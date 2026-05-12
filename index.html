@@ -13,202 +13,152 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --surface: #13131a;
-    --card: #1c1c26;
-    --accent: #e8ff47;
-    --accent2: #ff6b35;
-    --accent3: #4ecdc4;
-    --text: #f0f0f5;
-    --muted: #6b6b80;
-    --border: #2a2a38;
+    --bg: #0a0a0f; --surface: #13131a; --card: #1c1c26;
+    --accent: #e8ff47; --accent2: #ff6b35; --accent3: #4ecdc4;
+    --text: #f0f0f5; --muted: #6b6b80; --border: #2a2a38;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; }
 
   /* ── LOGIN ── */
-  #login-screen {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    padding: 24px; background: var(--bg);
-  }
-  .login-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 22px; padding: 36px 28px; width: 100%; max-width: 340px;
-  }
-  .login-logo { text-align: center; margin-bottom: 30px; }
-  .login-logo .logo-icon { font-size: 44px; display: block; margin-bottom: 10px; }
-  .login-logo h2 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 3px; color: var(--text); margin-bottom: 4px; }
-  .login-logo p { font-size: 12px; color: var(--muted); }
-  .field { margin-bottom: 14px; }
-  .field label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .field input { width: 100%; background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 13px 14px; color: var(--text); font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
-  .field input:focus { border-color: var(--accent); }
-  .btn-login { width: 100%; background: var(--accent); color: #0a0a0f; border: none; border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; margin-top: 6px; transition: opacity 0.2s; }
-  .btn-login:active { opacity: 0.8; }
-  .login-error { color: #ff6b6b; font-size: 12px; text-align: center; margin-top: 12px; display: none; }
+  #login-screen { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; }
+  .login-card { background:var(--card); border:1px solid var(--border); border-radius:22px; padding:36px 28px; width:100%; max-width:340px; }
+  .login-logo { text-align:center; margin-bottom:30px; }
+  .login-logo .logo-icon { font-size:44px; display:block; margin-bottom:10px; }
+  .login-logo h2 { font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:3px; color:var(--text); margin-bottom:4px; }
+  .login-logo p { font-size:12px; color:var(--muted); }
+  .field { margin-bottom:14px; }
+  .field label { display:block; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .field input { width:100%; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; padding:13px 14px; color:var(--text); font-size:15px; font-family:'DM Sans',sans-serif; outline:none; transition:border-color .2s; -webkit-appearance:none; }
+  .field input:focus { border-color:var(--accent); }
+  .btn-login { width:100%; background:var(--accent); color:#0a0a0f; border:none; border-radius:10px; padding:14px; font-size:15px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; margin-top:6px; transition:opacity .2s; }
+  .btn-login:active { opacity:.8; }
+  .login-error { color:#ff6b6b; font-size:12px; text-align:center; margin-top:12px; display:none; }
 
-  /* ── APP SHELL ── */
-  #app { display: none; padding-bottom: 48px; }
+  /* ── APP ── */
+  #app { display:none; padding-bottom:48px; }
 
-  .header { background: linear-gradient(135deg, #1c1c26 0%, #0f0f18 100%); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
-  .header-top { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px 0; }
-  .header-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px; color: var(--accent); }
-  .btn-logout { padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
-  .btn-logout:active { background: var(--surface); color: var(--text); }
+  /* ── HEADER ── */
+  .header { background:linear-gradient(135deg,#1c1c26 0%,#0f0f18 100%); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+  .header-top { display:flex; align-items:center; justify-content:space-between; padding:16px 18px 0; }
+  .header-title { font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:3px; color:var(--accent); }
+  .btn-logout { padding:5px 12px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:11px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .2s; }
+  .btn-logout:active { background:var(--surface); color:var(--text); }
 
-  /* ── SEGMENTED NAV (main + plan weeks) ── */
-  .seg-tabs { display: flex; padding: 8px 14px 0; gap: 6px; }
-  .seg-tab { flex: 1; padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; border: 1.5px solid var(--border); background: transparent; color: var(--muted); transition: all 0.2s; font-family: 'DM Sans', sans-serif; text-align: center; }
-  .seg-tab.active { background: var(--accent); color: #0a0a0f; border-color: var(--accent); }
+  /* ── TABS (weeks + days) ── */
+  .tabs { display:flex; padding:8px 14px; gap:6px; overflow-x:auto; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab { flex-shrink:0; padding:7px 14px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; border:1.5px solid var(--border); background:transparent; color:var(--muted); transition:all .2s; }
+  .tab.active { background:var(--accent); color:#0a0a0f; border-color:var(--accent); }
+  #week-tabs { padding-bottom:0; }
+  #day-tabs  { padding-top:6px; }
 
-  /* ── WEEK NAV (alternativas) ── */
-  .week-nav { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px 6px; }
-  .week-arrow { width: 38px; height: 38px; border-radius: 11px; border: 1.5px solid var(--border); background: transparent; color: var(--text); font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-family: 'DM Sans', sans-serif; line-height: 1; }
-  .week-arrow:disabled { opacity: 0.25; cursor: default; }
-  .week-arrow:not(:disabled):active { background: var(--surface); }
-  .week-center { text-align: center; }
-  .week-sublabel { font-family: 'Bebas Neue', sans-serif; font-size: 10px; letter-spacing: 2px; color: var(--muted); }
-  .week-label { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 1px; color: var(--text); line-height: 1.1; }
+  /* ── CONTENT ── */
+  #main-content { min-height:50vh; }
 
-  /* ── DAY TABS ── */
-  .tabs { display: flex; padding: 8px 14px 12px; gap: 6px; overflow-x: auto; scrollbar-width: none; }
-  .tabs::-webkit-scrollbar { display: none; }
-  .tab { flex-shrink: 0; padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1.5px solid var(--border); background: transparent; color: var(--muted); transition: all 0.2s; }
-  .tab.active { background: var(--accent); color: #0a0a0f; border-color: var(--accent); }
-
-  /* ── SECTIONS (alternativas) ── */
-  .section { display: none; padding: 10px 16px; }
-  .section.active { display: block; animation: fadeIn 0.3s cubic-bezier(0.22,1,0.36,1); }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px) scale(0.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  /* ── ANIMATIONS ── */
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px) scale(.99); } to { opacity:1; transform:translateY(0) scale(1); } }
+  .anim { animation:fadeIn .3s cubic-bezier(.22,1,.36,1); }
 
   /* ── LOADING ── */
-  .loading { text-align: center; padding: 60px 20px; font-size: 13px; color: var(--muted); letter-spacing: 1px; }
+  .loading { text-align:center; padding:60px 20px; font-size:13px; color:var(--muted); letter-spacing:1px; }
 
-  /* ── PROGRESS BAR (alternativas) ── */
-  .progress-wrap { display: flex; align-items: center; gap: 10px; padding: 6px 0 2px; }
-  .progress-track { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.5s cubic-bezier(0.22,1,0.36,1); width: 0%; }
-  .progress-fill.complete { background: var(--accent3); }
-  .progress-label { font-size: 11px; color: var(--muted); white-space: nowrap; font-weight: 600; min-width: 82px; text-align: right; }
+  /* ════════════════════════════
+     ALTERNATIVAS GUIDE STYLES
+  ════════════════════════════ */
+  .section { display:none; padding:10px 16px; }
+  .section.active { display:block; }
 
-  /* ── MUSCLE GROUP ── */
-  .muscle-group { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 2px; color: var(--accent2); margin: 18px 0 8px; }
-  .muscle-group:first-of-type { margin-top: 12px; }
+  .progress-wrap { display:flex; align-items:center; gap:10px; padding:6px 0 2px; }
+  .progress-track { flex:1; height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
+  .progress-fill { height:100%; background:var(--accent); border-radius:2px; transition:width .5s cubic-bezier(.22,1,.36,1); width:0%; }
+  .progress-fill.complete { background:var(--accent3); }
+  .progress-label { font-size:11px; color:var(--muted); white-space:nowrap; font-weight:600; min-width:82px; text-align:right; }
 
-  /* ── EXERCISE CARD (alternativas) ── */
-  .exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 8px; overflow: hidden; transition: border-color 0.2s, opacity 0.3s; }
-  .exercise-card.open { border-color: rgba(255,107,53,0.6); }
-  .exercise-card.done { opacity: 0.5; }
-  .exercise-card.done.open { opacity: 1; }
-  .card-header { display: flex; align-items: center; padding: 12px 14px; gap: 9px; }
-  .ex-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--surface); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-  .ex-info { flex: 1; min-width: 0; }
-  .ex-name { font-weight: 700; font-size: 14px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.2s; }
-  .exercise-card.done .ex-name { text-decoration: line-through; color: var(--muted); }
-  .ex-muscle { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
-  .done-btn { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.25s; color: transparent; font-size: 14px; font-weight: 800; line-height: 1; font-family: 'DM Sans', sans-serif; }
-  .done-btn.active { background: var(--accent); border-color: var(--accent); color: #0a0a0f; }
-  .done-btn:active { transform: scale(0.87); }
-  .alt-trigger { display: flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 20px; border: 1px solid rgba(255,107,53,0.35); background: rgba(255,107,53,0.08); cursor: pointer; flex-shrink: 0; transition: all 0.2s; }
-  .alt-trigger span { font-size: 10px; font-weight: 700; color: var(--accent2); white-space: nowrap; }
-  .alt-trigger .chevron { font-size: 13px; color: var(--accent2); transition: transform 0.3s cubic-bezier(0.22,1,0.36,1); }
-  .exercise-card.open .alt-trigger .chevron { transform: rotate(180deg); }
-  .card-body { overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.45s ease, opacity 0.3s ease; }
-  .exercise-card.open .card-body { max-height: 3200px; opacity: 1; }
-  .card-body-content { padding: 0 14px 14px; border-top: 1px solid var(--border); }
-  .alt-header { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin: 12px 0 8px; }
-  .alt-item { background: rgba(255,107,53,0.07); border: 1px solid rgba(255,107,53,0.18); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
-  .alt-item:last-child { margin-bottom: 0; }
-  .app-name { display: inline-flex; align-items: center; gap: 5px; background: rgba(78,205,196,0.12); border: 1px solid rgba(78,205,196,0.3); border-radius: 6px; padding: 3px 8px; margin-bottom: 6px; }
-  .app-name-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent3); }
-  .app-name-value { font-size: 11px; font-weight: 700; color: var(--accent3); }
-  .alt-item-name { font-size: 13px; font-weight: 700; color: var(--accent2); margin-bottom: 4px; }
-  .alt-item-desc { font-size: 12px; color: #b0b0c0; line-height: 1.65; margin-bottom: 8px; }
-  .steps-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-  .step { display: flex; gap: 8px; margin-bottom: 6px; align-items: flex-start; }
-  .step-num { width: 18px; height: 18px; border-radius: 4px; background: var(--accent2); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-  .step-text { font-size: 12px; color: #c0c0d0; line-height: 1.55; }
-  .tip { background: rgba(232,255,71,0.06); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 8px 10px; margin-top: 8px; font-size: 12px; color: #c0c0a0; line-height: 1.55; }
-  .tip strong { color: var(--accent); }
+  .muscle-group { font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:2px; color:var(--accent2); margin:18px 0 8px; }
+  .muscle-group:first-of-type { margin-top:12px; }
 
-  /* ════════════════════════════════════════
-     MI PLAN — STYLES
-  ════════════════════════════════════════ */
+  .exercise-card { background:var(--card); border:1px solid var(--border); border-radius:14px; margin-bottom:8px; overflow:hidden; transition:border-color .2s, opacity .3s; }
+  .exercise-card.open { border-color:rgba(255,107,53,.6); }
+  .exercise-card.done { opacity:.5; }
+  .exercise-card.done.open { opacity:1; }
 
-  #plan-content { padding: 12px 16px 48px; display: none; animation: fadeIn 0.3s cubic-bezier(0.22,1,0.36,1); }
+  .card-header { display:flex; align-items:center; padding:12px 14px; gap:9px; }
+  .ex-icon { width:36px; height:36px; border-radius:9px; background:var(--surface); display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+  .ex-info { flex:1; min-width:0; }
+  .ex-name { font-weight:700; font-size:14px; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; transition:color .2s; }
+  .exercise-card.done .ex-name { text-decoration:line-through; color:var(--muted); }
+  .ex-muscle { font-size:11px; color:var(--muted); margin-top:2px; line-height:1.4; }
 
-  /* Day header strip */
-  .plan-day-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; padding-top: 4px; }
-  .plan-day-title { font-family: 'Bebas Neue', sans-serif; font-size: 17px; letter-spacing: 1px; color: var(--text); }
-  .plan-count { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 0.2px; }
-  .btn-reset { padding: 5px 11px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 11px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
-  .btn-reset:active { background: rgba(255,107,53,0.1); color: var(--accent2); border-color: rgba(255,107,53,0.4); }
+  .done-btn { width:28px; height:28px; border-radius:50%; border:2px solid var(--border); background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .25s; color:transparent; font-size:14px; font-weight:800; font-family:'DM Sans',sans-serif; }
+  .done-btn.active { background:var(--accent); border-color:var(--accent); color:#0a0a0f; }
+  .done-btn:active { transform:scale(.87); }
 
-  /* Plan progress bar */
-  .plan-pbar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 16px; }
-  .plan-pfill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.45s cubic-bezier(0.22,1,0.36,1); width: 0%; }
-  .plan-pfill.complete { background: var(--accent3); }
+  .alt-trigger { display:flex; align-items:center; gap:5px; padding:5px 10px; border-radius:20px; border:1px solid rgba(255,107,53,.35); background:rgba(255,107,53,.08); cursor:pointer; flex-shrink:0; transition:all .2s; }
+  .alt-trigger span { font-size:10px; font-weight:700; color:var(--accent2); white-space:nowrap; }
+  .alt-trigger .chevron { font-size:13px; color:var(--accent2); transition:transform .3s cubic-bezier(.22,1,.36,1); }
+  .exercise-card.open .alt-trigger .chevron { transform:rotate(180deg); }
 
-  /* Exercise row */
-  .plan-ex {
-    display: flex; align-items: center; gap: 12px;
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 13px; padding: 13px 14px; margin-bottom: 8px;
-    cursor: pointer; transition: opacity 0.3s, border-color 0.2s;
-    user-select: none;
-  }
-  .plan-ex.done { opacity: 0.45; }
-  .plan-ex:active { opacity: 0.7; }
+  .card-body { overflow:hidden; max-height:0; opacity:0; transition:max-height .45s ease, opacity .3s ease; }
+  .exercise-card.open .card-body { max-height:3200px; opacity:1; }
+  .card-body-content { padding:0 14px 14px; border-top:1px solid var(--border); }
 
-  .pex-num {
-    width: 28px; height: 28px; border-radius: 8px;
-    background: var(--surface); color: var(--muted);
-    font-size: 12px; font-weight: 700; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.25s;
-  }
-  .plan-ex.done .pex-num { background: var(--accent); color: #0a0a0f; }
+  .alt-header { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin:12px 0 8px; }
+  .alt-item { background:rgba(255,107,53,.07); border:1px solid rgba(255,107,53,.18); border-radius:10px; padding:10px 12px; margin-bottom:8px; }
+  .alt-item:last-child { margin-bottom:0; }
+  .app-name { display:inline-flex; align-items:center; gap:5px; background:rgba(78,205,196,.12); border:1px solid rgba(78,205,196,.3); border-radius:6px; padding:3px 8px; margin-bottom:6px; }
+  .app-name-label { font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--accent3); }
+  .app-name-value { font-size:11px; font-weight:700; color:var(--accent3); }
+  .alt-item-name { font-size:13px; font-weight:700; color:var(--accent2); margin-bottom:4px; }
+  .alt-item-desc { font-size:12px; color:#b0b0c0; line-height:1.65; margin-bottom:8px; }
+  .steps-label { font-size:10px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .step { display:flex; gap:8px; margin-bottom:6px; align-items:flex-start; }
+  .step-num { width:18px; height:18px; border-radius:4px; background:var(--accent2); color:#fff; font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+  .step-text { font-size:12px; color:#c0c0d0; line-height:1.55; }
+  .tip { background:rgba(232,255,71,.06); border-left:3px solid var(--accent); border-radius:0 8px 8px 0; padding:8px 10px; margin-top:8px; font-size:12px; color:#c0c0a0; line-height:1.55; }
+  .tip strong { color:var(--accent); }
 
-  .pex-name {
-    flex: 1; font-size: 13px; font-weight: 600; color: var(--text);
-    line-height: 1.35; transition: color 0.2s;
-  }
-  .plan-ex.done .pex-name { text-decoration: line-through; color: var(--muted); }
+  /* ════════════════════════════
+     CHECKLIST PLAN STYLES
+  ════════════════════════════ */
+  #checklist-view { padding:12px 16px 48px; }
 
-  .pex-check {
-    width: 26px; height: 26px; border-radius: 50%;
-    border: 2px solid var(--border); background: transparent;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 800; color: transparent;
-    flex-shrink: 0; transition: all 0.25s;
-  }
-  .plan-ex.done .pex-check { background: var(--accent); border-color: var(--accent); color: #0a0a0f; }
+  .plan-day-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; padding-top:4px; }
+  .plan-day-title { font-family:'Bebas Neue',sans-serif; font-size:17px; letter-spacing:1px; color:var(--text); }
+  .plan-count { font-size:12px; color:var(--muted); font-weight:600; }
+  .btn-reset { padding:5px 11px; border-radius:20px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:11px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .2s; }
+  .btn-reset:active { background:rgba(255,107,53,.1); color:var(--accent2); border-color:rgba(255,107,53,.4); }
 
-  /* Swipe hint (dots) */
-  .plan-dots { display: flex; justify-content: center; gap: 6px; padding: 18px 0 4px; }
-  .plan-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
-  .plan-dot.active { background: var(--accent); width: 18px; border-radius: 3px; }
+  .plan-pbar { height:3px; background:var(--border); border-radius:2px; overflow:hidden; margin-bottom:16px; }
+  .plan-pfill { height:100%; background:var(--accent); border-radius:2px; transition:width .45s cubic-bezier(.22,1,.36,1); width:0%; }
+  .plan-pfill.complete { background:var(--accent3); }
+
+  .plan-ex { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--border); border-radius:13px; padding:13px 14px; margin-bottom:8px; cursor:pointer; transition:opacity .3s; user-select:none; }
+  .plan-ex.done { opacity:.45; }
+  .plan-ex:active { opacity:.7; }
+  .pex-num { width:28px; height:28px; border-radius:8px; background:var(--surface); color:var(--muted); font-size:12px; font-weight:700; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .25s; }
+  .plan-ex.done .pex-num { background:var(--accent); color:#0a0a0f; }
+  .pex-name { flex:1; font-size:13px; font-weight:600; color:var(--text); line-height:1.35; transition:color .2s; }
+  .plan-ex.done .pex-name { text-decoration:line-through; color:var(--muted); }
+  .pex-check { width:26px; height:26px; border-radius:50%; border:2px solid var(--border); background:transparent; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:transparent; flex-shrink:0; transition:all .25s; }
+  .plan-ex.done .pex-check { background:var(--accent); border-color:var(--accent); color:#0a0a0f; }
+
+  /* Swipe dots */
+  .plan-dots { display:flex; justify-content:center; gap:6px; padding:18px 0 4px; }
+  .plan-dot { width:6px; height:6px; border-radius:50%; background:var(--border); transition:all .3s; }
+  .plan-dot.active { background:var(--accent); width:18px; border-radius:3px; }
 
   /* ── COMPLETION OVERLAY ── */
-  .completion-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.88);
-    align-items: center; justify-content: center;
-    z-index: 200; padding: 24px; display: none;
-  }
-  .completion-overlay.show { display: flex; }
-  .completion-card {
-    background: var(--card); border: 1px solid rgba(232,255,71,0.35);
-    border-radius: 24px; padding: 44px 28px 36px; text-align: center;
-    width: 100%; max-width: 320px;
-    animation: popIn 0.4s cubic-bezier(0.22,1,0.36,1);
-  }
-  @keyframes popIn { from { transform: scale(0.82); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-  .completion-emoji { font-size: 60px; display: block; margin-bottom: 14px; animation: bounce 0.6s cubic-bezier(0.22,1,0.36,1) 0.2s both; }
-  @keyframes bounce { 0% { transform: scale(0) rotate(-10deg); } 70% { transform: scale(1.15) rotate(3deg); } 100% { transform: scale(1) rotate(0); } }
-  .completion-title { font-family: 'Bebas Neue', sans-serif; font-size: 34px; letter-spacing: 2px; color: var(--accent); margin-bottom: 8px; }
-  .completion-sub { font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 30px; }
-  .completion-btn { background: var(--accent); color: #0a0a0f; border: none; border-radius: 12px; padding: 14px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; width: 100%; transition: opacity 0.2s; }
-  .completion-btn:active { opacity: 0.8; }
+  .completion-overlay { position:fixed; inset:0; background:rgba(0,0,0,.88); align-items:center; justify-content:center; z-index:200; padding:24px; display:none; }
+  .completion-overlay.show { display:flex; }
+  .completion-card { background:var(--card); border:1px solid rgba(232,255,71,.35); border-radius:24px; padding:44px 28px 36px; text-align:center; width:100%; max-width:320px; animation:popIn .4s cubic-bezier(.22,1,.36,1); }
+  @keyframes popIn { from { transform:scale(.82); opacity:0; } to { transform:scale(1); opacity:1; } }
+  .completion-emoji { font-size:60px; display:block; margin-bottom:14px; animation:bounce .6s cubic-bezier(.22,1,.36,1) .2s both; }
+  @keyframes bounce { 0% { transform:scale(0) rotate(-10deg); } 70% { transform:scale(1.15) rotate(3deg); } 100% { transform:scale(1) rotate(0); } }
+  .completion-title { font-family:'Bebas Neue',sans-serif; font-size:34px; letter-spacing:2px; color:var(--accent); margin-bottom:8px; }
+  .completion-sub { font-size:14px; color:var(--muted); line-height:1.5; margin-bottom:30px; }
+  .completion-btn { background:var(--accent); color:#0a0a0f; border:none; border-radius:12px; padding:14px; font-size:15px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; width:100%; }
+  .completion-btn:active { opacity:.8; }
 </style>
 </head>
 <body>
@@ -236,76 +186,41 @@
 
 <!-- ══════════ APP ══════════ -->
 <div id="app">
-  <div class="header">
 
-    <!-- Top bar -->
+  <div class="header">
     <div class="header-top">
-      <div class="header-title">GUÍA ENTRENO</div>
+      <div class="header-title">MI PLAN</div>
       <button class="btn-logout" onclick="doLogout()">Salir</button>
     </div>
-
-    <!-- Main section selector -->
-    <div class="seg-tabs">
-      <button class="seg-tab active" id="main-tab-alt"  onclick="showMain('alt',this)">Alternativas</button>
-      <button class="seg-tab"        id="main-tab-plan" onclick="showMain('plan',this)">Mi Plan</button>
+    <!-- Week selector (all weeks, scrollable — add future weeks here) -->
+    <div class="tabs" id="week-tabs">
+      <div class="tab" data-week="semanas1-2" onclick="selectWeek('semanas1-2',this)">Semanas 1-2</div>
+      <div class="tab" data-week="semanas3-4" onclick="selectWeek('semanas3-4',this)">Semanas 3-4</div>
+      <div class="tab" data-week="semanas4-5" onclick="selectWeek('semanas4-5',this)">Semanas 4-5</div>
     </div>
+    <!-- Day tabs (populated dynamically) -->
+    <div class="tabs" id="day-tabs"></div>
+  </div>
 
-    <!-- ── ALTERNATIVAS controls ── -->
-    <div id="alt-controls">
-      <div class="week-nav">
-        <button class="week-arrow" id="btn-prev" onclick="prevWeek()" disabled>‹</button>
-        <div class="week-center">
-          <div class="week-sublabel">SEMANA</div>
-          <div class="week-label" id="week-label">—</div>
-        </div>
-        <button class="week-arrow" id="btn-next" onclick="nextWeek()" disabled>›</button>
-      </div>
-      <div class="tabs" id="day-tabs"></div>
-    </div>
-
-    <!-- ── MI PLAN controls ── -->
-    <div id="plan-controls" style="display:none">
-      <div class="seg-tabs" style="padding-top:10px">
-        <button class="seg-tab active" onclick="selectPlanWeek('semanas1-2',this)">Semanas 1-2</button>
-        <button class="seg-tab"       onclick="selectPlanWeek('semanas3-4',this)">Semanas 3-4</button>
-      </div>
-      <div class="tabs" id="plan-day-tabs">
-        <div class="tab active" onclick="showPlanDay(0,this)">Día 1 · Empujes</div>
-        <div class="tab"        onclick="showPlanDay(1,this)">Día 2 · Tirones</div>
-        <div class="tab"        onclick="showPlanDay(2,this)">Día 3 · Pierna+Brazo</div>
-        <div class="tab"        onclick="showPlanDay(3,this)">Día 4 · Pecho+Espalda</div>
-      </div>
-    </div>
-
-  </div><!-- /header -->
-
-  <!-- Alternativas content -->
-  <div id="week-content"><div class="loading">Cargando…</div></div>
-
-  <!-- Mi Plan content -->
-  <div id="plan-content"></div>
+  <!-- Single content area -->
+  <div id="main-content"><div class="loading">Cargando…</div></div>
 
   <!-- Completion overlay -->
   <div id="completion-overlay" class="completion-overlay" onclick="closeCompletion()">
     <div class="completion-card" onclick="event.stopPropagation()">
       <span class="completion-emoji">🎉</span>
       <div class="completion-title">¡DÍA COMPLETADO!</div>
-      <div class="completion-sub" id="completion-sub">Excelente sesión.<br>Sigue así, crack.</div>
+      <div class="completion-sub" id="completion-sub">Excelente sesión.<br>Sigue así, crack. 💪</div>
       <button class="completion-btn" onclick="closeCompletion()">Continuar</button>
     </div>
   </div>
 
-</div><!-- /app -->
+</div>
 
 <script>
 /* ════════════════════════════════════════════════════════
-   ALTERNATIVAS — código original sin modificar
+   AUTH
 ════════════════════════════════════════════════════════ */
-
-const WEEKS = [
-  { id: 'semana4-5', label: 'Semanas 4-5' }
-];
-
 const _C = { u: 'tgmico', p: 'Clarmak893@' };
 
 function doLogin() {
@@ -331,55 +246,95 @@ function doLogout() {
 function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  const saved = parseInt(localStorage.getItem('entreno_week') || '0');
-  loadWeek(Math.min(saved, WEEKS.length - 1));
-  // Restore last main section
-  const lastMain = localStorage.getItem('entreno_main') || 'alt';
-  if (lastMain === 'plan') {
-    const planTab = document.getElementById('main-tab-plan');
-    showMain('plan', planTab);
-  }
+  const saved = localStorage.getItem('active_week') || 'semanas1-2';
+  const tab   = document.querySelector(`#week-tabs [data-week="${saved}"]`)
+             || document.querySelector('#week-tabs .tab');
+  selectWeek(saved, tab);
 }
 
-let currentWeek = 0;
+/* ════════════════════════════════════════════════════════
+   WEEK DEFINITIONS
+   Para añadir una semana nueva:
+   1. Añadir entrada en ALL_WEEKS
+   2. Añadir tab en #week-tabs (HTML arriba)
+   3. Si es tipo 'guide': crear weeks/semanaX-Y.js
+   4. Si es tipo 'checklist': añadir entrada en PLAN_DATA
+════════════════════════════════════════════════════════ */
+const ALL_WEEKS = [
+  { id: 'semanas1-2', label: 'Semanas 1-2', type: 'checklist' },
+  { id: 'semanas3-4', label: 'Semanas 3-4', type: 'checklist' },
+  { id: 'semanas4-5', label: 'Semanas 4-5', type: 'guide', fileId: 'semana4-5' }
+];
 
-function loadWeek(idx) {
-  currentWeek = idx;
-  localStorage.setItem('entreno_week', idx);
-  document.getElementById('week-label').textContent = WEEKS[idx].label;
-  document.getElementById('btn-prev').disabled = idx === 0;
-  document.getElementById('btn-next').disabled = idx === WEEKS.length - 1;
+/* ════════════════════════════════════════════════════════
+   NAVIGATION STATE
+════════════════════════════════════════════════════════ */
+let activeWeek = 'semanas1-2';
+let activeDay  = 0;
+let guideData  = null;
+
+function selectWeek(weekId, tab) {
+  activeWeek = weekId;
+  activeDay  = 0;
+  localStorage.setItem('active_week', weekId);
+
+  document.querySelectorAll('#week-tabs .tab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+
+  const week = ALL_WEEKS.find(w => w.id === weekId);
+  if (week.type === 'guide') {
+    loadGuideWeek(week.fileId);
+  } else {
+    renderChecklistDayTabs();
+    renderChecklistDay();
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ════════════════════════════════════════════════════════
+   GUIDE WEEKS (tipo: alternativas con ejercicios detallados)
+════════════════════════════════════════════════════════ */
+function loadGuideWeek(fileId) {
   document.getElementById('day-tabs').innerHTML = '';
-  document.getElementById('week-content').innerHTML = '<div class="loading">Cargando…</div>';
+  document.getElementById('main-content').innerHTML = '<div class="loading">Cargando…</div>';
+
   const old = document.getElementById('_ws');
   if (old) old.remove();
   const s = document.createElement('script');
   s.id = '_ws';
-  s.src = 'weeks/' + WEEKS[idx].id + '.js';
-  s.onload = () => renderWeek(window.WEEK_DATA);
-  s.onerror = () => {
-    document.getElementById('week-content').innerHTML =
-      '<div class="loading">No se pudo cargar la semana.</div>';
-  };
+  s.src = 'weeks/' + fileId + '.js';
+  s.onload  = () => { guideData = window.WEEK_DATA; renderGuideDayTabs(); renderGuideContent(); };
+  s.onerror = () => { document.getElementById('main-content').innerHTML = '<div class="loading">No se pudo cargar la semana.</div>'; };
   document.head.appendChild(s);
 }
 
-function prevWeek() { if (currentWeek > 0) loadWeek(currentWeek - 1); }
-function nextWeek() { if (currentWeek < WEEKS.length - 1) loadWeek(currentWeek + 1); }
-
-function renderWeek(data) {
-  document.getElementById('day-tabs').innerHTML = data.days
-    .map((d, i) => `<div class="tab${i === 0 ? ' active' : ''}" onclick="showDay('${d.id}',this)">${d.label}</div>`)
+function renderGuideDayTabs() {
+  document.getElementById('day-tabs').innerHTML = guideData.days
+    .map((d, i) => `<div class="tab${i===0?' active':''}" onclick="showGuideDay('${d.id}',this)">${d.label}</div>`)
     .join('');
-  document.getElementById('week-content').innerHTML = data.days.map((d, i) => renderDay(d, i === 0)).join('');
-  loadState();
-  updateProgress();
 }
 
+function renderGuideContent() {
+  document.getElementById('main-content').innerHTML =
+    `<div class="anim">${guideData.days.map((d,i) => renderDay(d, i===0)).join('')}</div>`;
+  loadGuideState();
+  updateGuideProgress();
+}
+
+function showGuideDay(dayId, tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('#day-tabs .tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(dayId).classList.add('active');
+  tab.classList.add('active');
+  activeDay = guideData.days.findIndex(d => d.id === dayId);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── Guide rendering ── */
 function renderDay(day, active) {
   const total = day.groups.flatMap(g => g.exercises).length;
   return `
-    <div class="section${active ? ' active' : ''}" id="${day.id}">
+    <div class="section${active?' active':''}" id="${day.id}">
       <div class="progress-wrap">
         <div class="progress-track"><div class="progress-fill" id="fill-${day.id}"></div></div>
         <div class="progress-label" id="label-${day.id}">0 / ${total} completados</div>
@@ -387,11 +342,9 @@ function renderDay(day, active) {
       ${day.groups.map(renderGroup).join('')}
     </div>`;
 }
-
 function renderGroup(g) {
   return `<div class="muscle-group">${g.label}</div>${g.exercises.map(renderExercise).join('')}`;
 }
-
 function renderExercise(ex) {
   return `
     <div class="exercise-card" id="${ex.id}">
@@ -402,7 +355,7 @@ function renderExercise(ex) {
           <div class="ex-muscle">${ex.muscle}</div>
         </div>
         <button class="done-btn" onclick="toggleDone('${ex.id}',event)">✓</button>
-        <div class="alt-trigger" onclick="toggle('${ex.id}')">
+        <div class="alt-trigger" onclick="toggleCard('${ex.id}')">
           <span>Si está ocupado</span><span class="chevron">⌄</span>
         </div>
       </div>
@@ -414,30 +367,29 @@ function renderExercise(ex) {
       </div>
     </div>`;
 }
-
 function renderAlt(alt) {
   let h = '<div class="alt-item">';
   if (alt.appName) h += `<div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">${alt.appName}</span></div>`;
   h += `<div class="alt-item-name">${alt.name}</div>`;
   if (alt.desc) h += `<div class="alt-item-desc">${alt.desc}</div>`;
   if (alt.steps && alt.steps.length) {
-    h += `<div class="steps-label">${alt.stepsLabel || 'Ejecución'}</div>`;
-    h += alt.steps.map((s, i) => `<div class="step"><div class="step-num">${i + 1}</div><div class="step-text">${s}</div></div>`).join('');
+    h += `<div class="steps-label">${alt.stepsLabel||'Ejecución'}</div>`;
+    h += alt.steps.map((s,i) => `<div class="step"><div class="step-num">${i+1}</div><div class="step-text">${s}</div></div>`).join('');
   }
   if (alt.tip) {
-    const t = typeof alt.tip === 'string' ? alt.tip : `<strong>${alt.tip.bold}</strong> ${alt.tip.text}`;
+    const t = typeof alt.tip==='string' ? alt.tip : `<strong>${alt.tip.bold}</strong> ${alt.tip.text}`;
     h += `<div class="tip">${t}</div>`;
   }
   return h + '</div>';
 }
 
-function toggle(id) {
+/* ── Guide interactions ── */
+function toggleCard(id) {
   const card = document.getElementById(id);
   const wasOpen = card.classList.contains('open');
   document.querySelectorAll('.exercise-card').forEach(c => c.classList.remove('open'));
   if (!wasOpen) card.classList.add('open');
 }
-
 function toggleDone(id, event) {
   event.stopPropagation();
   const card = document.getElementById(id);
@@ -445,324 +397,266 @@ function toggleDone(id, event) {
   const done = card.classList.contains('done');
   card.classList.toggle('done', !done);
   btn.classList.toggle('active', !done);
-  const state = getState();
-  state[id] = !done;
-  saveState(state);
-  updateProgress();
+  const state = getGuideState(); state[id] = !done;
+  saveGuideState(state);
+  updateGuideProgress();
 }
 
-function stateKey() { return 'entreno_done_' + WEEKS[currentWeek].id; }
-function getState()  { try { return JSON.parse(localStorage.getItem(stateKey()) || '{}'); } catch { return {}; } }
-function saveState(s) { localStorage.setItem(stateKey(), JSON.stringify(s)); }
+/* ── Guide state ── */
+function guideStateKey() {
+  const w = ALL_WEEKS.find(w => w.id === activeWeek);
+  return 'entreno_done_' + (w ? w.fileId : activeWeek);
+}
+function getGuideState()   { try { return JSON.parse(localStorage.getItem(guideStateKey())||'{}'); } catch { return {}; } }
+function saveGuideState(s) { localStorage.setItem(guideStateKey(), JSON.stringify(s)); }
 
-function loadState() {
-  const state = getState();
+function loadGuideState() {
+  const state = getGuideState();
   Object.entries(state).forEach(([id, done]) => {
     if (!done) return;
-    const card = document.getElementById(id);
-    if (!card) return;
+    const card = document.getElementById(id); if (!card) return;
     card.classList.add('done');
-    const btn = card.querySelector('.done-btn');
-    if (btn) btn.classList.add('active');
+    const btn = card.querySelector('.done-btn'); if (btn) btn.classList.add('active');
   });
 }
-
-function updateProgress() {
-  if (!window.WEEK_DATA) return;
-  const state = getState();
-  window.WEEK_DATA.days.forEach(day => {
+function updateGuideProgress() {
+  if (!guideData) return;
+  const state = getGuideState();
+  guideData.days.forEach(day => {
     const ids   = day.groups.flatMap(g => g.exercises.map(e => e.id));
     const done  = ids.filter(id => state[id]).length;
     const total = ids.length;
-    const fill  = document.getElementById('fill-' + day.id);
-    const label = document.getElementById('label-' + day.id);
+    const fill  = document.getElementById('fill-'+day.id);
+    const label = document.getElementById('label-'+day.id);
     if (!fill || !label) return;
-    fill.style.width = (total ? done / total * 100 : 0) + '%';
-    fill.classList.toggle('complete', done === total && total > 0);
-    label.textContent = done + ' / ' + total + ' completados';
+    fill.style.width = (total ? done/total*100 : 0) + '%';
+    fill.classList.toggle('complete', done===total && total>0);
+    label.textContent = done+' / '+total+' completados';
   });
 }
 
-function showDay(id, tab) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('#day-tabs .tab').forEach(t => t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  tab.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
 /* ════════════════════════════════════════════════════════
-   MAIN NAVIGATION
+   CHECKLIST WEEKS (tipo: lista de ejercicios con checkbox)
 ════════════════════════════════════════════════════════ */
-
-function showMain(section, tab) {
-  document.querySelectorAll('.seg-tabs:first-of-type .seg-tab, #main-tab-alt, #main-tab-plan')
-    .forEach(t => t.classList.remove('active'));
-  tab.classList.add('active');
-
-  const isAlt = section === 'alt';
-  document.getElementById('alt-controls').style.display  = isAlt ? '' : 'none';
-  document.getElementById('plan-controls').style.display = isAlt ? 'none' : '';
-  document.getElementById('week-content').style.display  = isAlt ? '' : 'none';
-  document.getElementById('plan-content').style.display  = isAlt ? 'none' : '';
-
-  if (!isAlt) renderPlanDay();
-  localStorage.setItem('entreno_main', section);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-/* ════════════════════════════════════════════════════════
-   MI PLAN — DATA
-════════════════════════════════════════════════════════ */
-
 const PLAN_DATA = {
   'semanas1-2': {
-    label: 'Semanas 1-2',
     days: [
-      {
-        label: 'Día 1 · Empujes',
-        exercises: [
-          'Press inclinado en multipower',
-          'Press plano con mancuernas',
-          'Cruces en polea de arriba a abajo',
-          'Elevaciones laterales con mancuernas',
-          'Elevaciones laterales con polea (altura cadera)',
-          'Extensión de tríceps por encima de la cabeza barra',
-          'Extensión de tríceps unilateral'
-        ]
-      },
-      {
-        label: 'Día 2 · Tirones',
-        exercises: [
-          'Remo en máquina unilateral (enfoque dorsal)',
-          'Remo en polea con barra',
-          'Pullover con cuerda',
-          'Facepull en polea',
-          'Curl en banco scott con barra Z',
-          'Curl bayesian en polea unilateral'
-        ]
-      },
-      {
-        label: 'Día 3 · Pierna + brazo',
-        exercises: [
-          'Hack squat',
-          'Prensa a 45 grados',
-          'Extensión de cuádriceps',
-          'Peso muerto rumano con mancuernas',
-          'Curl de femoral sentado',
-          'Kaz press en multipower',
-          'Extensión de tríceps por encima de la cabeza cuerda',
-          'Curl a 90 grados en remo bajo',
-          'Curl alterno con mancuernas'
-        ]
-      },
-      {
-        label: 'Día 4 · Pecho + espalda',
-        exercises: [
-          'Press plano en máquina',
-          'Press inclinado en multipower',
-          'Cruces en polea de arriba a abajo',
-          'Remo en máquina (enfoque espalda alta)',
-          'Jalón al pecho agarre neutro (enfoque dorsal)',
-          'Pullover en polea con barra'
-        ]
-      }
+      { label: 'Día 1 · Empujes', exercises: [
+        'Press inclinado en multipower',
+        'Press plano con mancuernas',
+        'Cruces en polea de arriba a abajo',
+        'Elevaciones laterales con mancuernas',
+        'Elevaciones laterales con polea (altura cadera)',
+        'Extensión de tríceps por encima de la cabeza barra',
+        'Extensión de tríceps unilateral'
+      ]},
+      { label: 'Día 2 · Tirones', exercises: [
+        'Remo en máquina unilateral (enfoque dorsal)',
+        'Remo en polea con barra',
+        'Pullover con cuerda',
+        'Facepull en polea',
+        'Curl en banco scott con barra Z',
+        'Curl bayesian en polea unilateral'
+      ]},
+      { label: 'Día 3 · Pierna + brazo', exercises: [
+        'Hack squat',
+        'Prensa a 45 grados',
+        'Extensión de cuádriceps',
+        'Peso muerto rumano con mancuernas',
+        'Curl de femoral sentado',
+        'Kaz press en multipower',
+        'Extensión de tríceps por encima de la cabeza cuerda',
+        'Curl a 90 grados en remo bajo',
+        'Curl alterno con mancuernas'
+      ]},
+      { label: 'Día 4 · Pecho + espalda', exercises: [
+        'Press plano en máquina',
+        'Press inclinado en multipower',
+        'Cruces en polea de arriba a abajo',
+        'Remo en máquina (enfoque espalda alta)',
+        'Jalón al pecho agarre neutro (enfoque dorsal)',
+        'Pullover en polea con barra'
+      ]}
     ]
   },
   'semanas3-4': {
-    label: 'Semanas 3-4',
     days: [
-      {
-        label: 'Día 1 · Empujes',
-        exercises: [
-          'Press inclinado en multipower',
-          'Press plano con mancuernas',
-          'Peck-deck o máquina contractora',
-          'Elevaciones laterales con mancuernas',
-          'Elevaciones laterales con polea (altura cadera)',
-          'Extensión de tríceps por encima de la cabeza barra',
-          'Extensión de tríceps con cuerda'
-        ]
-      },
-      {
-        label: 'Día 2 · Tirones',
-        exercises: [
-          'Remo en máquina unilateral (enfoque dorsal)',
-          'Remo en polea con barra',
-          'Pullover con cuerda',
-          'Reverse flyes en máquina contractora',
-          'Curl en banco scott con barra Z',
-          'Curl en banco inclinado con mancuernas'
-        ]
-      },
-      {
-        label: 'Día 3 · Pierna + brazo',
-        exercises: [
-          'Hack squat',
-          'Prensa a 45 grados',
-          'Extensión de cuádriceps',
-          'Peso muerto rumano con mancuernas',
-          'Curl de femoral sentado',
-          'Kaz press en multipower',
-          'Extensión de tríceps katana',
-          'Curl a 90 grados en remo bajo',
-          'Curl alterno con mancuernas'
-        ]
-      },
-      {
-        label: 'Día 4 · Pecho + espalda',
-        exercises: [
-          'Press plano en máquina',
-          'Press inclinado en multipower',
-          'Cruces en polea de arriba a abajo',
-          'Remo en máquina (enfoque espalda alta)',
-          'Jalón al pecho agarre cerrado',
-          'Pullover en polea con barra'
-        ]
-      }
+      { label: 'Día 1 · Empujes', exercises: [
+        'Press inclinado en multipower',
+        'Press plano con mancuernas',
+        'Peck-deck o máquina contractora',
+        'Elevaciones laterales con mancuernas',
+        'Elevaciones laterales con polea (altura cadera)',
+        'Extensión de tríceps por encima de la cabeza barra',
+        'Extensión de tríceps con cuerda'
+      ]},
+      { label: 'Día 2 · Tirones', exercises: [
+        'Remo en máquina unilateral (enfoque dorsal)',
+        'Remo en polea con barra',
+        'Pullover con cuerda',
+        'Reverse flyes en máquina contractora',
+        'Curl en banco scott con barra Z',
+        'Curl en banco inclinado con mancuernas'
+      ]},
+      { label: 'Día 3 · Pierna + brazo', exercises: [
+        'Hack squat',
+        'Prensa a 45 grados',
+        'Extensión de cuádriceps',
+        'Peso muerto rumano con mancuernas',
+        'Curl de femoral sentado',
+        'Kaz press en multipower',
+        'Extensión de tríceps katana',
+        'Curl a 90 grados en remo bajo',
+        'Curl alterno con mancuernas'
+      ]},
+      { label: 'Día 4 · Pecho + espalda', exercises: [
+        'Press plano en máquina',
+        'Press inclinado en multipower',
+        'Cruces en polea de arriba a abajo',
+        'Remo en máquina (enfoque espalda alta)',
+        'Jalón al pecho agarre cerrado',
+        'Pullover en polea con barra'
+      ]}
     ]
   }
 };
 
-/* ════════════════════════════════════════════════════════
-   MI PLAN — LOGIC
-════════════════════════════════════════════════════════ */
-
-let planWeek = 'semanas1-2';
-let planDay  = 0;
-
-function planStateKey() { return 'plan_' + planWeek + '_' + planDay; }
-function getPlanState()  { try { return JSON.parse(localStorage.getItem(planStateKey()) || '[]'); } catch { return []; } }
-function savePlanState(arr) { localStorage.setItem(planStateKey(), JSON.stringify(arr)); }
-
-function selectPlanWeek(wk, btn) {
-  planWeek = wk;
-  planDay  = 0;
-  document.querySelectorAll('#plan-controls .seg-tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#plan-day-tabs .tab').forEach((t, i) => t.classList.toggle('active', i === 0));
-  renderPlanDay();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+function renderChecklistDayTabs() {
+  const days = PLAN_DATA[activeWeek].days;
+  document.getElementById('day-tabs').innerHTML = days
+    .map((d, i) => `<div class="tab${i===0?' active':''}" onclick="showChecklistDay(${i},this)">${d.label}</div>`)
+    .join('');
 }
 
-function showPlanDay(idx, tab) {
-  planDay = idx;
-  document.querySelectorAll('#plan-day-tabs .tab').forEach(t => t.classList.remove('active'));
+function showChecklistDay(idx, tab) {
+  activeDay = idx;
+  document.querySelectorAll('#day-tabs .tab').forEach(t => t.classList.remove('active'));
   tab.classList.add('active');
-  renderPlanDay();
+  renderChecklistDay();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function renderPlanDay() {
-  const day      = PLAN_DATA[planWeek].days[planDay];
+function renderChecklistDay() {
+  const day      = PLAN_DATA[activeWeek].days[activeDay];
   const doneArr  = getPlanState();
   const total    = day.exercises.length;
   const doneCount = doneArr.filter(Boolean).length;
-  const pct      = total ? doneCount / total * 100 : 0;
+  const pct      = total ? doneCount/total*100 : 0;
 
-  // Build dots
-  const dots = PLAN_DATA[planWeek].days
-    .map((_, i) => `<div class="plan-dot${i === planDay ? ' active' : ''}"></div>`)
-    .join('');
+  const dots = PLAN_DATA[activeWeek].days
+    .map((_, i) => `<div class="plan-dot${i===activeDay?' active':''}"></div>`).join('');
 
-  // Build exercise rows
-  const exRows = day.exercises.map((name, i) => {
+  const rows = day.exercises.map((name, i) => {
     const done = !!doneArr[i];
-    return `
-      <div class="plan-ex${done ? ' done' : ''}" id="pex-${i}" onclick="togglePlanEx(${i})">
-        <div class="pex-num">${done ? '✓' : i + 1}</div>
-        <div class="pex-name">${name}</div>
-        <div class="pex-check">✓</div>
-      </div>`;
+    return `<div class="plan-ex${done?' done':''}" id="pex-${i}" onclick="togglePlanEx(${i})">
+      <div class="pex-num">${done?'✓':i+1}</div>
+      <div class="pex-name">${name}</div>
+      <div class="pex-check">✓</div>
+    </div>`;
   }).join('');
 
-  document.getElementById('plan-content').innerHTML = `
-    <div class="plan-day-header">
-      <div>
-        <div class="plan-day-title">${day.label}</div>
-        <div class="plan-count" id="plan-count">${doneCount}/${total} ejercicios</div>
+  document.getElementById('main-content').innerHTML = `
+    <div id="checklist-view" class="anim">
+      <div class="plan-day-header">
+        <div>
+          <div class="plan-day-title">${day.label}</div>
+          <div class="plan-count" id="plan-count">${doneCount}/${total} ejercicios</div>
+        </div>
+        <button class="btn-reset" onclick="resetPlanDay()">↺ Resetear</button>
       </div>
-      <button class="btn-reset" onclick="resetPlanDay()">↺ Resetear</button>
-    </div>
-    <div class="plan-pbar"><div class="plan-pfill${doneCount === total && total > 0 ? ' complete' : ''}" id="plan-pfill" style="width:${pct}%"></div></div>
-    ${exRows}
-    <div class="plan-dots">${dots}</div>`;
+      <div class="plan-pbar"><div class="plan-pfill${doneCount===total&&total>0?' complete':''}" id="plan-pfill" style="width:${pct}%"></div></div>
+      ${rows}
+      <div class="plan-dots">${dots}</div>
+    </div>`;
 }
 
 function togglePlanEx(idx) {
   const doneArr = getPlanState();
-  // Ensure array is long enough
-  const total = PLAN_DATA[planWeek].days[planDay].exercises.length;
+  const total   = PLAN_DATA[activeWeek].days[activeDay].exercises.length;
   while (doneArr.length < total) doneArr.push(false);
   doneArr[idx] = !doneArr[idx];
   savePlanState(doneArr);
 
-  // Update DOM without full re-render (smooth UX)
-  const el      = document.getElementById('pex-' + idx);
-  const numEl   = el.querySelector('.pex-num');
-  const isDone  = doneArr[idx];
+  const el     = document.getElementById('pex-'+idx);
+  const numEl  = el.querySelector('.pex-num');
+  const isDone = doneArr[idx];
   el.classList.toggle('done', isDone);
-  numEl.textContent = isDone ? '✓' : idx + 1;
+  numEl.textContent = isDone ? '✓' : idx+1;
 
-  // Update progress
   const doneCount = doneArr.filter(Boolean).length;
-  const pct = doneCount / total * 100;
+  const pct = doneCount/total*100;
   const pfill = document.getElementById('plan-pfill');
-  const pcountEl = document.getElementById('plan-count');
-  if (pfill) { pfill.style.width = pct + '%'; pfill.classList.toggle('complete', doneCount === total); }
-  if (pcountEl) pcountEl.textContent = doneCount + '/' + total + ' ejercicios';
+  const pcnt  = document.getElementById('plan-count');
+  if (pfill) { pfill.style.width = pct+'%'; pfill.classList.toggle('complete', doneCount===total); }
+  if (pcnt)    pcnt.textContent = doneCount+'/'+total+' ejercicios';
 
-  // Completion check
   if (doneCount === total) {
-    setTimeout(() => showCompletion(PLAN_DATA[planWeek].days[planDay].label), 400);
+    setTimeout(() => showCompletion(PLAN_DATA[activeWeek].days[activeDay].label), 400);
   }
 }
 
 function resetPlanDay() {
-  const total = PLAN_DATA[planWeek].days[planDay].exercises.length;
+  const total = PLAN_DATA[activeWeek].days[activeDay].exercises.length;
   savePlanState(new Array(total).fill(false));
-  renderPlanDay();
+  renderChecklistDay();
 }
 
-/* ── Completion ── */
+/* ── Checklist state ── */
+function planStateKey()    { return 'plan_'+activeWeek+'_'+activeDay; }
+function getPlanState()    { try { return JSON.parse(localStorage.getItem(planStateKey())||'[]'); } catch { return []; } }
+function savePlanState(a)  { localStorage.setItem(planStateKey(), JSON.stringify(a)); }
+
+/* ════════════════════════════════════════════════════════
+   SHARED — day navigation (swipe + next/prev)
+════════════════════════════════════════════════════════ */
+function nextDay() {
+  const w = ALL_WEEKS.find(w => w.id === activeWeek);
+  const maxDay = w.type==='guide' ? guideData.days.length-1 : PLAN_DATA[activeWeek].days.length-1;
+  if (activeDay >= maxDay) return;
+  const tab = document.querySelectorAll('#day-tabs .tab')[activeDay+1];
+  if (!tab) return;
+  if (w.type==='guide') showGuideDay(guideData.days[activeDay+1].id, tab);
+  else showChecklistDay(activeDay+1, tab);
+}
+function prevDay() {
+  if (activeDay <= 0) return;
+  const w = ALL_WEEKS.find(w => w.id === activeWeek);
+  const tab = document.querySelectorAll('#day-tabs .tab')[activeDay-1];
+  if (!tab) return;
+  if (w.type==='guide') showGuideDay(guideData.days[activeDay-1].id, tab);
+  else showChecklistDay(activeDay-1, tab);
+}
+
+/* ── Swipe ── */
+(function() {
+  let tx = 0, ty = 0;
+  const el = document.getElementById('main-content');
+  el.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+  el.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    const dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 52) {
+      if (dx < 0) nextDay(); else prevDay();
+    }
+  }, { passive: true });
+})();
+
+/* ════════════════════════════════════════════════════════
+   COMPLETION OVERLAY
+════════════════════════════════════════════════════════ */
 function showCompletion(dayLabel) {
-  document.getElementById('completion-sub').innerHTML =
-    `${dayLabel}<br>Excelente sesión. Sigue así, crack. 💪`;
+  document.getElementById('completion-sub').innerHTML = `${dayLabel}<br>Excelente sesión. Sigue así, crack. 💪`;
   document.getElementById('completion-overlay').classList.add('show');
 }
 function closeCompletion() {
   document.getElementById('completion-overlay').classList.remove('show');
 }
 
-/* ── Swipe between plan days ── */
-(function() {
-  let tx = 0, ty = 0;
-  const el = document.getElementById('plan-content');
-  el.addEventListener('touchstart', e => {
-    tx = e.touches[0].clientX;
-    ty = e.touches[0].clientY;
-  }, { passive: true });
-  el.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - tx;
-    const dy = e.changedTouches[0].clientY - ty;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 52) {
-      const maxDay = PLAN_DATA[planWeek].days.length - 1;
-      if (dx < 0 && planDay < maxDay) {
-        const nextTab = document.querySelectorAll('#plan-day-tabs .tab')[planDay + 1];
-        showPlanDay(planDay + 1, nextTab);
-      } else if (dx > 0 && planDay > 0) {
-        const prevTab = document.querySelectorAll('#plan-day-tabs .tab')[planDay - 1];
-        showPlanDay(planDay - 1, prevTab);
-      }
-    }
-  }, { passive: true });
-})();
-
-/* ── Init ── */
+/* ════════════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('inp-pass').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
+  document.getElementById('inp-pass').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
   if (localStorage.getItem('entreno_auth') === '1') showApp();
 });
 
