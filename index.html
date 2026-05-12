@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Guía Entreno">
-<title>Guía de Entreno</title>
+<title>Guía Entreno</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/icon-192.svg">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -24,47 +24,156 @@
     --border: #2a2a38;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; padding-bottom: 48px; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
-  /* ── HEADER ── */
-  .header { background: linear-gradient(135deg, #1c1c26 0%, #0f0f18 100%); padding: 24px 20px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
-  .day-tag { font-family: 'Bebas Neue', sans-serif; font-size: 11px; letter-spacing: 3px; color: var(--accent); margin-bottom: 4px; }
-  .header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 1px; line-height: 1; color: var(--text); }
-  .header p { font-size: 11px; color: var(--muted); margin-top: 5px; }
-  .tabs { display: flex; padding: 12px 16px; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+  /* ── LOGIN ── */
+  #login-screen {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding: 24px; background: var(--bg);
+  }
+  .login-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 22px; padding: 36px 28px; width: 100%; max-width: 340px;
+  }
+  .login-logo { text-align: center; margin-bottom: 30px; }
+  .login-logo .logo-icon { font-size: 44px; display: block; margin-bottom: 10px; }
+  .login-logo h2 {
+    font-family: 'Bebas Neue', sans-serif; font-size: 30px;
+    letter-spacing: 3px; color: var(--text); margin-bottom: 4px;
+  }
+  .login-logo p { font-size: 12px; color: var(--muted); }
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block; font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px;
+  }
+  .field input {
+    width: 100%; background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 13px 14px; color: var(--text);
+    font-size: 15px; font-family: 'DM Sans', sans-serif; outline: none;
+    transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  .field input:focus { border-color: var(--accent); }
+  .btn-login {
+    width: 100%; background: var(--accent); color: #0a0a0f; border: none;
+    border-radius: 10px; padding: 14px; font-size: 15px; font-weight: 700;
+    font-family: 'DM Sans', sans-serif; cursor: pointer; margin-top: 6px;
+    transition: opacity 0.2s;
+  }
+  .btn-login:active { opacity: 0.8; }
+  .login-error {
+    color: #ff6b6b; font-size: 12px; text-align: center;
+    margin-top: 12px; display: none;
+  }
+
+  /* ── APP SHELL ── */
+  #app { display: none; padding-bottom: 48px; }
+
+  .header {
+    background: linear-gradient(135deg, #1c1c26 0%, #0f0f18 100%);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .header-top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 18px 0;
+  }
+  .header-title {
+    font-family: 'Bebas Neue', sans-serif; font-size: 18px;
+    letter-spacing: 3px; color: var(--accent);
+  }
+  .btn-logout {
+    padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); font-size: 11px;
+    font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-logout:active { background: var(--surface); color: var(--text); }
+
+  /* ── WEEK NAV ── */
+  .week-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px 6px;
+  }
+  .week-arrow {
+    width: 38px; height: 38px; border-radius: 11px;
+    border: 1.5px solid var(--border); background: transparent;
+    color: var(--text); font-size: 24px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; font-family: 'DM Sans', sans-serif; line-height: 1;
+  }
+  .week-arrow:disabled { opacity: 0.25; cursor: default; }
+  .week-arrow:not(:disabled):active { background: var(--surface); }
+  .week-center { text-align: center; }
+  .week-sublabel {
+    font-family: 'Bebas Neue', sans-serif; font-size: 10px;
+    letter-spacing: 2px; color: var(--muted);
+  }
+  .week-label {
+    font-family: 'Bebas Neue', sans-serif; font-size: 24px;
+    letter-spacing: 1px; color: var(--text); line-height: 1.1;
+  }
+
+  /* ── TABS ── */
+  .tabs { display: flex; padding: 8px 14px 12px; gap: 6px; overflow-x: auto; scrollbar-width: none; }
   .tabs::-webkit-scrollbar { display: none; }
-  .tab { flex-shrink: 0; padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1.5px solid var(--border); background: transparent; color: var(--muted); transition: all 0.2s; }
+  .tab {
+    flex-shrink: 0; padding: 7px 14px; border-radius: 20px; font-size: 12px;
+    font-weight: 600; cursor: pointer; border: 1.5px solid var(--border);
+    background: transparent; color: var(--muted); transition: all 0.2s;
+  }
   .tab.active { background: var(--accent); color: #0a0a0f; border-color: var(--accent); }
 
   /* ── SECTIONS ── */
   .section { display: none; padding: 10px 16px; }
-  .section.active { display: block; animation: fadeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+  .section.active { display: block; animation: fadeIn 0.3s cubic-bezier(0.22,1,0.36,1); }
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px) scale(0.99); }
-    to   { opacity: 1; transform: translateY(0)   scale(1);    }
+    from { opacity: 0; transform: translateY(8px) scale(0.99); }
+    to   { opacity: 1; transform: translateY(0)  scale(1);    }
   }
 
-  /* ── PROGRESS BAR ── */
+  /* ── LOADING ── */
+  .loading {
+    text-align: center; padding: 60px 20px;
+    font-size: 13px; color: var(--muted); letter-spacing: 1px;
+  }
+
+  /* ── PROGRESS ── */
   .progress-wrap { display: flex; align-items: center; gap: 10px; padding: 6px 0 2px; }
   .progress-track { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1); width: 0%; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.5s cubic-bezier(0.22,1,0.36,1); width: 0%; }
   .progress-fill.complete { background: var(--accent3); }
-  .progress-label { font-size: 11px; color: var(--muted); white-space: nowrap; font-weight: 600; letter-spacing: 0.2px; min-width: 80px; text-align: right; }
+  .progress-label { font-size: 11px; color: var(--muted); white-space: nowrap; font-weight: 600; min-width: 82px; text-align: right; }
 
-  /* ── MUSCLE GROUP LABEL ── */
-  .muscle-group { font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 2px; color: var(--accent2); margin: 18px 0 8px; }
+  /* ── MUSCLE GROUP ── */
+  .muscle-group {
+    font-family: 'Bebas Neue', sans-serif; font-size: 12px;
+    letter-spacing: 2px; color: var(--accent2); margin: 18px 0 8px;
+  }
   .muscle-group:first-of-type { margin-top: 12px; }
 
   /* ── EXERCISE CARD ── */
-  .exercise-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; margin-bottom: 8px; overflow: hidden; transition: border-color 0.2s, opacity 0.35s; }
+  .exercise-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; margin-bottom: 8px; overflow: hidden;
+    transition: border-color 0.2s, opacity 0.3s;
+  }
   .exercise-card.open { border-color: rgba(255,107,53,0.6); }
   .exercise-card.done { opacity: 0.5; }
   .exercise-card.done.open { opacity: 1; }
 
   .card-header { display: flex; align-items: center; padding: 12px 14px; gap: 9px; }
-  .ex-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--surface); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .ex-icon {
+    width: 36px; height: 36px; border-radius: 9px; background: var(--surface);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
   .ex-info { flex: 1; min-width: 0; }
-  .ex-name { font-weight: 700; font-size: 14px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color 0.25s; }
+  .ex-name {
+    font-weight: 700; font-size: 14px; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    transition: color 0.2s;
+  }
   .exercise-card.done .ex-name { text-decoration: line-through; color: var(--muted); }
   .ex-muscle { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
 
@@ -75,23 +184,27 @@
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; transition: all 0.25s; color: transparent;
     font-size: 14px; font-weight: 800; line-height: 1;
+    font-family: 'DM Sans', sans-serif;
   }
   .done-btn.active { background: var(--accent); border-color: var(--accent); color: #0a0a0f; }
-  .done-btn:active { transform: scale(0.88); }
+  .done-btn:active { transform: scale(0.87); }
 
   /* ── ALT TRIGGER ── */
-  .alt-trigger { display: flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 20px; border: 1px solid rgba(255,107,53,0.35); background: rgba(255,107,53,0.08); cursor: pointer; flex-shrink: 0; transition: all 0.2s; }
-  .alt-trigger span { font-size: 10px; font-weight: 700; color: var(--accent2); letter-spacing: 0.3px; white-space: nowrap; }
-  .alt-trigger .chevron { font-size: 13px; color: var(--accent2); transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); margin: 0; }
+  .alt-trigger {
+    display: flex; align-items: center; gap: 5px; padding: 5px 10px;
+    border-radius: 20px; border: 1px solid rgba(255,107,53,0.35);
+    background: rgba(255,107,53,0.08); cursor: pointer; flex-shrink: 0; transition: all 0.2s;
+  }
+  .alt-trigger span { font-size: 10px; font-weight: 700; color: var(--accent2); white-space: nowrap; }
+  .alt-trigger .chevron { font-size: 13px; color: var(--accent2); transition: transform 0.3s cubic-bezier(0.22,1,0.36,1); }
   .exercise-card.open .alt-trigger .chevron { transform: rotate(180deg); }
 
-  /* ── CARD BODY (smooth expand) ── */
+  /* ── CARD BODY ── */
   .card-body { overflow: hidden; max-height: 0; opacity: 0; transition: max-height 0.45s ease, opacity 0.3s ease; }
   .exercise-card.open .card-body { max-height: 3200px; opacity: 1; }
   .card-body-content { padding: 0 14px 14px; border-top: 1px solid var(--border); }
 
   .alt-header { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin: 12px 0 8px; }
-
   .alt-item { background: rgba(255,107,53,0.07); border: 1px solid rgba(255,107,53,0.18); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
   .alt-item:last-child { margin-bottom: 0; }
 
@@ -112,1002 +225,265 @@
 </head>
 <body>
 
-<div class="header">
-  <div class="day-tag">GUÍA DE ALTERNATIVAS</div>
-  <h1>Split Completo</h1>
-  <p>Toca "Si está ocupado" para ver alternativas · ✓ para marcar completado</p>
-  <div class="tabs">
-    <div class="tab active" onclick="showSection('dia1',this)">Día 1 · Empujes</div>
-    <div class="tab" onclick="showSection('dia2',this)">Día 2 · Tirones</div>
-    <div class="tab" onclick="showSection('dia3',this)">Día 3 · Pierna+Brazo</div>
-    <div class="tab" onclick="showSection('dia4',this)">Día 4 · Pecho+Espalda</div>
+<!-- ══════════ LOGIN ══════════ -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="logo-icon">💪</span>
+      <h2>GUÍA ENTRENO</h2>
+      <p>Accede a tu plan de entrenamiento</p>
+    </div>
+    <div class="field">
+      <label>Usuario</label>
+      <input type="text" id="inp-user" autocomplete="username" placeholder="usuario">
+    </div>
+    <div class="field">
+      <label>Contraseña</label>
+      <input type="password" id="inp-pass" autocomplete="current-password" placeholder="••••••••">
+    </div>
+    <div id="login-error" class="login-error">Usuario o contraseña incorrectos</div>
+    <button class="btn-login" onclick="doLogin()">Entrar</button>
   </div>
 </div>
 
-<!-- ===== DÍA 1 ===== -->
-<div class="section active" id="dia1">
-  <div class="progress-wrap">
-    <div class="progress-track"><div class="progress-fill" id="fill-dia1"></div></div>
-    <div class="progress-label" id="label-dia1">0 / 7 completados</div>
+<!-- ══════════ APP ══════════ -->
+<div id="app">
+  <div class="header">
+    <div class="header-top">
+      <div class="header-title">GUÍA ENTRENO</div>
+      <button class="btn-logout" onclick="doLogout()">Salir</button>
+    </div>
+    <div class="week-nav">
+      <button class="week-arrow" id="btn-prev" onclick="prevWeek()" disabled>‹</button>
+      <div class="week-center">
+        <div class="week-sublabel">SEMANA</div>
+        <div class="week-label" id="week-label">—</div>
+      </div>
+      <button class="week-arrow" id="btn-next" onclick="nextWeek()" disabled>›</button>
+    </div>
+    <div class="tabs" id="day-tabs"></div>
   </div>
-
-  <div class="muscle-group">PECTORAL · HOMBRO ANTERIOR</div>
-
-  <div class="exercise-card" id="c-d1-1">
-    <div class="card-header">
-      <div class="ex-icon">📐</div>
-      <div class="ex-info">
-        <div class="ex-name">Press inclinado en multipower</div>
-        <div class="ex-muscle">Pectoral superior · Hombro anterior · Tríceps</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d1-1',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d1-1')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Incline Press</span></div>
-          <div class="alt-item-name">Press inclinado con mancuernas</div>
-          <div class="alt-item-desc">Banco a 30-45°. Igual de efectivo para el pectoral superior, con mayor rango de movimiento.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Banco a 30-45°, espalda apoyada, pies en el suelo</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Mancuernas a los lados del pecho, codos a ~45° del cuerpo</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Empuja hacia arriba hasta casi extender los brazos</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Baja lento hasta notar el estiramiento en el pecho</div></div>
-          <div class="tip"><strong>No subas el banco más de 45°</strong> — si pasas de ahí el hombro anterior toma el protagonismo y el pecho descansa.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d1-2">
-    <div class="card-header">
-      <div class="ex-icon">🏋️</div>
-      <div class="ex-info">
-        <div class="ex-name">Press plano con mancuernas</div>
-        <div class="ex-muscle">Pectoral · Tríceps · Hombro anterior</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d1-2',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d1-2')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si las mancuernas están ocupadas</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Bench Press</span></div>
-          <div class="alt-item-name">Press plano con barra</div>
-          <div class="alt-item-desc">Si hay rack libre — misma mecánica, más carga posible.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Banco plano, agarre algo más ancho que los hombros</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Baja la barra al pecho medio-bajo de forma controlada</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Toca el pecho sin rebotar, empuja hacia arriba</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Codos a 45-60° del cuerpo, no totalmente abiertos</div></div>
-          <div class="tip"><strong>Escápulas juntas y abajo</strong> antes de empezar. Protege el hombro y mejora la fuerza.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Chest Press Machine</span></div>
-          <div class="alt-item-name">Máquina de press plano</div>
-          <div class="alt-item-desc">Si el rack también está ocupado. Menos técnica pero igual de efectivo.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="muscle-group">PECTORAL (AISLAMIENTO)</div>
-
-  <div class="exercise-card" id="c-d1-3">
-    <div class="card-header">
-      <div class="ex-icon">🦋</div>
-      <div class="ex-info">
-        <div class="ex-name">Peck-deck / máquina contractora</div>
-        <div class="ex-muscle">Pectoral (aislamiento · contracción)</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d1-3',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d1-3')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Cable Crossover</span></div>
-          <div class="alt-item-name">Cruces en polea (altura media)</div>
-          <div class="alt-item-desc">Poleas a la altura del pecho. Tensión constante durante todo el recorrido.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Flyes</span></div>
-          <div class="alt-item-name">Aperturas con mancuernas en banco plano</div>
-          <div class="alt-item-desc">Si la polea también está ocupada.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Banco plano, mancuernas sobre el pecho, codos ligeramente flexionados</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Abre los brazos en arco hacia los lados, hasta la altura del pecho</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Nota el estiramiento en el pecho abajo — no bajes más</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Cierra los brazos volviendo al inicio, como si abrazaras un árbol</div></div>
-          <div class="tip"><strong>Peso muy ligero.</strong> Es un ejercicio de estiramiento y contracción, no de fuerza.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="muscle-group">HOMBRO LATERAL</div>
-
-  <div class="exercise-card" id="c-d1-4">
-    <div class="card-header">
-      <div class="ex-icon">🅻</div>
-      <div class="ex-info">
-        <div class="ex-name">Elevaciones laterales en banco inclinado</div>
-        <div class="ex-muscle">Deltoides lateral (cabeza media)</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d1-4',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d1-4')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Lateral Raise</span></div>
-          <div class="alt-item-name">Elevaciones laterales de pie</div>
-          <div class="alt-item-desc">De pie, mancuernas a los lados. Igual de efectivo si se hace sin trampa.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">De pie, mancuernas a los lados con codos ligeramente flexionados</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Sube los brazos hacia los lados hasta la altura de los hombros</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">El meñique ligeramente más alto que el pulgar al subir</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Baja lento, sin dejar caer</div></div>
-          <div class="tip"><strong>No balancees el torso.</strong> Si tienes que usar impulso, el peso es demasiado.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d1-5">
-    <div class="card-header">
-      <div class="ex-icon">🔌</div>
-      <div class="ex-info">
-        <div class="ex-name">Elevaciones laterales en polea</div>
-        <div class="ex-muscle">Deltoides lateral (tensión constante)</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d1-5',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d1-5')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la polea está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Lateral Raise</span></div>
-          <div class="alt-item-name">Elevaciones laterales con mancuerna (una a la vez)</div>
-          <div class="alt-item-desc">Una mancuerna a la vez, apoyando la otra mano en un soporte. Mayor concentración en cada lado.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Mano libre apoyada en la máquina, mancuerna colgando al lado</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Sube el brazo en arco lateral hasta la altura del hombro</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Baja controlando — el negativo también cuenta</div></div>
-          <div class="tip"><strong>Sin impulso.</strong> El hombro lateral es pequeño — empieza con poco peso.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="muscle-group">TRÍCEPS</div>
-
-  <div class="exercise-card" id="c-d1-6">
-    <div class="card-header">
-      <div class="ex-icon">⚔️</div>
-      <div class="ex-info">
-        <div class="ex-name">Extensión de tríceps katana</div>
-        <div class="ex-muscle">Tríceps cabeza larga</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d1-6',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d1-6')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Cable Tricep Extension</span></div>
-          <div class="alt-item-name">Extensión en polea alta con cuerda</div>
-          <div class="alt-item-desc">Primera opción — misma mecánica de empuje hacia abajo.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Agarra la cuerda a la altura de la cara, codos pegados al cuerpo</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Solo se mueve el antebrazo — codos fijos</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Estira completamente los brazos, abriendo la cuerda al final</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Sube lento a la posición inicial</div></div>
-          <div class="tip"><strong>Codos quietos.</strong> Si se mueven hacia delante, el tríceps deja de trabajar al máximo.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dips</span></div>
-          <div class="alt-item-name">Fondos en paralelas</div>
-          <div class="alt-item-desc">Si la polea también está ocupada. Codos pegados al cuerpo para que cargue el tríceps y no el pecho.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d1-7">
-    <div class="card-header">
-      <div class="ex-icon">🪢</div>
-      <div class="ex-info">
-        <div class="ex-name">Extensión de tríceps con cuerda</div>
-        <div class="ex-muscle">Tríceps (las tres cabezas)</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d1-7',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d1-7')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la polea está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Close Grip Bench Press</span></div>
-          <div class="alt-item-name">Press banca agarre cerrado con barra</div>
-          <div class="alt-item-desc">Agarre al ancho de hombros o menos. Codos pegados al cuerpo durante todo el movimiento.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Agarre al ancho de hombros, codos a 45° del cuerpo</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Baja al pecho bajo, sin rebotar</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Empuja manteniendo codos cerca del cuerpo</div></div>
-          <div class="tip"><strong>Si abres los codos</strong>, el pectoral roba el trabajo al tríceps.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== DÍA 2 ===== -->
-<div class="section" id="dia2">
-  <div class="progress-wrap">
-    <div class="progress-track"><div class="progress-fill" id="fill-dia2"></div></div>
-    <div class="progress-label" id="label-dia2">0 / 6 completados</div>
-  </div>
-
-  <div class="muscle-group">DORSAL</div>
-
-  <div class="exercise-card" id="c-d2-1">
-    <div class="card-header">
-      <div class="ex-icon">🏋️</div>
-      <div class="ex-info">
-        <div class="ex-name">Remo máquina unilateral</div>
-        <div class="ex-muscle">Dorsal ancho · Romboides</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d2-1',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d2-1')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">One Arm Dumbbell Row</span></div>
-          <div class="alt-item-name">Remo con mancuerna a una mano</div>
-          <div class="alt-item-desc">Mismo patrón, mismo músculo. Apoya una rodilla y mano del mismo lado en banco plano.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Rodilla y mano del mismo lado en el banco, espalda paralela al suelo</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Mancuerna colgando, brazo completamente estirado</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Tira del codo hacia el techo — piensa en el codo, no en la mano</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Aprieta el dorsal arriba 1 segundo, baja controlando</div></div>
-          <div class="tip"><strong>Error típico:</strong> rotar el torso para subir más peso. Cadera y hombro quietos siempre.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d2-2">
-    <div class="card-header">
-      <div class="ex-icon">🔱</div>
-      <div class="ex-info">
-        <div class="ex-name">Remo en T</div>
-        <div class="ex-muscle">Dorsal · Trapecio medio · Romboides</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d2-2',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d2-2')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">One Arm Dumbbell Row</span></div>
-          <div class="alt-item-name">Remo con mancuerna a una mano</div>
-          <div class="alt-item-desc">Encaja perfectamente como sustituto bilateral. Mismo patrón de tirón horizontal.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Pies a los lados de la barra, ligera inclinación hacia delante</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Agarre neutro (palmas enfrentadas), codos pegados al cuerpo</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Tira hasta que la barra toque el abdomen bajo</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Baja lento, estiramiento completo abajo</div></div>
-          <div class="tip"><strong>Alternativa B:</strong> remo con mancuernas a dos manos en banco inclinado.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="muscle-group">DORSAL · HOMBRO POSTERIOR</div>
-
-  <div class="exercise-card" id="c-d2-3">
-    <div class="card-header">
-      <div class="ex-icon">🔄</div>
-      <div class="ex-info">
-        <div class="ex-name">Pullover con cuerda</div>
-        <div class="ex-muscle">Dorsal ancho · Serrato</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d2-3',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d2-3')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la polea está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Pullover</span></div>
-          <div class="alt-item-name">Pullover con mancuerna en banco plano</div>
-          <div class="alt-item-desc">Versión clásica igual de efectiva. Trabaja el dorsal en estiramiento máximo.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Tumbado en banco plano, mancuerna con las dos manos sobre el pecho</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Baja en arco por detrás de la cabeza, codos ligeramente flexionados</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Llega hasta donde notes el estiramiento en el dorsal — no más</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Vuelve al inicio sin coger impulso</div></div>
-          <div class="tip"><strong>Peso ligero aquí.</strong> El hombro trabaja en posición comprometida — prioriza la técnica.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d2-4">
-    <div class="card-header">
-      <div class="ex-icon">🦅</div>
-      <div class="ex-info">
-        <div class="ex-name">Reverse flyes máquina contractora</div>
-        <div class="ex-muscle">Deltoides posterior · Romboides</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d2-4',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d2-4')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Rear Delt Row</span></div>
-          <div class="alt-item-name">Reverse flyes con mancuernas boca abajo en banco</div>
-          <div class="alt-item-desc">Banco inclinado a 45°, tumbado boca abajo. Abre hacia los lados como un pájaro.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Banco ~45°, pecho apoyado, cara mirando abajo</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Mancuernas colgando, codos con leve flexión</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Abre los brazos hacia los lados hasta la altura de los hombros</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Baja muy lento — el negativo es donde más se trabaja</div></div>
-          <div class="tip"><strong>Peso muy ligero.</strong> El hombro posterior es pequeño — forma perfecta primero.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="muscle-group">BÍCEPS</div>
-
-  <div class="exercise-card" id="c-d2-5">
-    <div class="card-header">
-      <div class="ex-icon">💪</div>
-      <div class="ex-info">
-        <div class="ex-name">Curl banco Scott barra Z</div>
-        <div class="ex-muscle">Bíceps · Braquial</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d2-5',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d2-5')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Preacher Curl</span></div>
-          <div class="alt-item-name">Curl predicador con mancuerna</div>
-          <div class="alt-item-desc">Mismo banco Scott, una mancuerna a la vez. Primera opción.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Concentration Curl</span></div>
-          <div class="alt-item-name">Curl concentrado sentado</div>
-          <div class="alt-item-desc">Si el banco Scott también está ocupado.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Sentado, codo apoyado en la cara interna del muslo</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Mancuerna colgando, brazo completamente estirado</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Sube girando la muñeca hacia fuera al final del recorrido</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Baja lento, sin dejar caer</div></div>
-          <div class="tip"><strong>No osciles el torso.</strong> El apoyo en el muslo existe exactamente para eso.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d2-6">
-    <div class="card-header">
-      <div class="ex-icon">📐</div>
-      <div class="ex-info">
-        <div class="ex-name">Curl banco inclinado</div>
-        <div class="ex-muscle">Bíceps cabeza larga</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d2-6',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d2-6')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si el banco está ocupado</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Curl</span></div>
-          <div class="alt-item-name">Curl con barra recta de pie</div>
-          <div class="alt-item-desc">Alternativa más directa. Codos pegados al cuerpo durante todo el movimiento.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">De pie, agarre supino (palmas arriba), pies a la anchura de cadera</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Codos pegados al cuerpo durante todo el movimiento</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Sube hasta la altura del pecho, aprieta arriba</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Baja controlando — no dejes caer la barra</div></div>
-          <div class="tip"><strong>Si el banco inclinado está libre, úsalo</strong> — es mejor para este músculo en concreto.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Cable Curl</span></div>
-          <div class="alt-item-name">Curl en polea baja</div>
-          <div class="alt-item-desc">Tensión constante en todo el recorrido — el bíceps trabaja de inicio a fin.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== DÍA 3 ===== -->
-<div class="section" id="dia3">
-  <div class="progress-wrap">
-    <div class="progress-track"><div class="progress-fill" id="fill-dia3"></div></div>
-    <div class="progress-label" id="label-dia3">0 / 9 completados</div>
-  </div>
-
-  <div class="muscle-group">CUÁDRICEPS · GLÚTEOS</div>
-
-  <div class="exercise-card" id="c-d3-1">
-    <div class="card-header">
-      <div class="ex-icon">🏗️</div>
-      <div class="ex-info">
-        <div class="ex-name">Hack squat</div>
-        <div class="ex-muscle">Cuádriceps · Glúteos</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d3-1',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d3-1')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Squat</span></div>
-          <div class="alt-item-name">Sentadilla con barra</div>
-          <div class="alt-item-desc">Si hay rack libre — mismo patrón de movimiento.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Goblet Squat</span></div>
-          <div class="alt-item-name">Goblet squat con mancuerna</div>
-          <div class="alt-item-desc">Replica bien la mecánica de torso vertical del hack squat.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Pies a la anchura de hombros, mancuerna sujeta verticalmente contra el pecho</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Baja como si te sentaras en una silla, rodillas siguiendo la dirección de los pies</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Muslos paralelos al suelo o más abajo si puedes</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Empuja con los talones para subir</div></div>
-          <div class="tip"><strong>La mancuerna al pecho</strong> obliga a mantener el torso recto — idéntico al hack squat.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d3-2">
-    <div class="card-header">
-      <div class="ex-icon">🦵</div>
-      <div class="ex-info">
-        <div class="ex-name">Prensa horizontal</div>
-        <div class="ex-muscle">Cuádriceps · Glúteos · Femorales</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d3-2',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d3-2')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Leg Press Machine</span></div>
-          <div class="alt-item-name">Prensa 45°</div>
-          <div class="alt-item-desc">Mismo músculo, diferente ángulo. Primera opción si está libre.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Bulgarian Split Squat</span></div>
-          <div class="alt-item-name">Sentadilla búlgara con mancuernas</div>
-          <div class="alt-item-desc">Si ambas prensas están ocupadas.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Pie trasero apoyado en banco, pie delantero a ~60cm del banco</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Baja el cuerpo hacia abajo, rodilla delantera sin pasar el pie</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Rodilla trasera casi toca el suelo</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Empuja con el talón delantero para subir</div></div>
-          <div class="tip"><strong>Empieza sin mancuernas</strong> para dominar el equilibrio antes de añadir carga.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d3-3">
-    <div class="card-header">
-      <div class="ex-icon">⚡</div>
-      <div class="ex-info">
-        <div class="ex-name">Extensión de cuádriceps</div>
-        <div class="ex-muscle">Cuádriceps (aislamiento)</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d3-3',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d3-3')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Bulgarian Split Squat</span></div>
-          <div class="alt-item-name">Sentadilla búlgara unilateral</div>
-          <div class="alt-item-desc">Aísla bien el cuádriceps de la pierna delantera. Empieza sin peso para el equilibrio.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Pie trasero apoyado en banco, pie delantero a ~60cm</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Baja controlando, rodilla delantera sin pasar el pie</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Rodilla trasera casi toca el suelo</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Empuja con el talón delantero para subir</div></div>
-          <div class="tip"><strong>Empieza sin mancuernas</strong> para aprender el equilibrio primero.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="muscle-group">FEMORALES · GLÚTEOS</div>
-
-  <div class="exercise-card" id="c-d3-4">
-    <div class="card-header">
-      <div class="ex-icon">🏋️</div>
-      <div class="ex-info">
-        <div class="ex-name">Peso muerto rumano con mancuernas</div>
-        <div class="ex-muscle">Femorales · Glúteos · Lumbar</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d3-4',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d3-4')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si las mancuernas están ocupadas</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Romanian Deadlift</span></div>
-          <div class="alt-item-name">Peso muerto rumano con barra</div>
-          <div class="alt-item-desc">Exactamente el mismo movimiento. Primera opción.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Barra a la altura de caderas, agarre prono, pies a la anchura de cadera</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Empuja las caderas hacia atrás mientras bajas la barra por las piernas</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Espalda recta en todo momento — si se redondea, para ahí</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Sientes el estiramiento en femorales → empuja caderas hacia delante para volver</div></div>
-          <div class="tip"><strong>La barra NO toca el suelo.</strong> El movimiento viene de la cadera, no de las rodillas.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d3-5">
-    <div class="card-header">
-      <div class="ex-icon">🔁</div>
-      <div class="ex-info">
-        <div class="ex-name">Curl de femoral sentado</div>
-        <div class="ex-muscle">Femorales / Isquiotibiales</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d3-5',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d3-5')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Lying Leg Curl Machine</span></div>
-          <div class="alt-item-name">Curl femoral tumbado (máquina)</div>
-          <div class="alt-item-desc">Si la sentado está ocupada, la tumbada trabaja igual de bien.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Romanian Deadlift</span></div>
-          <div class="alt-item-name">Rumano a una pierna con mancuerna</div>
-          <div class="alt-item-desc">Si ambas máquinas de curl están ocupadas. Mayor reto de equilibrio pero mismo músculo.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">De pie con una mancuerna, apoyo en una pierna</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Inclina el torso hacia delante mientras la pierna libre se eleva detrás</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Baja hasta notar el estiramiento en el femoral de la pierna de apoyo</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Vuelve arriba apretando el glúteo</div></div>
-          <div class="tip"><strong>Equilibrio difícil al principio</strong> — apóyate en una máquina con la otra mano si es necesario.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="muscle-group">TRÍCEPS</div>
-
-  <div class="exercise-card" id="c-d3-6">
-    <div class="card-header">
-      <div class="ex-icon">🔩</div>
-      <div class="ex-info">
-        <div class="ex-name">Kaz press en multipower</div>
-        <div class="ex-muscle">Tríceps · Pectoral · Hombro anterior</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d3-6',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d3-6')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Close Grip Bench Press</span></div>
-          <div class="alt-item-name">Press banca agarre cerrado con barra</div>
-          <div class="alt-item-desc">Mismo patrón, mismo músculo objetivo.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Agarre al ancho de hombros o menos, codos a 45° del cuerpo</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Baja al pecho bajo, sin rebotar</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Empuja manteniendo codos cerca del cuerpo</div></div>
-          <div class="tip"><strong>Si abres los codos</strong>, el pectoral roba el trabajo al tríceps.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d3-7">
-    <div class="card-header">
-      <div class="ex-icon">⚔️</div>
-      <div class="ex-info">
-        <div class="ex-name">Extensión de tríceps katana</div>
-        <div class="ex-muscle">Tríceps cabeza larga</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d3-7',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d3-7')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Cable Tricep Extension</span></div>
-          <div class="alt-item-name">Extensión en polea alta con cuerda</div>
-          <div class="alt-item-desc">Primera opción — misma mecánica.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Agarra la cuerda a la altura de la cara, codos pegados al cuerpo</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Solo se mueve el antebrazo — codos fijos</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Estira completamente los brazos, abriendo la cuerda al final</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Sube lento a la posición inicial</div></div>
-          <div class="tip"><strong>Codos quietos.</strong> Si se mueven hacia delante, el tríceps deja de trabajar al máximo.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dips</span></div>
-          <div class="alt-item-name">Fondos en paralelas</div>
-          <div class="alt-item-desc">Si la polea también está ocupada. Codos pegados al cuerpo para cargar el tríceps.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="muscle-group">BÍCEPS</div>
-
-  <div class="exercise-card" id="c-d3-8">
-    <div class="card-header">
-      <div class="ex-icon">📏</div>
-      <div class="ex-info">
-        <div class="ex-name">Curl a 90° en remo bajo</div>
-        <div class="ex-muscle">Bíceps cabeza larga</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d3-8',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d3-8')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Incline Curl</span></div>
-          <div class="alt-item-name">Curl en banco inclinado con mancuernas</div>
-          <div class="alt-item-desc">Sustituto directo — ambos trabajan el bíceps en estiramiento máximo.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Banco a 45°, brazos colgando hacia atrás</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Sube doblando el codo sin mover el hombro</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Gira la muñeca hacia fuera al subir</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Baja hasta el estiramiento completo — no cortes abajo</div></div>
-          <div class="tip"><strong>El valor está en la bajada.</strong> Controla el negativo y llegarás antes al fallo real.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d3-9">
-    <div class="card-header">
-      <div class="ex-icon">🔨</div>
-      <div class="ex-info">
-        <div class="ex-name">Curl martillo con mancuernas</div>
-        <div class="ex-muscle">Braquial · Braquiorradial · Bíceps</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d3-9',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d3-9')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si las mancuernas están ocupadas</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Cable Hammer Curl</span></div>
-          <div class="alt-item-name">Curl martillo en polea baja con cuerda</div>
-          <div class="alt-item-desc">Agarre neutro (pulgares arriba). Tensión constante en todo el recorrido.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Agarra la cuerda en agarre neutro (pulgares apuntando al techo)</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Codos pegados al cuerpo, brazos estirados como punto de inicio</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Sube hasta la contracción máxima sin rotar la muñeca</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Baja lento manteniendo el agarre neutro todo el recorrido</div></div>
-          <div class="tip"><strong>Agarre neutro = más braquial y antebrazo.</strong> Da más grosor al brazo que el curl normal.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">EZ Bar Curl</span></div>
-          <div class="alt-item-name">Curl con barra EZ agarre semisupino</div>
-          <div class="alt-item-desc">Mismo estímulo que el martillo. Más carga posible que con mancuernas.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== DÍA 4 ===== -->
-<div class="section" id="dia4">
-  <div class="progress-wrap">
-    <div class="progress-track"><div class="progress-fill" id="fill-dia4"></div></div>
-    <div class="progress-label" id="label-dia4">0 / 6 completados</div>
-  </div>
-
-  <div class="muscle-group">PECTORAL</div>
-
-  <div class="exercise-card" id="c-d4-1">
-    <div class="card-header">
-      <div class="ex-icon">🖥️</div>
-      <div class="ex-info">
-        <div class="ex-name">Press plano en máquina</div>
-        <div class="ex-muscle">Pectoral · Tríceps · Hombro anterior</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d4-1',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d4-1')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Bench Press</span></div>
-          <div class="alt-item-name">Press plano con mancuernas</div>
-          <div class="alt-item-desc">Mayor rango de movimiento y trabajo estabilizador que la máquina.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Banco plano, mancuernas a los lados del pecho, codos a ~45°</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Empuja hacia arriba hasta casi extender los brazos</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Baja lento hasta que los codos queden ligeramente por debajo del pecho</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Escápulas juntas y abajo durante todo el movimiento</div></div>
-          <div class="tip"><strong>Escápulas juntas antes de empezar.</strong> Protege el hombro y mejora la transmisión de fuerza.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Bench Press</span></div>
-          <div class="alt-item-name">Press plano con barra</div>
-          <div class="alt-item-desc">Si hay rack libre — misma mecánica, más carga posible.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d4-2">
-    <div class="card-header">
-      <div class="ex-icon">📐</div>
-      <div class="ex-info">
-        <div class="ex-name">Press inclinado con mancuernas</div>
-        <div class="ex-muscle">Pectoral superior · Hombro anterior</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d4-2',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d4-2')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si las mancuernas están ocupadas</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Incline Bench Press</span></div>
-          <div class="alt-item-name">Press inclinado con barra / multipower</div>
-          <div class="alt-item-desc">Más estabilidad y puedes cargar más peso. Banco a 30-45°.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Banco a 30-45°, agarre algo más ancho que los hombros</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Codos a ~45°, baja la barra al pecho superior de forma controlada</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Empuja hacia arriba sin extender del todo los codos</div></div>
-          <div class="tip"><strong>No subas el banco más de 45°</strong> — si pasas de ahí, el hombro anterior toma el protagonismo.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d4-3">
-    <div class="card-header">
-      <div class="ex-icon">✂️</div>
-      <div class="ex-info">
-        <div class="ex-name">Cruces en polea de arriba a abajo</div>
-        <div class="ex-muscle">Pectoral (aislamiento · contracción)</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d4-3',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d4-3')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la polea está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Chest Fly Machine</span></div>
-          <div class="alt-item-name">Peck-deck (máquina contractora)</div>
-          <div class="alt-item-desc">Primera opción si está libre.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Flyes</span></div>
-          <div class="alt-item-name">Aperturas con mancuernas en banco plano</div>
-          <div class="alt-item-desc">Si todo lo demás está ocupado.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Banco plano, mancuernas sobre el pecho, codos ligeramente flexionados</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Abre los brazos en arco, bajando hasta la altura del pecho</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Nota el estiramiento en el pecho abajo — no bajes más</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Cierra los brazos volviendo al inicio, como si abrazaras un árbol</div></div>
-          <div class="tip"><strong>Peso muy ligero.</strong> Es de estiramiento y contracción, no de fuerza.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="muscle-group">ESPALDA ALTA · DORSAL</div>
-
-  <div class="exercise-card" id="c-d4-4">
-    <div class="card-header">
-      <div class="ex-icon">🔝</div>
-      <div class="ex-info">
-        <div class="ex-name">Remo en máquina (espalda alta)</div>
-        <div class="ex-muscle">Trapecio · Romboides · Dorsal alto</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d4-4',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d4-4')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Barbell Upright Row</span></div>
-          <div class="alt-item-name">Remo al cuello con barra (agarre ancho)</div>
-          <div class="alt-item-desc">Torso inclinado ~45°, codos abiertos hacia los lados. Carga el trapecio, no el dorsal bajo.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Barra con agarre ancho, torso inclinado ~45°</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Tira hacia el pecho alto — codos se abren hacia los lados</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Junta las escápulas al final del recorrido</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Baja lento y estira completamente</div></div>
-          <div class="tip"><strong>Clave:</strong> codos hacia fuera = trapecio. Codos hacia atrás = dorsal. Aquí los codos van hacia fuera.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d4-5">
-    <div class="card-header">
-      <div class="ex-icon">⬇️</div>
-      <div class="ex-info">
-        <div class="ex-name">Jalón al pecho agarre cerrado</div>
-        <div class="ex-muscle">Dorsal ancho · Bíceps</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d4-5',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d4-5')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la máquina está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Lat Pulldown</span></div>
-          <div class="alt-item-name">Jalón agarre ancho</div>
-          <div class="alt-item-desc">Si la barra cerrada está ocupada — mismo músculo, diferente énfasis.</div>
-        </div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Assisted Pull-up</span></div>
-          <div class="alt-item-name">Dominadas asistidas en máquina</div>
-          <div class="alt-item-desc">Buena opción para progresar hacia dominadas reales.</div>
-          <div class="steps-label">Ejecución jalón agarre cerrado</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Agarre neutro (palmas enfrentadas) en barra en V o cuerda</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Tira hacia el pecho bajo, codos apuntando al suelo</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Junta las escápulas al final, aprieta el dorsal</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Sube lento hasta el estiramiento completo del dorsal</div></div>
-          <div class="tip"><strong>Agarre cerrado vs ancho:</strong> el cerrado da mayor rango de movimiento y más trabajo en la parte baja del dorsal.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="exercise-card" id="c-d4-6">
-    <div class="card-header">
-      <div class="ex-icon">🔄</div>
-      <div class="ex-info">
-        <div class="ex-name">Pullover en polea unilateral</div>
-        <div class="ex-muscle">Dorsal ancho · Serrato · Core</div>
-      </div>
-      <button class="done-btn" onclick="toggleDone('c-d4-6',event)" aria-label="Marcar como hecho">✓</button>
-      <div class="alt-trigger" onclick="toggle('c-d4-6')"><span>Si está ocupado</span><span class="chevron">⌄</span></div>
-    </div>
-    <div class="card-body">
-      <div class="card-body-content">
-        <div class="alt-header">Alternativas si la polea está ocupada</div>
-        <div class="alt-item">
-          <div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">Dumbbell Pullover</span></div>
-          <div class="alt-item-name">Pullover con mancuerna en banco plano</div>
-          <div class="alt-item-desc">La versión clásica. Igual de efectiva para el dorsal en estiramiento máximo.</div>
-          <div class="steps-label">Ejecución</div>
-          <div class="step"><div class="step-num">1</div><div class="step-text">Tumbado en banco plano, mancuerna con las dos manos sobre el pecho</div></div>
-          <div class="step"><div class="step-num">2</div><div class="step-text">Baja en arco por detrás de la cabeza, codos ligeramente flexionados</div></div>
-          <div class="step"><div class="step-num">3</div><div class="step-text">Nota el estiramiento en el dorsal — no bajes más de lo necesario</div></div>
-          <div class="step"><div class="step-num">4</div><div class="step-text">Vuelve al inicio sin coger impulso</div></div>
-          <div class="tip"><strong>Peso ligero.</strong> El hombro trabaja en posición comprometida — técnica primero.</div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div id="week-content"><div class="loading">Cargando…</div></div>
 </div>
 
 <script>
-  const DAYS = {
-    dia1: ['c-d1-1','c-d1-2','c-d1-3','c-d1-4','c-d1-5','c-d1-6','c-d1-7'],
-    dia2: ['c-d2-1','c-d2-2','c-d2-3','c-d2-4','c-d2-5','c-d2-6'],
-    dia3: ['c-d3-1','c-d3-2','c-d3-3','c-d3-4','c-d3-5','c-d3-6','c-d3-7','c-d3-8','c-d3-9'],
-    dia4: ['c-d4-1','c-d4-2','c-d4-3','c-d4-4','c-d4-5','c-d4-6'],
+// ── SEMANAS DISPONIBLES ──────────────────────────────────────────
+// Para añadir una semana nueva: crear el archivo weeks/semanaX-Y.js
+// y añadir aquí una nueva línea con { id: 'semanaX-Y', label: 'Semanas X-Y' }
+const WEEKS = [
+  { id: 'semana4-5', label: 'Semanas 4-5' }
+];
+
+// ── AUTH ─────────────────────────────────────────────────────────
+const _C = { u: 'tgmico', p: 'Clarmak893@' };
+
+function doLogin() {
+  const u = document.getElementById('inp-user').value.trim();
+  const p = document.getElementById('inp-pass').value;
+  if (u === _C.u && p === _C.p) {
+    localStorage.setItem('entreno_auth', '1');
+    document.getElementById('login-error').style.display = 'none';
+    showApp();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+
+function doLogout() {
+  localStorage.removeItem('entreno_auth');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('inp-user').value = '';
+  document.getElementById('inp-pass').value = '';
+}
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  const saved = parseInt(localStorage.getItem('entreno_week') || '0');
+  loadWeek(Math.min(saved, WEEKS.length - 1));
+}
+
+// ── WEEK NAVIGATION ───────────────────────────────────────────────
+let currentWeek = 0;
+
+function loadWeek(idx) {
+  currentWeek = idx;
+  localStorage.setItem('entreno_week', idx);
+
+  document.getElementById('week-label').textContent = WEEKS[idx].label;
+  document.getElementById('btn-prev').disabled = idx === 0;
+  document.getElementById('btn-next').disabled = idx === WEEKS.length - 1;
+  document.getElementById('day-tabs').innerHTML = '';
+  document.getElementById('week-content').innerHTML = '<div class="loading">Cargando…</div>';
+
+  const old = document.getElementById('_ws');
+  if (old) old.remove();
+  const s = document.createElement('script');
+  s.id = '_ws';
+  s.src = 'weeks/' + WEEKS[idx].id + '.js';
+  s.onload = () => renderWeek(window.WEEK_DATA);
+  s.onerror = () => {
+    document.getElementById('week-content').innerHTML =
+      '<div class="loading">No se pudo cargar la semana.<br>Comprueba tu conexión.</div>';
   };
+  document.head.appendChild(s);
+}
 
-  function getState() {
-    try { return JSON.parse(localStorage.getItem('entreno_done') || '{}'); }
-    catch { return {}; }
+function prevWeek() { if (currentWeek > 0) loadWeek(currentWeek - 1); }
+function nextWeek() { if (currentWeek < WEEKS.length - 1) loadWeek(currentWeek + 1); }
+
+// ── RENDERING ────────────────────────────────────────────────────
+function renderWeek(data) {
+  // Tabs
+  document.getElementById('day-tabs').innerHTML = data.days
+    .map((d, i) => `<div class="tab${i === 0 ? ' active' : ''}" onclick="showDay('${d.id}',this)">${d.label}</div>`)
+    .join('');
+
+  // Sections
+  document.getElementById('week-content').innerHTML = data.days
+    .map((d, i) => renderDay(d, i === 0))
+    .join('');
+
+  loadState();
+  updateProgress();
+}
+
+function renderDay(day, active) {
+  const total = day.groups.flatMap(g => g.exercises).length;
+  return `
+    <div class="section${active ? ' active' : ''}" id="${day.id}">
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="fill-${day.id}"></div></div>
+        <div class="progress-label" id="label-${day.id}">0 / ${total} completados</div>
+      </div>
+      ${day.groups.map(renderGroup).join('')}
+    </div>`;
+}
+
+function renderGroup(g) {
+  return `<div class="muscle-group">${g.label}</div>${g.exercises.map(renderExercise).join('')}`;
+}
+
+function renderExercise(ex) {
+  return `
+    <div class="exercise-card" id="${ex.id}">
+      <div class="card-header">
+        <div class="ex-icon">${ex.icon}</div>
+        <div class="ex-info">
+          <div class="ex-name">${ex.name}</div>
+          <div class="ex-muscle">${ex.muscle}</div>
+        </div>
+        <button class="done-btn" onclick="toggleDone('${ex.id}',event)">✓</button>
+        <div class="alt-trigger" onclick="toggle('${ex.id}')">
+          <span>Si está ocupado</span><span class="chevron">⌄</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-content">
+          <div class="alt-header">${ex.altHeader}</div>
+          ${ex.alternatives.map(renderAlt).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderAlt(alt) {
+  let h = '<div class="alt-item">';
+  if (alt.appName) h += `<div class="app-name"><span class="app-name-label">En tu app</span><span class="app-name-value">${alt.appName}</span></div>`;
+  h += `<div class="alt-item-name">${alt.name}</div>`;
+  if (alt.desc) h += `<div class="alt-item-desc">${alt.desc}</div>`;
+  if (alt.steps && alt.steps.length) {
+    h += `<div class="steps-label">${alt.stepsLabel || 'Ejecución'}</div>`;
+    h += alt.steps.map((s, i) =>
+      `<div class="step"><div class="step-num">${i + 1}</div><div class="step-text">${s}</div></div>`
+    ).join('');
   }
-
-  function saveState(state) {
-    localStorage.setItem('entreno_done', JSON.stringify(state));
+  if (alt.tip) {
+    const t = typeof alt.tip === 'string'
+      ? alt.tip
+      : `<strong>${alt.tip.bold}</strong> ${alt.tip.text}`;
+    h += `<div class="tip">${t}</div>`;
   }
+  return h + '</div>';
+}
 
-  function toggle(id) {
+// ── EXERCISE INTERACTIONS ────────────────────────────────────────
+function toggle(id) {
+  const card = document.getElementById(id);
+  const wasOpen = card.classList.contains('open');
+  document.querySelectorAll('.exercise-card').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) card.classList.add('open');
+}
+
+function toggleDone(id, event) {
+  event.stopPropagation();
+  const card = document.getElementById(id);
+  const btn  = card.querySelector('.done-btn');
+  const done = card.classList.contains('done');
+  card.classList.toggle('done', !done);
+  btn.classList.toggle('active', !done);
+  const state = getState();
+  state[id] = !done;
+  saveState(state);
+  updateProgress();
+}
+
+// ── STATE (per week) ─────────────────────────────────────────────
+function stateKey() { return 'entreno_done_' + WEEKS[currentWeek].id; }
+function getState()  { try { return JSON.parse(localStorage.getItem(stateKey()) || '{}'); } catch { return {}; } }
+function saveState(s) { localStorage.setItem(stateKey(), JSON.stringify(s)); }
+
+function loadState() {
+  const state = getState();
+  Object.entries(state).forEach(([id, done]) => {
+    if (!done) return;
     const card = document.getElementById(id);
-    const isOpen = card.classList.contains('open');
-    document.querySelectorAll('.exercise-card').forEach(c => c.classList.remove('open'));
-    if (!isOpen) card.classList.add('open');
-  }
-
-  function toggleDone(id, event) {
-    event.stopPropagation();
-    const card = document.getElementById(id);
+    if (!card) return;
+    card.classList.add('done');
     const btn = card.querySelector('.done-btn');
-    const isDone = card.classList.contains('done');
-    card.classList.toggle('done', !isDone);
-    btn.classList.toggle('active', !isDone);
-    const state = getState();
-    state[id] = !isDone;
-    saveState(state);
-    updateProgress();
-  }
+    if (btn) btn.classList.add('active');
+  });
+}
 
-  function updateProgress() {
-    const state = getState();
-    Object.entries(DAYS).forEach(([day, ids]) => {
-      const done = ids.filter(id => state[id]).length;
-      const total = ids.length;
-      const pct = total ? (done / total) * 100 : 0;
-      const fill = document.getElementById('fill-' + day);
-      const label = document.getElementById('label-' + day);
-      if (fill) {
-        fill.style.width = pct + '%';
-        fill.classList.toggle('complete', done === total);
-      }
-      if (label) label.textContent = done + ' / ' + total + ' completados';
-    });
-  }
+function updateProgress() {
+  if (!window.WEEK_DATA) return;
+  const state = getState();
+  window.WEEK_DATA.days.forEach(day => {
+    const ids   = day.groups.flatMap(g => g.exercises.map(e => e.id));
+    const done  = ids.filter(id => state[id]).length;
+    const total = ids.length;
+    const fill  = document.getElementById('fill-' + day.id);
+    const label = document.getElementById('label-' + day.id);
+    if (!fill || !label) return;
+    fill.style.width = (total ? done / total * 100 : 0) + '%';
+    fill.classList.toggle('complete', done === total && total > 0);
+    label.textContent = done + ' / ' + total + ' completados';
+  });
+}
 
-  function loadState() {
-    const state = getState();
-    Object.entries(state).forEach(([id, done]) => {
-      if (!done) return;
-      const card = document.getElementById(id);
-      if (!card) return;
-      card.classList.add('done');
-      const btn = card.querySelector('.done-btn');
-      if (btn) btn.classList.add('active');
-    });
-    updateProgress();
-  }
+// ── SECTION / TAB ────────────────────────────────────────────────
+function showDay(id, tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  tab.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-  function showSection(id, tab) {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    tab.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+// ── INIT ─────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('inp-pass').addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+  if (localStorage.getItem('entreno_auth') === '1') {
+    showApp();
   }
+});
 
-  document.addEventListener('DOMContentLoaded', loadState);
-
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('./sw.js').catch(() => {});
-    });
-  }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+}
 </script>
 </body>
 </html>
