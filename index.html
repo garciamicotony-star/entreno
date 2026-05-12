@@ -36,7 +36,7 @@
   .login-error { color:#ff6b6b; font-size:12px; text-align:center; margin-top:12px; display:none; }
 
   /* ── APP ── */
-  #app { display:none; padding-bottom:48px; }
+  #app { display:none; padding-bottom:80px; }
 
   /* ── HEADER ── */
   .header { background:linear-gradient(135deg,#1c1c26 0%,#0f0f18 100%); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
@@ -52,6 +52,16 @@
   .tab.active { background:var(--accent); color:#0a0a0f; border-color:var(--accent); }
   #week-tabs { padding-bottom:0; }
   #day-tabs  { padding-top:6px; }
+
+  /* ── LIBRARY BAR (in header) ── */
+  #lib-bar { display:none; }
+  .lib-search-wrap { padding:10px 14px 0; }
+  .lib-search-inp { width:100%; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; padding:10px 14px 10px 38px; color:var(--text); font-size:14px; font-family:'DM Sans',sans-serif; outline:none; transition:border-color .2s; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b6b80' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:12px center; }
+  .lib-search-inp:focus { border-color:var(--accent); }
+  .lib-chips { display:flex; gap:6px; padding:8px 14px 10px; overflow-x:auto; scrollbar-width:none; }
+  .lib-chips::-webkit-scrollbar { display:none; }
+  .lib-chip { flex-shrink:0; padding:6px 13px; border-radius:20px; font-size:11px; font-weight:700; cursor:pointer; border:1.5px solid var(--border); background:transparent; color:var(--muted); transition:all .2s; font-family:'DM Sans',sans-serif; }
+  .lib-chip.active { background:var(--accent); color:#0a0a0f; border-color:var(--accent); }
 
   /* ── CONTENT ── */
   #main-content { min-height:50vh; }
@@ -159,6 +169,34 @@
   .completion-sub { font-size:14px; color:var(--muted); line-height:1.5; margin-bottom:30px; }
   .completion-btn { background:var(--accent); color:#0a0a0f; border:none; border-radius:12px; padding:14px; font-size:15px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; width:100%; }
   .completion-btn:active { opacity:.8; }
+
+  /* ════════════════════════════
+     BIBLIOTECA STYLES
+  ════════════════════════════ */
+  #library-view { display:none; min-height:50vh; padding-bottom:20px; animation:fadeIn .3s cubic-bezier(.22,1,.36,1); }
+  .lib-group-title { font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:2px; color:var(--accent2); padding:18px 16px 8px; }
+  .lib-group-title:first-child { padding-top:12px; }
+  /* Library exercise cards */
+  #library-view .exercise-card { margin:0 16px 8px; }
+  /* Plain cards for exercises without detail */
+  .lib-plain-card { background:var(--card); border:1px solid var(--border); border-radius:13px; margin:0 16px 8px; padding:12px 14px; display:flex; align-items:center; gap:10px; }
+  .lib-plain-icon { width:8px; height:8px; border-radius:50%; background:var(--border); flex-shrink:0; }
+  .lib-plain-name { font-size:13px; font-weight:600; color:var(--text); line-height:1.35; }
+  .lib-empty { text-align:center; padding:60px 20px; }
+  .lib-empty p { font-size:14px; color:var(--muted); margin-bottom:8px; }
+  .lib-empty small { font-size:12px; color:var(--border); }
+  /* Stats bar */
+  .lib-stats { display:flex; gap:8px; padding:12px 16px 4px; }
+  .lib-stat { flex:1; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 14px; text-align:center; }
+  .lib-stat-num { font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--accent); letter-spacing:1px; }
+  .lib-stat-label { font-size:10px; color:var(--muted); font-weight:600; letter-spacing:.5px; text-transform:uppercase; }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:var(--surface); border-top:1px solid var(--border); display:flex; z-index:110; padding-bottom:env(safe-area-inset-bottom,0); }
+  .nav-item { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:10px 0; background:none; border:none; cursor:pointer; color:var(--muted); transition:color .2s; font-family:'DM Sans',sans-serif; }
+  .nav-item.active { color:var(--accent); }
+  .nav-icon { font-size:20px; line-height:1.2; }
+  .nav-label { font-size:10px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; }
 </style>
 </head>
 <body>
@@ -189,21 +227,33 @@
 
   <div class="header">
     <div class="header-top">
-      <div class="header-title">MI PLAN</div>
+      <div class="header-title" id="header-title">MI PLAN</div>
       <button class="btn-logout" onclick="doLogout()">Salir</button>
     </div>
-    <!-- Week selector (all weeks, scrollable — add future weeks here) -->
+
+    <!-- Plan: week selector (all weeks, scrollable) -->
     <div class="tabs" id="week-tabs">
       <div class="tab" data-week="semanas1-2" onclick="selectWeek('semanas1-2',this)">Semanas 1-2</div>
       <div class="tab" data-week="semanas3-4" onclick="selectWeek('semanas3-4',this)">Semanas 3-4</div>
       <div class="tab" data-week="semanas4-5" onclick="selectWeek('semanas4-5',this)">Semanas 4-5</div>
     </div>
-    <!-- Day tabs (populated dynamically) -->
+    <!-- Plan: day tabs (populated dynamically) -->
     <div class="tabs" id="day-tabs"></div>
+
+    <!-- Biblioteca: search + filter chips -->
+    <div id="lib-bar">
+      <div class="lib-search-wrap">
+        <input class="lib-search-inp" id="lib-search" type="search" placeholder="Buscar ejercicio..." oninput="renderLibrary()">
+      </div>
+      <div class="lib-chips" id="lib-chips"></div>
+    </div>
   </div>
 
-  <!-- Single content area -->
+  <!-- Plan content -->
   <div id="main-content"><div class="loading">Cargando…</div></div>
+
+  <!-- Biblioteca content -->
+  <div id="library-view"></div>
 
   <!-- Completion overlay -->
   <div id="completion-overlay" class="completion-overlay" onclick="closeCompletion()">
@@ -214,6 +264,18 @@
       <button class="completion-btn" onclick="closeCompletion()">Continuar</button>
     </div>
   </div>
+
+  <!-- Bottom navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" id="nav-plan" onclick="switchView('plan')">
+      <span class="nav-icon">📋</span>
+      <span class="nav-label">Mi Plan</span>
+    </button>
+    <button class="nav-item" id="nav-lib" onclick="switchView('library')">
+      <span class="nav-icon">📚</span>
+      <span class="nav-label">Biblioteca</span>
+    </button>
+  </nav>
 
 </div>
 
@@ -246,10 +308,43 @@ function doLogout() {
 function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
+  initLibChips();
   const saved = localStorage.getItem('active_week') || 'semanas1-2';
   const tab   = document.querySelector(`#week-tabs [data-week="${saved}"]`)
              || document.querySelector('#week-tabs .tab');
   selectWeek(saved, tab);
+  // Pre-load guide data in background for the library
+  preloadGuideData();
+}
+
+/* ════════════════════════════════════════════════════════
+   VIEW SWITCHING  (Mi Plan ↔ Biblioteca)
+════════════════════════════════════════════════════════ */
+let activeView = 'plan';
+
+function switchView(view) {
+  activeView = view;
+  const isPlan = view === 'plan';
+
+  document.getElementById('nav-plan').classList.toggle('active', isPlan);
+  document.getElementById('nav-lib').classList.toggle('active', !isPlan);
+
+  document.getElementById('week-tabs').style.display   = isPlan ? '' : 'none';
+  document.getElementById('day-tabs').style.display    = isPlan ? '' : 'none';
+  document.getElementById('lib-bar').style.display     = isPlan ? 'none' : '';
+  document.getElementById('header-title').textContent  = isPlan ? 'MI PLAN' : 'BIBLIOTECA';
+  document.getElementById('main-content').style.display  = isPlan ? '' : 'none';
+  document.getElementById('library-view').style.display  = isPlan ? 'none' : '';
+
+  if (!isPlan) {
+    if (!guideData) {
+      document.getElementById('library-view').innerHTML = '<div class="loading">Cargando ejercicios…</div>';
+      loadGuideForLibrary();
+    } else {
+      renderLibrary();
+    }
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 /* ════════════════════════════════════════════════════════
@@ -305,6 +400,28 @@ function loadGuideWeek(fileId) {
   s.src = 'weeks/' + fileId + '.js';
   s.onload  = () => { guideData = window.WEEK_DATA; renderGuideDayTabs(); renderGuideContent(); };
   s.onerror = () => { document.getElementById('main-content').innerHTML = '<div class="loading">No se pudo cargar la semana.</div>'; };
+  document.head.appendChild(s);
+}
+
+function preloadGuideData() {
+  if (guideData) return;
+  const old = document.getElementById('_wsp');
+  if (old) return; // already loading
+  const s = document.createElement('script');
+  s.id = '_wsp';
+  s.src = 'weeks/semana4-5.js';
+  s.onload  = () => { if (!guideData) guideData = window.WEEK_DATA; };
+  document.head.appendChild(s);
+}
+
+function loadGuideForLibrary() {
+  const old = document.getElementById('_wsl');
+  if (old) old.remove();
+  const s = document.createElement('script');
+  s.id = '_wsl';
+  s.src = 'weeks/semana4-5.js';
+  s.onload  = () => { guideData = window.WEEK_DATA; renderLibrary(); };
+  s.onerror = () => { document.getElementById('library-view').innerHTML = '<div class="loading">No se pudo cargar la biblioteca.</div>'; };
   document.head.appendChild(s);
 }
 
@@ -633,6 +750,7 @@ function prevDay() {
   const el = document.getElementById('main-content');
   el.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
   el.addEventListener('touchend', e => {
+    if (activeView !== 'plan') return;
     const dx = e.changedTouches[0].clientX - tx;
     const dy = e.changedTouches[0].clientY - ty;
     if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 52) {
@@ -640,6 +758,160 @@ function prevDay() {
     }
   }, { passive: true });
 })();
+
+/* ════════════════════════════════════════════════════════
+   BIBLIOTECA
+════════════════════════════════════════════════════════ */
+let libFilter = 'all';
+
+const LIB_FILTERS = [
+  { id: 'all',      label: 'Todos' },
+  { id: 'pectoral', label: '🏋️ Pectoral' },
+  { id: 'dorsal',   label: '🔱 Espalda' },
+  { id: 'hombro',   label: '🅻 Hombro' },
+  { id: 'triceps',  label: '⚔️ Tríceps' },
+  { id: 'biceps',   label: '💪 Bíceps' },
+  { id: 'pierna',   label: '🦵 Pierna' },
+];
+
+function initLibChips() {
+  document.getElementById('lib-chips').innerHTML = LIB_FILTERS
+    .map(f => `<button class="lib-chip${f.id===libFilter?' active':''}" onclick="setLibFilter('${f.id}')">${f.label}</button>`)
+    .join('');
+}
+
+function setLibFilter(id) {
+  libFilter = id;
+  document.querySelectorAll('.lib-chip').forEach(c => c.classList.remove('active'));
+  const active = document.querySelector(`#lib-chips .lib-chip:nth-child(${LIB_FILTERS.findIndex(f=>f.id===id)+1})`);
+  if (active) active.classList.add('active');
+  renderLibrary();
+}
+
+function groupToFilterId(label) {
+  const u = label.toUpperCase();
+  if (u.includes('PECTORAL'))                                     return 'pectoral';
+  if (u.includes('HOMBRO'))                                       return 'hombro';
+  if (u.includes('TRÍCEPS') || u.includes('TRICEPS'))            return 'triceps';
+  if (u.includes('DORSAL')  || u.includes('ESPALDA'))            return 'dorsal';
+  if (u.includes('BÍCEPS')  || u.includes('BICEPS'))             return 'biceps';
+  if (u.includes('CUÁDRICEPS') || u.includes('FEMORAL') ||
+      u.includes('GLÚTEO')  || u.includes('PIERNA'))             return 'pierna';
+  return 'otros';
+}
+
+function renderLibrary() {
+  const q = (document.getElementById('lib-search')?.value || '').toLowerCase().trim();
+  let html = '';
+  let totalEx = 0;
+
+  if (!guideData) {
+    document.getElementById('library-view').innerHTML = '<div class="loading">Cargando ejercicios…</div>';
+    return;
+  }
+
+  // ── Stats bar ──
+  const totalGuide = guideData.days.reduce((acc, d) => acc + d.groups.reduce((a, g) => a + g.exercises.length, 0), 0);
+  const allPlanNames = new Set();
+  Object.values(PLAN_DATA).forEach(week => week.days.forEach(day => day.exercises.forEach(n => allPlanNames.add(n.toLowerCase()))));
+  const guideNameSet = new Set();
+  guideData.days.forEach(d => d.groups.forEach(g => g.exercises.forEach(e => guideNameSet.add(e.name.toLowerCase()))));
+  const planOnlyAll = [...allPlanNames].filter(n => !guideNameSet.has(n));
+  const totalLib = totalGuide + planOnlyAll.length;
+
+  html += `<div class="lib-stats">
+    <div class="lib-stat"><div class="lib-stat-num">${totalLib}</div><div class="lib-stat-label">Ejercicios</div></div>
+    <div class="lib-stat"><div class="lib-stat-num">${totalGuide}</div><div class="lib-stat-label">Con detalle</div></div>
+    <div class="lib-stat"><div class="lib-stat-num">${guideData.days.reduce((a,d)=>a+d.groups.length,0)}</div><div class="lib-stat-label">Grupos</div></div>
+  </div>`;
+
+  // ── Detailed exercises from semana4-5 ──
+  const seenNames = new Set();
+  const grouped   = {}; // group label → exercises[]
+
+  guideData.days.forEach(day => {
+    day.groups.forEach(grp => {
+      const fid = groupToFilterId(grp.label);
+      if (libFilter !== 'all' && fid !== libFilter) return;
+      grp.exercises.forEach(ex => {
+        const nameKey = ex.name.toLowerCase();
+        if (seenNames.has(nameKey)) return; // deduplicate same exercise across days
+        if (q && !ex.name.toLowerCase().includes(q) && !ex.muscle.toLowerCase().includes(q)) return;
+        seenNames.add(nameKey);
+        if (!grouped[grp.label]) grouped[grp.label] = [];
+        grouped[grp.label].push(ex);
+      });
+    });
+  });
+
+  const groupEntries = Object.entries(grouped);
+  groupEntries.forEach(([label, exs]) => {
+    html += `<div class="lib-group-title">${label}</div>`;
+    exs.forEach(ex => { html += renderLibraryCard(ex); totalEx++; });
+  });
+
+  // ── Plan-only exercises (no detail) ──
+  if (libFilter === 'all') {
+    const planOnly = [];
+    Object.values(PLAN_DATA).forEach(week => {
+      week.days.forEach(day => {
+        day.exercises.forEach(name => {
+          const key = name.toLowerCase();
+          if (!guideNameSet.has(key) && !planOnly.find(n => n.toLowerCase() === key)) {
+            planOnly.push(name);
+          }
+        });
+      });
+    });
+    const planFiltered = planOnly.filter(name => !q || name.toLowerCase().includes(q));
+    if (planFiltered.length > 0) {
+      html += `<div class="lib-group-title">OTROS EJERCICIOS DEL PLAN</div>`;
+      planFiltered.forEach(name => {
+        html += `<div class="lib-plain-card"><div class="lib-plain-icon"></div><div class="lib-plain-name">${name}</div></div>`;
+        totalEx++;
+      });
+    }
+  }
+
+  if (totalEx === 0) {
+    html += `<div class="lib-empty"><p>Sin resultados${q ? ` para "<strong>${q}</strong>"` : ''}</p><small>Prueba con otro filtro o búsqueda</small></div>`;
+  }
+
+  document.getElementById('library-view').innerHTML = html;
+}
+
+function renderLibraryCard(ex) {
+  const lid     = 'lib-' + ex.id;
+  const hasAlts = ex.alternatives && ex.alternatives.length;
+  return `
+    <div class="exercise-card" id="${lid}">
+      <div class="card-header">
+        <div class="ex-icon">${ex.icon}</div>
+        <div class="ex-info">
+          <div class="ex-name">${ex.name}</div>
+          <div class="ex-muscle">${ex.muscle}</div>
+        </div>
+        ${hasAlts ? `<div class="alt-trigger" onclick="toggleLibCard('${lid}')"><span>Alternativas</span><span class="chevron">⌄</span></div>` : ''}
+      </div>
+      ${hasAlts ? `
+      <div class="card-body">
+        <div class="card-body-content">
+          <div class="alt-header">${ex.altHeader}</div>
+          ${ex.alternatives.map(renderAlt).join('')}
+        </div>
+      </div>` : ''}
+    </div>`;
+}
+
+function toggleLibCard(id) {
+  const card = document.getElementById(id);
+  if (!card) return;
+  const wasOpen = card.classList.contains('open');
+  // Close all lib cards
+  document.querySelectorAll('#library-view .exercise-card').forEach(c => c.classList.remove('open'));
+  if (!wasOpen) card.classList.add('open');
+  if (!wasOpen) setTimeout(() => card.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
+}
 
 /* ════════════════════════════════════════════════════════
    COMPLETION OVERLAY
