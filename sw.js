@@ -1,4 +1,4 @@
-const CACHE = 'entreno-v4';
+const CACHE = 'entreno-v5';
 const ASSETS = [
   './',
   './index.html',
@@ -6,6 +6,7 @@ const ASSETS = [
   './icons/icon-192.svg',
   './icons/icon-512.svg',
   './weeks/semana4-5.js',
+  './weeks/library.js',
 ];
 
 self.addEventListener('install', e => {

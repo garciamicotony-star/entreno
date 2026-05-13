@@ -174,22 +174,23 @@
      BIBLIOTECA STYLES
   ════════════════════════════ */
   #library-view { display:none; min-height:50vh; padding-bottom:20px; animation:fadeIn .3s cubic-bezier(.22,1,.36,1); }
-  .lib-group-title { font-family:'Bebas Neue',sans-serif; font-size:12px; letter-spacing:2px; color:var(--accent2); padding:18px 16px 8px; }
-  .lib-group-title:first-child { padding-top:12px; }
-  /* Library exercise cards */
-  #library-view .exercise-card { margin:0 16px 8px; }
-  /* Plain cards for exercises without detail */
-  .lib-plain-card { background:var(--card); border:1px solid var(--border); border-radius:13px; margin:0 16px 8px; padding:12px 14px; display:flex; align-items:center; gap:10px; }
-  .lib-plain-icon { width:8px; height:8px; border-radius:50%; background:var(--border); flex-shrink:0; }
-  .lib-plain-name { font-size:13px; font-weight:600; color:var(--text); line-height:1.35; }
   .lib-empty { text-align:center; padding:60px 20px; }
   .lib-empty p { font-size:14px; color:var(--muted); margin-bottom:8px; }
   .lib-empty small { font-size:12px; color:var(--border); }
-  /* Stats bar */
+  /* Stats */
   .lib-stats { display:flex; gap:8px; padding:12px 16px 4px; }
-  .lib-stat { flex:1; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px 14px; text-align:center; }
-  .lib-stat-num { font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--accent); letter-spacing:1px; }
-  .lib-stat-label { font-size:10px; color:var(--muted); font-weight:600; letter-spacing:.5px; text-transform:uppercase; }
+  .lib-stat { flex:1; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:10px 12px; text-align:center; }
+  .lib-stat-num { font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--accent); letter-spacing:1px; line-height:1.1; }
+  .lib-stat-label { font-size:9px; color:var(--muted); font-weight:600; letter-spacing:.5px; text-transform:uppercase; margin-top:2px; }
+  /* Letter divider */
+  .lib-letter { font-family:'Bebas Neue',sans-serif; font-size:30px; letter-spacing:2px; color:var(--accent); padding:18px 16px 4px; line-height:1; }
+  .lib-letter:first-of-type { padding-top:12px; }
+  /* Flat card */
+  .lib-card { display:flex; align-items:center; gap:11px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:9px 12px; margin:0 16px 5px; }
+  .lib-card-icon { width:34px; height:34px; border-radius:9px; background:var(--surface); display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+  .lib-card-info { flex:1; min-width:0; }
+  .lib-card-name { font-size:13px; font-weight:600; color:var(--text); line-height:1.3; }
+  .lib-card-muscle { font-size:10px; color:var(--muted); margin-top:2px; font-weight:500; }
 
   /* ── BOTTOM NAV ── */
   .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:var(--surface); border-top:1px solid var(--border); display:flex; z-index:110; padding-bottom:env(safe-area-inset-bottom,0); }
@@ -470,9 +471,9 @@ function switchView(view) {
   document.getElementById('library-view').style.display  = isPlan ? 'none' : 'block';
 
   if (!isPlan) {
-    if (!guideData) {
-      document.getElementById('library-view').innerHTML = '<div class="loading">Cargando ejercicios…</div>';
-      loadGuideForLibrary();
+    if (!window.LIBRARY) {
+      document.getElementById('library-view').innerHTML = '<div class="loading">Cargando biblioteca…</div>';
+      loadLibrary();
     } else {
       renderLibrary();
     }
@@ -537,23 +538,31 @@ function loadGuideWeek(fileId) {
 }
 
 function preloadGuideData() {
-  if (guideData) return;
-  const old = document.getElementById('_wsp');
-  if (old) return; // already loading
-  const s = document.createElement('script');
-  s.id = '_wsp';
-  s.src = 'weeks/semana4-5.js';
-  s.onload  = () => { if (!guideData) guideData = window.WEEK_DATA; };
-  document.head.appendChild(s);
+  // Pre-carga semana4-5 (para Mi Plan)
+  if (!guideData && !document.getElementById('_wsp')) {
+    const s = document.createElement('script');
+    s.id = '_wsp';
+    s.src = 'weeks/semana4-5.js';
+    s.onload  = () => { if (!guideData) guideData = window.WEEK_DATA; };
+    document.head.appendChild(s);
+  }
+  // Pre-carga library.js (para Biblioteca)
+  if (!window.LIBRARY && !document.getElementById('_wlp')) {
+    const s = document.createElement('script');
+    s.id = '_wlp';
+    s.src = 'weeks/library.js';
+    document.head.appendChild(s);
+  }
 }
 
-function loadGuideForLibrary() {
-  const old = document.getElementById('_wsl');
+function loadLibrary() {
+  if (window.LIBRARY) { renderLibrary(); return; }
+  const old = document.getElementById('_wll');
   if (old) old.remove();
   const s = document.createElement('script');
-  s.id = '_wsl';
-  s.src = 'weeks/semana4-5.js';
-  s.onload  = () => { guideData = window.WEEK_DATA; renderLibrary(); };
+  s.id = '_wll';
+  s.src = 'weeks/library.js';
+  s.onload  = () => renderLibrary();
   s.onerror = () => { document.getElementById('library-view').innerHTML = '<div class="loading">No se pudo cargar la biblioteca.</div>'; };
   document.head.appendChild(s);
 }
@@ -946,13 +955,80 @@ let libFilter = 'all';
 
 const LIB_FILTERS = [
   { id: 'all',      label: 'Todos' },
-  { id: 'pectoral', label: '🏋️ Pectoral' },
-  { id: 'dorsal',   label: '🔱 Espalda' },
-  { id: 'hombro',   label: '🅻 Hombro' },
-  { id: 'triceps',  label: '⚔️ Tríceps' },
+  { id: 'pectoral', label: '🏋️ Pecho' },
+  { id: 'espalda',  label: '🦅 Espalda' },
+  { id: 'hombro',   label: '🤸 Hombro' },
   { id: 'biceps',   label: '💪 Bíceps' },
+  { id: 'triceps',  label: '⚔️ Tríceps' },
   { id: 'pierna',   label: '🦵 Pierna' },
+  { id: 'core',     label: '🔥 Core' },
+  { id: 'otros',    label: '🧘 Otros' },
 ];
+
+// Mapeo de grupo muscular (como aparece en library.js) → id de filtro
+function muscleToFilterId(m) {
+  switch (m) {
+    case 'Chest': return 'pectoral';
+    case 'Back': case 'Lower Back': case 'Traps': return 'espalda';
+    case 'Shoulders': return 'hombro';
+    case 'Biceps': return 'biceps';
+    case 'Triceps': case 'Forearms': return 'triceps';
+    case 'Quadriceps': case 'Hamstrings': case 'Glutes': case 'Calves':
+    case 'Adductors': case 'Abductors': case 'Hip Flexors': return 'pierna';
+    case 'Abs': case 'Core': case 'Obliques': return 'core';
+    default: return 'otros';
+  }
+}
+
+// Icono por grupo muscular
+function iconForMuscle(m) {
+  switch (m) {
+    case 'Chest':       return '🏋️';
+    case 'Back':        return '🦅';
+    case 'Lower Back':  return '🌉';
+    case 'Traps':       return '🔝';
+    case 'Shoulders':   return '🤸';
+    case 'Biceps':      return '💪';
+    case 'Triceps':     return '⚔️';
+    case 'Forearms':    return '✊';
+    case 'Abs':         return '🔥';
+    case 'Core':        return '🌀';
+    case 'Obliques':    return '🔄';
+    case 'Glutes':      return '🍑';
+    case 'Quadriceps':  return '🦵';
+    case 'Hamstrings':  return '🦵';
+    case 'Calves':      return '🦶';
+    case 'Adductors':   return '🦵';
+    case 'Abductors':   return '🦵';
+    case 'Hip Flexors': return '🦵';
+    default:            return '🧘';
+  }
+}
+
+// Traduce el grupo muscular al castellano (solo para mostrar)
+function muscleLabel(m) {
+  switch (m) {
+    case 'Chest':       return 'Pectoral';
+    case 'Back':        return 'Espalda';
+    case 'Lower Back':  return 'Lumbar';
+    case 'Traps':       return 'Trapecio';
+    case 'Shoulders':   return 'Hombro';
+    case 'Biceps':      return 'Bíceps';
+    case 'Triceps':     return 'Tríceps';
+    case 'Forearms':    return 'Antebrazo';
+    case 'Abs':         return 'Abdominales';
+    case 'Core':        return 'Core';
+    case 'Obliques':    return 'Oblicuos';
+    case 'Glutes':      return 'Glúteos';
+    case 'Quadriceps':  return 'Cuádriceps';
+    case 'Hamstrings':  return 'Femoral';
+    case 'Calves':      return 'Gemelos';
+    case 'Adductors':   return 'Aductores';
+    case 'Abductors':   return 'Abductores';
+    case 'Hip Flexors': return 'Flexores de cadera';
+    default:            return 'Otros';
+  }
+}
 
 function initLibChips() {
   document.getElementById('lib-chips').innerHTML = LIB_FILTERS
@@ -982,125 +1058,57 @@ function groupToFilterId(label) {
 
 function renderLibrary() {
   const q = (document.getElementById('lib-search')?.value || '').toLowerCase().trim();
-  let html = '';
-  let totalEx = 0;
 
-  if (!guideData) {
-    document.getElementById('library-view').innerHTML = '<div class="loading">Cargando ejercicios…</div>';
+  if (!window.LIBRARY) {
+    document.getElementById('library-view').innerHTML = '<div class="loading">Cargando biblioteca…</div>';
     return;
   }
 
-  // ── Stats bar ──
-  const totalGuide = guideData.days.reduce((acc, d) => acc + d.groups.reduce((a, g) => a + g.exercises.length, 0), 0);
-  const allPlanNames = new Set();
-  Object.values(PLAN_DATA).forEach(week => week.days.forEach(day => day.exercises.forEach(n => allPlanNames.add(n.toLowerCase()))));
-  const guideNameSet = new Set();
-  guideData.days.forEach(d => d.groups.forEach(g => g.exercises.forEach(e => guideNameSet.add(e.name.toLowerCase()))));
-  const planOnlyAll = [...allPlanNames].filter(n => !guideNameSet.has(n));
-  const totalLib = totalGuide + planOnlyAll.length;
+  // Filtra por chip de músculo + búsqueda
+  const filtered = window.LIBRARY.filter(([name, muscle]) => {
+    if (libFilter !== 'all' && muscleToFilterId(muscle) !== libFilter) return false;
+    if (q) {
+      const nn = name.toLowerCase();
+      const mm = muscle.toLowerCase();
+      const ml = muscleLabel(muscle).toLowerCase();
+      if (!nn.includes(q) && !mm.includes(q) && !ml.includes(q)) return false;
+    }
+    return true;
+  });
 
-  html += `<div class="lib-stats">
-    <div class="lib-stat"><div class="lib-stat-num">${totalLib}</div><div class="lib-stat-label">Ejercicios</div></div>
-    <div class="lib-stat"><div class="lib-stat-num">${totalGuide}</div><div class="lib-stat-label">Con detalle</div></div>
-    <div class="lib-stat"><div class="lib-stat-num">${guideData.days.reduce((a,d)=>a+d.groups.length,0)}</div><div class="lib-stat-label">Grupos</div></div>
+  const total = window.LIBRARY.length;
+  const isFiltered = q || libFilter !== 'all';
+
+  let html = `<div class="lib-stats">
+    <div class="lib-stat"><div class="lib-stat-num">${filtered.length}</div><div class="lib-stat-label">${isFiltered ? 'Resultados' : 'Ejercicios'}</div></div>
+    <div class="lib-stat"><div class="lib-stat-num">${total}</div><div class="lib-stat-label">Total catálogo</div></div>
+    <div class="lib-stat"><div class="lib-stat-num">${LIB_FILTERS.length-1}</div><div class="lib-stat-label">Grupos</div></div>
   </div>`;
 
-  // ── Detailed exercises from semana4-5 ──
-  const seenNames = new Set();
-  const grouped   = {}; // group label → exercises[]
-
-  guideData.days.forEach(day => {
-    day.groups.forEach(grp => {
-      const fid = groupToFilterId(grp.label);
-      if (libFilter !== 'all' && fid !== libFilter) return;
-      grp.exercises.forEach(ex => {
-        const nameKey = ex.name.toLowerCase();
-        if (seenNames.has(nameKey)) return; // deduplicate same exercise across days
-        if (q) {
-          // Buscar en nombre, músculo y nombre de alternativas
-          const inName = ex.name.toLowerCase().includes(q);
-          const inMuscle = ex.muscle.toLowerCase().includes(q);
-          const inAlts = (ex.alternatives || []).some(a =>
-            (a.name && a.name.toLowerCase().includes(q)) ||
-            (a.appName && a.appName.toLowerCase().includes(q)) ||
-            (a.desc && a.desc.toLowerCase().includes(q))
-          );
-          if (!inName && !inMuscle && !inAlts) return;
-        }
-        seenNames.add(nameKey);
-        if (!grouped[grp.label]) grouped[grp.label] = [];
-        grouped[grp.label].push(ex);
-      });
-    });
-  });
-
-  const groupEntries = Object.entries(grouped);
-  groupEntries.forEach(([label, exs]) => {
-    html += `<div class="lib-group-title">${label}</div>`;
-    exs.forEach(ex => { html += renderLibraryCard(ex); totalEx++; });
-  });
-
-  // ── Plan-only exercises (no detail) ──
-  if (libFilter === 'all') {
-    const planOnly = [];
-    Object.values(PLAN_DATA).forEach(week => {
-      week.days.forEach(day => {
-        day.exercises.forEach(name => {
-          const key = name.toLowerCase();
-          if (!guideNameSet.has(key) && !planOnly.find(n => n.toLowerCase() === key)) {
-            planOnly.push(name);
-          }
-        });
-      });
-    });
-    const planFiltered = planOnly.filter(name => !q || name.toLowerCase().includes(q));
-    if (planFiltered.length > 0) {
-      html += `<div class="lib-group-title">OTROS EJERCICIOS DEL PLAN</div>`;
-      planFiltered.forEach(name => {
-        html += `<div class="lib-plain-card"><div class="lib-plain-icon"></div><div class="lib-plain-name">${name}</div></div>`;
-        totalEx++;
-      });
-    }
-  }
-
-  if (totalEx === 0) {
+  if (filtered.length === 0) {
     html += `<div class="lib-empty"><p>Sin resultados${q ? ` para "<strong>${q}</strong>"` : ''}</p><small>Prueba con otro filtro o búsqueda</small></div>`;
+    document.getElementById('library-view').innerHTML = html;
+    return;
   }
+
+  // Render con divisores alfabéticos
+  let currentLetter = '';
+  filtered.forEach(([name, muscle]) => {
+    const letter = name[0].toUpperCase();
+    if (letter !== currentLetter) {
+      currentLetter = letter;
+      html += `<div class="lib-letter">${letter}</div>`;
+    }
+    html += `<div class="lib-card">
+      <div class="lib-card-icon">${iconForMuscle(muscle)}</div>
+      <div class="lib-card-info">
+        <div class="lib-card-name">${name}</div>
+        <div class="lib-card-muscle">${muscleLabel(muscle)}</div>
+      </div>
+    </div>`;
+  });
 
   document.getElementById('library-view').innerHTML = html;
-}
-
-function renderLibraryCard(ex) {
-  const lid     = 'lib-' + ex.id;
-  const hasAlts = ex.alternatives && ex.alternatives.length;
-  return `
-    <div class="exercise-card" id="${lid}">
-      <div class="card-header">
-        <div class="ex-icon">${ex.icon}</div>
-        <div class="ex-info">
-          <div class="ex-name">${ex.name}</div>
-          <div class="ex-muscle">${ex.muscle}</div>
-        </div>
-        ${hasAlts ? `<div class="alt-trigger" onclick="toggleLibCard('${lid}')"><span>Alternativas</span><span class="chevron">⌄</span></div>` : ''}
-      </div>
-      ${hasAlts ? `
-      <div class="card-body">
-        <div class="card-body-content">
-          <div class="alt-header">${ex.altHeader}</div>
-          ${ex.alternatives.map(renderAlt).join('')}
-        </div>
-      </div>` : ''}
-    </div>`;
-}
-
-function toggleLibCard(id) {
-  const card = document.getElementById(id);
-  if (!card) return;
-  const wasOpen = card.classList.contains('open');
-  // Close all lib cards
-  document.querySelectorAll('#library-view .exercise-card').forEach(c => c.classList.remove('open'));
-  if (!wasOpen) card.classList.add('open');
-  if (!wasOpen) setTimeout(() => card.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
 }
 
 /* ════════════════════════════════════════════════════════
