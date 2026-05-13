@@ -197,6 +197,65 @@
   .nav-item.active { color:var(--accent); }
   .nav-icon { font-size:20px; line-height:1.2; }
   .nav-label { font-size:10px; font-weight:700; letter-spacing:.5px; text-transform:uppercase; }
+
+  /* ════════════════════════════
+     CRONÓMETRO DE DESCANSO
+  ════════════════════════════ */
+  .timer-fab { position:fixed; right:16px; bottom:calc(72px + env(safe-area-inset-bottom,0px)); height:54px; min-width:54px; padding:0 16px; border-radius:27px; background:var(--accent); color:#0a0a0f; border:none; cursor:pointer; box-shadow:0 8px 24px rgba(232,255,71,.28),0 2px 8px rgba(0,0,0,.4); display:flex; align-items:center; justify-content:center; z-index:115; transition:transform .18s, box-shadow .3s; font-family:'Bebas Neue',sans-serif; }
+  .timer-fab:active { transform:scale(.92); }
+  .timer-fab .fab-icon { font-size:24px; }
+  .timer-fab .fab-time { font-size:20px; letter-spacing:1.5px; font-variant-numeric:tabular-nums; }
+  .timer-fab.running { animation:fabPulse 1.6s ease-in-out infinite; }
+  .timer-fab.paused  { background:var(--accent2); color:#fff; animation:none; }
+  .timer-fab.flash   { animation:fabFlash .6s ease-in-out 4; }
+  @keyframes fabPulse { 0%,100% { box-shadow:0 8px 24px rgba(232,255,71,.28),0 0 0 0 rgba(232,255,71,.45); } 50% { box-shadow:0 8px 24px rgba(232,255,71,.4),0 0 0 14px rgba(232,255,71,0); } }
+  @keyframes fabFlash { 0%,100% { background:var(--accent3); color:#0a0a0f; } 50% { background:var(--accent); color:#0a0a0f; } }
+
+  .timer-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:118; opacity:0; visibility:hidden; transition:opacity .3s, visibility .3s; }
+  .timer-backdrop.open { opacity:1; visibility:visible; }
+
+  .timer-sheet { position:fixed; bottom:0; left:0; right:0; background:var(--card); border-top:1px solid var(--border); border-radius:24px 24px 0 0; z-index:120; transform:translateY(100%); transition:transform .35s cubic-bezier(.22,1,.36,1); padding:10px 20px calc(22px + env(safe-area-inset-bottom,0px)); box-shadow:0 -8px 40px rgba(0,0,0,.55); max-width:520px; margin:0 auto; }
+  .timer-sheet.open { transform:translateY(0); }
+  .timer-handle { width:40px; height:4px; border-radius:2px; background:var(--border); margin:0 auto 14px; }
+
+  .timer-setup-title { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:2px; color:var(--accent); text-align:center; margin-bottom:16px; }
+  .timer-presets { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:18px; }
+  .timer-preset { padding:16px 4px; background:var(--surface); border:1.5px solid var(--border); border-radius:12px; color:var(--text); font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:1px; cursor:pointer; transition:all .15s; font-variant-numeric:tabular-nums; }
+  .timer-preset:active { background:var(--accent); color:#0a0a0f; border-color:var(--accent); transform:scale(.96); }
+  .timer-preset.suggested { border-color:var(--accent); color:var(--accent); }
+  .timer-custom-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .timer-custom-row { display:flex; gap:8px; margin-bottom:16px; }
+  .timer-stepper { display:flex; flex:1; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; overflow:hidden; }
+  .timer-stepper button { background:none; border:none; color:var(--text); padding:0 16px; font-size:20px; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
+  .timer-stepper button:active { background:var(--card); }
+  .timer-stepper input { flex:1; background:none; border:none; color:var(--text); font-size:18px; font-weight:600; text-align:center; outline:none; font-family:'Bebas Neue',sans-serif; letter-spacing:1px; font-variant-numeric:tabular-nums; -moz-appearance:textfield; }
+  .timer-stepper input::-webkit-outer-spin-button,.timer-stepper input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+  .timer-btn-primary { background:var(--accent); color:#0a0a0f; border:none; border-radius:10px; padding:0 22px; font-size:14px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; }
+  .timer-btn-primary:active { opacity:.8; }
+  .timer-autostart { display:flex; align-items:center; justify-content:space-between; padding:11px 14px; background:var(--surface); border:1px solid var(--border); border-radius:10px; }
+  .timer-autostart-label { font-size:12px; color:var(--text); font-weight:600; }
+  .timer-autostart-sub { font-size:10px; color:var(--muted); margin-top:2px; }
+  .timer-switch { width:42px; height:24px; border-radius:14px; background:var(--border); border:none; cursor:pointer; position:relative; transition:background .25s; padding:0; flex-shrink:0; }
+  .timer-switch::after { content:''; position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:50%; background:#fff; transition:transform .25s; box-shadow:0 1px 3px rgba(0,0,0,.3); }
+  .timer-switch.on { background:var(--accent); }
+  .timer-switch.on::after { transform:translateX(18px); }
+
+  .timer-big { font-family:'Bebas Neue',sans-serif; font-size:84px; letter-spacing:3px; color:var(--accent); text-align:center; line-height:1; margin:8px 0 16px; font-variant-numeric:tabular-nums; }
+  .timer-big.paused { color:var(--accent2); }
+  .timer-progress { height:6px; background:var(--border); border-radius:3px; overflow:hidden; margin-bottom:18px; }
+  .timer-progress-fill { height:100%; background:linear-gradient(90deg,var(--accent2),var(--accent)); border-radius:3px; transition:width .25s linear; }
+  .timer-controls { display:flex; justify-content:center; align-items:center; gap:14px; margin-bottom:14px; }
+  .timer-adj { padding:0 16px; height:46px; background:var(--surface); border:1.5px solid var(--border); border-radius:23px; color:var(--text); font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; font-size:13px; }
+  .timer-adj:active { background:var(--card); }
+  .timer-play { width:62px; height:62px; border-radius:50%; font-size:24px; padding:0; background:var(--accent); color:#0a0a0f; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 14px rgba(232,255,71,.3); }
+  .timer-play:active { transform:scale(.94); }
+  .timer-cancel { width:100%; background:transparent; color:var(--muted); border:1.5px solid var(--border); border-radius:10px; padding:12px; font-size:13px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; }
+  .timer-cancel:active { color:var(--accent2); border-color:rgba(255,107,53,.4); }
+
+  .timer-finished { text-align:center; padding:14px 0 4px; }
+  .timer-finished-emoji { font-size:64px; display:block; animation:bounce .55s cubic-bezier(.22,1,.36,1); }
+  .timer-finished-title { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--accent); letter-spacing:2px; margin:14px 0 6px; }
+  .timer-finished-sub { color:var(--muted); font-size:13px; margin-bottom:22px; }
 </style>
 </head>
 <body>
@@ -277,6 +336,16 @@
     </button>
   </nav>
 
+  <!-- Cronómetro de descanso -->
+  <button class="timer-fab" id="timer-fab" onclick="Timer.toggle()" aria-label="Cronómetro de descanso">
+    <span class="fab-icon">⏱️</span>
+  </button>
+  <div class="timer-backdrop" id="timer-backdrop" onclick="Timer.close()"></div>
+  <div class="timer-sheet" id="timer-sheet">
+    <div class="timer-handle"></div>
+    <div id="timer-sheet-body"></div>
+  </div>
+
 </div>
 
 <script>
@@ -299,6 +368,8 @@ function doLogin() {
 
 function doLogout() {
   localStorage.removeItem('entreno_auth');
+  Timer.stop();
+  Timer.close();
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('inp-user').value = '';
@@ -517,6 +588,10 @@ function toggleDone(id, event) {
   const state = getGuideState(); state[id] = !done;
   saveGuideState(state);
   updateGuideProgress();
+  if (!done) {
+    if (navigator.vibrate) { try { navigator.vibrate(15); } catch {} }
+    Timer.onExerciseDone();
+  }
 }
 
 /* ── Guide state ── */
@@ -706,6 +781,11 @@ function togglePlanEx(idx) {
   const pcnt  = document.getElementById('plan-count');
   if (pfill) { pfill.style.width = pct+'%'; pfill.classList.toggle('complete', doneCount===total); }
   if (pcnt)    pcnt.textContent = doneCount+'/'+total+' ejercicios';
+
+  if (isDone) {
+    if (navigator.vibrate) { try { navigator.vibrate(15); } catch {} }
+    Timer.onExerciseDone();
+  }
 
   if (doneCount === total) {
     setTimeout(() => showCompletion(PLAN_DATA[activeWeek].days[activeDay].label), 400);
@@ -912,6 +992,267 @@ function toggleLibCard(id) {
   if (!wasOpen) card.classList.add('open');
   if (!wasOpen) setTimeout(() => card.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
 }
+
+/* ════════════════════════════════════════════════════════
+   CRONÓMETRO DE DESCANSO
+════════════════════════════════════════════════════════ */
+const Timer = {
+  endTime: 0,            // ms epoch en que termina (0 = idle)
+  duration: 0,           // segundos totales (para barra de progreso)
+  pausedRemaining: null, // si pausado: segundos restantes; si no: null
+  intervalId: null,
+  justFinished: false,   // true por unos segundos tras acabar
+  _autoCloseId: null,
+  _audioCtx: null,
+
+  // ── Estado derivado ──
+  get isRunning() { return this.intervalId !== null; },
+  get isPaused()  { return this.pausedRemaining !== null; },
+  get remaining() {
+    if (this.pausedRemaining !== null) return this.pausedRemaining;
+    if (!this.endTime) return 0;
+    return Math.max(0, Math.ceil((this.endTime - Date.now()) / 1000));
+  },
+
+  // ── Acciones ──
+  start(seconds) {
+    if (seconds < 1) return;
+    this.justFinished = false;
+    if (this._autoCloseId) { clearTimeout(this._autoCloseId); this._autoCloseId = null; }
+    this.duration = seconds;
+    this.endTime  = Date.now() + seconds * 1000;
+    this.pausedRemaining = null;
+    this._initAudio(); // desbloquea audio en iOS
+    if (this.intervalId) clearInterval(this.intervalId);
+    this.intervalId = setInterval(() => this._tick(), 250);
+    localStorage.setItem('timer_last', String(seconds));
+    this.render();
+    this.open();
+  },
+
+  startCustom() {
+    const v = parseInt(document.getElementById('timer-custom-inp').value, 10);
+    if (Number.isFinite(v) && v >= 5 && v <= 900) this.start(v);
+  },
+
+  pause() {
+    if (this.isPaused) {
+      // Reanudar
+      this.endTime = Date.now() + this.pausedRemaining * 1000;
+      this.pausedRemaining = null;
+    } else {
+      // Pausar
+      this.pausedRemaining = this.remaining;
+    }
+    this.render();
+  },
+
+  add(seconds) {
+    if (this.isPaused) {
+      this.pausedRemaining = Math.max(1, this.pausedRemaining + seconds);
+    } else if (this.endTime) {
+      this.endTime += seconds * 1000;
+      const r = this.remaining;
+      if (r > this.duration) this.duration = r;
+    }
+    this.render();
+  },
+
+  stop() {
+    if (this.intervalId) clearInterval(this.intervalId);
+    this.intervalId = null;
+    this.endTime = 0;
+    this.duration = 0;
+    this.pausedRemaining = null;
+    this.justFinished = false;
+    if (this._autoCloseId) { clearTimeout(this._autoCloseId); this._autoCloseId = null; }
+    this.render();
+  },
+
+  // ── Tick interno ──
+  _tick() {
+    if (this.isPaused) return;
+    const r = this.remaining;
+    if (r <= 0) {
+      this._finish();
+    } else {
+      this._renderRunning(r);
+    }
+  },
+
+  _finish() {
+    clearInterval(this.intervalId);
+    this.intervalId = null;
+    this.endTime = 0;
+    this.pausedRemaining = null;
+    this.justFinished = true;
+    // Feedback
+    if (navigator.vibrate) {
+      try { navigator.vibrate([300, 120, 300, 120, 500]); } catch {}
+    }
+    this._beep();
+    // Si la sheet está cerrada, ábrela para notificar
+    this.open();
+    // Flash del FAB
+    const fab = document.getElementById('timer-fab');
+    fab.classList.add('flash');
+    setTimeout(() => fab.classList.remove('flash'), 2600);
+    this.render();
+    // Auto-cerrar tras 5s
+    this._autoCloseId = setTimeout(() => {
+      this.justFinished = false;
+      this.duration = 0;
+      this.close();
+      this.render();
+    }, 5000);
+  },
+
+  // ── Audio (3 beeps) ──
+  _initAudio() {
+    if (!this._audioCtx) {
+      try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch { return null; }
+    }
+    if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+    return this._audioCtx;
+  },
+  _beep() {
+    const ctx = this._initAudio();
+    if (!ctx) return;
+    [0, 0.22, 0.44].forEach(t => {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = 'sine';
+      o.frequency.value = 880;
+      o.connect(g); g.connect(ctx.destination);
+      const startAt = ctx.currentTime + t;
+      g.gain.setValueAtTime(0.0001, startAt);
+      g.gain.exponentialRampToValueAtTime(0.35, startAt + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, startAt + 0.18);
+      o.start(startAt);
+      o.stop(startAt + 0.22);
+    });
+  },
+
+  // ── Apertura/cierre de la sheet ──
+  open() {
+    document.getElementById('timer-sheet').classList.add('open');
+    document.getElementById('timer-backdrop').classList.add('open');
+    this.render();
+  },
+  close() {
+    document.getElementById('timer-sheet').classList.remove('open');
+    document.getElementById('timer-backdrop').classList.remove('open');
+  },
+  toggle() {
+    const open = document.getElementById('timer-sheet').classList.contains('open');
+    if (open) this.close(); else this.open();
+  },
+
+  // ── Auto-inicio tras marcar ejercicio ──
+  isAutoStartEnabled() { return localStorage.getItem('timer_autostart') === '1'; },
+  toggleAutoStart() {
+    const next = !this.isAutoStartEnabled();
+    localStorage.setItem('timer_autostart', next ? '1' : '0');
+    this.render();
+  },
+  onExerciseDone() {
+    if (!this.isAutoStartEnabled()) return;
+    if (this.isRunning) return; // no interrumpir un descanso ya activo
+    const last = parseInt(localStorage.getItem('timer_last') || '90', 10);
+    this.start(last);
+  },
+
+  // ── Render ──
+  render() {
+    // FAB
+    const fab = document.getElementById('timer-fab');
+    if (this.isRunning || this.isPaused) {
+      fab.classList.toggle('running', !this.isPaused);
+      fab.classList.toggle('paused',  this.isPaused);
+      const r  = this.remaining;
+      const mm = Math.floor(r / 60);
+      const ss = String(r % 60).padStart(2, '0');
+      fab.innerHTML = `<span class="fab-time">${this.isPaused ? '⏸ ' : ''}${mm}:${ss}</span>`;
+    } else {
+      fab.classList.remove('running');
+      fab.classList.remove('paused');
+      fab.innerHTML = `<span class="fab-icon">⏱️</span>`;
+    }
+
+    // Sheet body — solo renderizamos si está abierta
+    const body = document.getElementById('timer-sheet-body');
+    if (!body) return;
+
+    if (this.justFinished) {
+      body.innerHTML = `
+        <div class="timer-finished">
+          <span class="timer-finished-emoji">💪</span>
+          <div class="timer-finished-title">¡A POR LA SIGUIENTE!</div>
+          <div class="timer-finished-sub">Descanso terminado</div>
+          <button class="timer-btn-primary" style="width:100%;padding:14px" onclick="Timer.close()">Cerrar</button>
+        </div>`;
+      return;
+    }
+
+    if (this.isRunning || this.isPaused) {
+      this._renderRunning(this.remaining);
+      return;
+    }
+
+    // Setup
+    const last = parseInt(localStorage.getItem('timer_last') || '90', 10);
+    const auto = this.isAutoStartEnabled();
+    const presets = [60, 90, 120, 180];
+    body.innerHTML = `
+      <div class="timer-setup-title">DESCANSO</div>
+      <div class="timer-presets">
+        ${presets.map(s => `<button class="timer-preset${s===last?' suggested':''}" onclick="Timer.start(${s})">${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}</button>`).join('')}
+      </div>
+      <div class="timer-custom-label">Personalizado (segundos)</div>
+      <div class="timer-custom-row">
+        <div class="timer-stepper">
+          <button onclick="Timer._step(-5)">−</button>
+          <input id="timer-custom-inp" type="number" min="5" max="900" step="5" value="${last}">
+          <button onclick="Timer._step(5)">+</button>
+        </div>
+        <button class="timer-btn-primary" onclick="Timer.startCustom()">Iniciar</button>
+      </div>
+      <div class="timer-autostart">
+        <div>
+          <div class="timer-autostart-label">Iniciar al marcar ✓</div>
+          <div class="timer-autostart-sub">Auto-inicia el último tiempo usado</div>
+        </div>
+        <button class="timer-switch${auto?' on':''}" onclick="Timer.toggleAutoStart()" aria-label="Auto-inicio"></button>
+      </div>`;
+  },
+
+  _renderRunning(r) {
+    const body = document.getElementById('timer-sheet-body');
+    if (!body) return;
+    const mm = Math.floor(r / 60);
+    const ss = String(r % 60).padStart(2, '0');
+    const pct = this.duration > 0 ? Math.max(0, Math.min(100, (this.duration - r) / this.duration * 100)) : 0;
+    body.innerHTML = `
+      <div class="timer-big${this.isPaused?' paused':''}">${mm}:${ss}</div>
+      <div class="timer-progress"><div class="timer-progress-fill" style="width:${pct}%"></div></div>
+      <div class="timer-controls">
+        <button class="timer-adj" onclick="Timer.add(-15)">−15s</button>
+        <button class="timer-play" onclick="Timer.pause()">${this.isPaused ? '▶' : '⏸'}</button>
+        <button class="timer-adj" onclick="Timer.add(15)">+15s</button>
+      </div>
+      <button class="timer-cancel" onclick="Timer.stop()">Cancelar descanso</button>`;
+    // Refresca FAB también
+    const fab = document.getElementById('timer-fab');
+    fab.innerHTML = `<span class="fab-time">${this.isPaused ? '⏸ ' : ''}${mm}:${ss}</span>`;
+  },
+
+  _step(delta) {
+    const inp = document.getElementById('timer-custom-inp');
+    if (!inp) return;
+    const v = Math.max(5, Math.min(900, (parseInt(inp.value, 10) || 0) + delta));
+    inp.value = v;
+  }
+};
 
 /* ════════════════════════════════════════════════════════
    COMPLETION OVERLAY
