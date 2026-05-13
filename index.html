@@ -400,12 +400,12 @@ function switchView(view) {
   document.getElementById('nav-plan').classList.toggle('active', isPlan);
   document.getElementById('nav-lib').classList.toggle('active', !isPlan);
 
-  document.getElementById('week-tabs').style.display   = isPlan ? '' : 'none';
-  document.getElementById('day-tabs').style.display    = isPlan ? '' : 'none';
-  document.getElementById('lib-bar').style.display     = isPlan ? 'none' : '';
+  document.getElementById('week-tabs').style.display   = isPlan ? 'flex' : 'none';
+  document.getElementById('day-tabs').style.display    = isPlan ? 'flex' : 'none';
+  document.getElementById('lib-bar').style.display     = isPlan ? 'none' : 'block';
   document.getElementById('header-title').textContent  = isPlan ? 'MI PLAN' : 'BIBLIOTECA';
-  document.getElementById('main-content').style.display  = isPlan ? '' : 'none';
-  document.getElementById('library-view').style.display  = isPlan ? 'none' : '';
+  document.getElementById('main-content').style.display  = isPlan ? 'block' : 'none';
+  document.getElementById('library-view').style.display  = isPlan ? 'none' : 'block';
 
   if (!isPlan) {
     if (!guideData) {
@@ -526,9 +526,27 @@ function renderDay(day, active) {
       <div class="progress-wrap">
         <div class="progress-track"><div class="progress-fill" id="fill-${day.id}"></div></div>
         <div class="progress-label" id="label-${day.id}">0 / ${total} completados</div>
+        <button class="btn-reset" onclick="resetGuideDay('${day.id}')" style="margin-left:8px">↺</button>
       </div>
       ${day.groups.map(renderGroup).join('')}
     </div>`;
+}
+
+function resetGuideDay(dayId) {
+  if (!guideData) return;
+  const day = guideData.days.find(d => d.id === dayId);
+  if (!day) return;
+  const ids = day.groups.flatMap(g => g.exercises.map(e => e.id));
+  const state = getGuideState();
+  ids.forEach(id => { delete state[id]; });
+  saveGuideState(state);
+  // UI
+  ids.forEach(id => {
+    const card = document.getElementById(id); if (!card) return;
+    card.classList.remove('done');
+    const btn = card.querySelector('.done-btn'); if (btn) btn.classList.remove('active');
+  });
+  updateGuideProgress();
 }
 function renderGroup(g) {
   return `<div class="muscle-group">${g.label}</div>${g.exercises.map(renderExercise).join('')}`;
@@ -591,6 +609,19 @@ function toggleDone(id, event) {
   if (!done) {
     if (navigator.vibrate) { try { navigator.vibrate(15); } catch {} }
     Timer.onExerciseDone();
+    checkGuideDayCompletion();
+  }
+}
+
+function checkGuideDayCompletion() {
+  if (!guideData) return;
+  const day = guideData.days[activeDay];
+  if (!day) return;
+  const ids = day.groups.flatMap(g => g.exercises.map(e => e.id));
+  const state = getGuideState();
+  const allDone = ids.length > 0 && ids.every(id => state[id]);
+  if (allDone) {
+    setTimeout(() => showCompletion(day.label), 400);
   }
 }
 
@@ -916,7 +947,17 @@ function renderLibrary() {
       grp.exercises.forEach(ex => {
         const nameKey = ex.name.toLowerCase();
         if (seenNames.has(nameKey)) return; // deduplicate same exercise across days
-        if (q && !ex.name.toLowerCase().includes(q) && !ex.muscle.toLowerCase().includes(q)) return;
+        if (q) {
+          // Buscar en nombre, músculo y nombre de alternativas
+          const inName = ex.name.toLowerCase().includes(q);
+          const inMuscle = ex.muscle.toLowerCase().includes(q);
+          const inAlts = (ex.alternatives || []).some(a =>
+            (a.name && a.name.toLowerCase().includes(q)) ||
+            (a.appName && a.appName.toLowerCase().includes(q)) ||
+            (a.desc && a.desc.toLowerCase().includes(q))
+          );
+          if (!inName && !inMuscle && !inAlts) return;
+        }
         seenNames.add(nameKey);
         if (!grouped[grp.label]) grouped[grp.label] = [];
         grouped[grp.label].push(ex);
