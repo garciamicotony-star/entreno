@@ -256,6 +256,61 @@
   .timer-finished-emoji { font-size:64px; display:block; animation:bounce .55s cubic-bezier(.22,1,.36,1); }
   .timer-finished-title { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--accent); letter-spacing:2px; margin:14px 0 6px; }
   .timer-finished-sub { color:var(--muted); font-size:13px; margin-bottom:22px; }
+
+  /* ════════════════════════════
+     REGISTRO DE SERIES (peso × reps)
+  ════════════════════════════ */
+  .ex-log-btn { width:28px; height:28px; border-radius:50%; border:1.5px solid rgba(78,205,196,.45); background:rgba(78,205,196,.1); color:var(--accent3); font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; padding:0; position:relative; transition:transform .15s; font-family:'DM Sans',sans-serif; }
+  .ex-log-btn:active { transform:scale(.88); }
+  .ex-log-btn.has-data::after { content:''; position:absolute; top:-2px; right:-2px; width:9px; height:9px; border-radius:50%; background:var(--accent); border:2px solid var(--card); }
+
+  /* En checklist el fondo es var(--card) también, el punto se ve igual */
+  .plan-ex .ex-log-btn { width:26px; height:26px; font-size:12px; }
+  .plan-ex .ex-log-btn.has-data::after { border-color:var(--card); }
+
+  .exlog-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:118; opacity:0; visibility:hidden; transition:opacity .3s, visibility .3s; }
+  .exlog-backdrop.open { opacity:1; visibility:visible; }
+  .exlog-sheet { position:fixed; bottom:0; left:0; right:0; background:var(--card); border-top:1px solid var(--border); border-radius:24px 24px 0 0; z-index:120; transform:translateY(100%); transition:transform .35s cubic-bezier(.22,1,.36,1); padding:10px 20px calc(22px + env(safe-area-inset-bottom,0px)); box-shadow:0 -8px 40px rgba(0,0,0,.55); max-width:520px; margin:0 auto; max-height:88vh; overflow-y:auto; }
+  .exlog-sheet.open { transform:translateY(0); }
+  .exlog-handle { width:40px; height:4px; border-radius:2px; background:var(--border); margin:0 auto 14px; }
+
+  .exlog-title { font-family:'Bebas Neue',sans-serif; font-size:19px; color:var(--accent3); text-align:center; letter-spacing:1.5px; line-height:1.2; padding:0 24px; }
+  .exlog-muscle { font-size:11px; color:var(--muted); text-align:center; margin:4px 0 18px; }
+  .exlog-section { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+
+  .exlog-last { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent3); border-radius:10px; padding:9px 12px; margin-bottom:18px; }
+  .exlog-last-meta { font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--accent3); font-weight:700; margin-bottom:3px; }
+  .exlog-last-series { font-size:13px; color:var(--text); font-weight:600; font-variant-numeric:tabular-nums; }
+  .exlog-empty { font-size:12px; color:var(--muted); padding:8px 0 12px; text-align:center; }
+
+  .exlog-rows { margin-bottom:10px; }
+  .exlog-row { display:flex; align-items:center; gap:6px; margin-bottom:7px; }
+  .exlog-row-num { width:24px; text-align:center; font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--accent3); letter-spacing:1px; flex-shrink:0; }
+  .exlog-input-wrap { flex:1; position:relative; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; transition:border-color .15s; }
+  .exlog-input-wrap:focus-within { border-color:var(--accent3); }
+  .exlog-input { width:100%; background:transparent; border:none; padding:11px 30px 11px 14px; color:var(--text); font-size:15px; font-weight:600; outline:none; font-family:'DM Sans',sans-serif; font-variant-numeric:tabular-nums; -moz-appearance:textfield; }
+  .exlog-input::-webkit-outer-spin-button,.exlog-input::-webkit-inner-spin-button { -webkit-appearance:none; margin:0; }
+  .exlog-unit { position:absolute; right:10px; top:50%; transform:translateY(-50%); font-size:10px; color:var(--muted); font-weight:700; pointer-events:none; letter-spacing:.5px; }
+  .exlog-x { font-size:14px; color:var(--muted); font-weight:700; flex-shrink:0; }
+  .exlog-del { width:28px; height:28px; border-radius:50%; background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer; flex-shrink:0; line-height:1; padding:0; }
+  .exlog-del:active { color:var(--accent2); }
+
+  .exlog-add { width:100%; padding:11px; background:transparent; border:1.5px dashed var(--border); border-radius:10px; color:var(--accent3); font-weight:700; font-size:13px; font-family:'DM Sans',sans-serif; cursor:pointer; transition:all .15s; margin-bottom:12px; }
+  .exlog-add:active { background:rgba(78,205,196,.08); border-color:var(--accent3); }
+
+  .exlog-history-toggle { width:100%; background:transparent; border:1px solid var(--border); border-radius:10px; padding:10px; color:var(--muted); font-size:11px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; text-transform:uppercase; letter-spacing:1px; }
+  .exlog-history-toggle:active { color:var(--accent3); }
+  .exlog-history { margin-top:8px; max-height:0; overflow:hidden; transition:max-height .35s ease; }
+  .exlog-history.open { max-height:400px; overflow-y:auto; }
+  .exlog-history-item { background:var(--surface); border-radius:8px; padding:8px 10px; margin-top:6px; display:flex; gap:10px; align-items:baseline; }
+  .exlog-history-date { font-size:9px; letter-spacing:1px; text-transform:uppercase; color:var(--accent3); font-weight:700; flex-shrink:0; min-width:62px; }
+  .exlog-history-series { font-size:12px; color:var(--text); font-weight:600; font-variant-numeric:tabular-nums; flex:1; }
+
+  .exlog-actions { display:flex; gap:8px; margin-top:14px; }
+  .exlog-action-clear { flex:1; background:transparent; color:var(--muted); border:1.5px solid var(--border); border-radius:10px; padding:11px; font-size:12px; font-weight:600; font-family:'DM Sans',sans-serif; cursor:pointer; }
+  .exlog-action-clear:active { color:var(--accent2); border-color:rgba(255,107,53,.4); }
+  .exlog-action-close { flex:1; background:var(--accent3); color:#0a0a0f; border:none; border-radius:10px; padding:11px; font-size:13px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; }
+  .exlog-action-close:active { opacity:.85; }
 </style>
 </head>
 <body>
@@ -344,6 +399,13 @@
   <div class="timer-sheet" id="timer-sheet">
     <div class="timer-handle"></div>
     <div id="timer-sheet-body"></div>
+  </div>
+
+  <!-- Registro de series (peso × reps) -->
+  <div class="exlog-backdrop" id="exlog-backdrop" onclick="ExLog.close()"></div>
+  <div class="exlog-sheet" id="exlog-sheet">
+    <div class="exlog-handle"></div>
+    <div id="exlog-body"></div>
   </div>
 
 </div>
@@ -552,6 +614,9 @@ function renderGroup(g) {
   return `<div class="muscle-group">${g.label}</div>${g.exercises.map(renderExercise).join('')}`;
 }
 function renderExercise(ex) {
+  const safeName = ex.name.replace(/'/g, "\\'");
+  const safeMuscle = ex.muscle.replace(/'/g, "\\'");
+  const hasLog = ExLog.hasTodayData(ex.name);
   return `
     <div class="exercise-card" id="${ex.id}">
       <div class="card-header">
@@ -560,9 +625,10 @@ function renderExercise(ex) {
           <div class="ex-name">${ex.name}</div>
           <div class="ex-muscle">${ex.muscle}</div>
         </div>
+        <button class="ex-log-btn${hasLog?' has-data':''}" onclick="event.stopPropagation();ExLog.open('${safeName}','${safeMuscle}')" aria-label="Registrar series">📊</button>
         <button class="done-btn" onclick="toggleDone('${ex.id}',event)">✓</button>
         <div class="alt-trigger" onclick="toggleCard('${ex.id}')">
-          <span>Si está ocupado</span><span class="chevron">⌄</span>
+          <span>Alt.</span><span class="chevron">⌄</span>
         </div>
       </div>
       <div class="card-body">
@@ -771,9 +837,12 @@ function renderChecklistDay() {
 
   const rows = day.exercises.map((name, i) => {
     const done = !!doneArr[i];
+    const safe = name.replace(/'/g, "\\'");
+    const hasLog = ExLog.hasTodayData(name);
     return `<div class="plan-ex${done?' done':''}" id="pex-${i}" onclick="togglePlanEx(${i})">
       <div class="pex-num">${done?'✓':i+1}</div>
       <div class="pex-name">${name}</div>
+      <button class="ex-log-btn${hasLog?' has-data':''}" onclick="event.stopPropagation();ExLog.open('${safe}','')" aria-label="Registrar series">📊</button>
       <div class="pex-check">✓</div>
     </div>`;
   }).join('');
@@ -1292,6 +1361,272 @@ const Timer = {
     if (!inp) return;
     const v = Math.max(5, Math.min(900, (parseInt(inp.value, 10) || 0) + delta));
     inp.value = v;
+  }
+};
+
+/* ════════════════════════════════════════════════════════
+   REGISTRO DE SERIES (peso × reps)
+   Clave por nombre normalizado → el mismo ejercicio
+   comparte historial entre semanas.
+════════════════════════════════════════════════════════ */
+const ExLog = {
+  currentName: '',
+  currentMuscle: '',
+  historyOpen: false,
+
+  // ── Helpers de storage ──
+  _key(name) {
+    // Normaliza eliminando acentos para que "Press inclinado" y variantes mapeen igual
+    return 'log_' + (name || '')
+      .toLowerCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_|_$/g, '');
+  },
+  _get(name) {
+    try { return JSON.parse(localStorage.getItem(this._key(name)) || '{}'); }
+    catch { return {}; }
+  },
+  _save(name, data) {
+    // Si está vacío, eliminar la clave
+    if (!data || Object.keys(data).length === 0) localStorage.removeItem(this._key(name));
+    else localStorage.setItem(this._key(name), JSON.stringify(data));
+  },
+  _today() { return new Date().toISOString().slice(0, 10); },
+
+  hasTodayData(name) {
+    const all = this._get(name);
+    const t = all[this._today()];
+    return t && t.length > 0 && t.some(s => (s.kg != null && s.kg !== '') || (s.reps != null && s.reps !== ''));
+  },
+
+  // ── Lectura para UI ──
+  getTodaySeries(name) {
+    return this._get(name)[this._today()] || [];
+  },
+  getLastSession(name) {
+    const all = this._get(name);
+    const today = this._today();
+    const dates = Object.keys(all).filter(d => d !== today && all[d] && all[d].length > 0).sort();
+    if (!dates.length) return null;
+    const last = dates[dates.length - 1];
+    return { date: last, series: all[last] };
+  },
+  getAllSessions(name) {
+    const all = this._get(name);
+    return Object.keys(all)
+      .filter(d => all[d] && all[d].length > 0)
+      .sort()
+      .reverse()
+      .map(date => ({ date, series: all[date] }));
+  },
+
+  // ── Mutaciones ──
+  _ensureToday(name) {
+    const all = this._get(name);
+    if (!all[this._today()]) all[this._today()] = [];
+    return all;
+  },
+  setSeries(name, idx, field, value) {
+    const all = this._ensureToday(name);
+    const today = this._today();
+    while (all[today].length <= idx) all[today].push({ kg: null, reps: null });
+    const parsed = value === '' ? null : parseFloat(value);
+    all[today][idx][field] = (parsed === null || Number.isNaN(parsed)) ? null : parsed;
+    this._save(name, all);
+    this._refreshBadge();
+  },
+  addSeries(name) {
+    const all = this._ensureToday(name);
+    const today = this._today();
+    // Sugerir desde la última serie de hoy o de la última sesión
+    let suggest = { kg: null, reps: null };
+    const t = all[today];
+    if (t.length > 0) {
+      suggest = { ...t[t.length - 1] };
+    } else {
+      const last = this.getLastSession(name);
+      if (last && last.series.length > 0) {
+        suggest = { kg: last.series[0].kg, reps: last.series[0].reps };
+      }
+    }
+    all[today].push(suggest);
+    this._save(name, all);
+    this.render();
+    // Foco en el último input añadido
+    setTimeout(() => {
+      const inputs = document.querySelectorAll('.exlog-row .exlog-input');
+      if (inputs.length) inputs[(all[today].length - 1) * 2].focus();
+    }, 50);
+  },
+  removeSeries(name, idx) {
+    const all = this._get(name);
+    const today = this._today();
+    if (!all[today]) return;
+    all[today].splice(idx, 1);
+    if (all[today].length === 0) delete all[today];
+    this._save(name, all);
+    this.render();
+    this._refreshBadge();
+  },
+  clearToday(name) {
+    const all = this._get(name);
+    delete all[this._today()];
+    this._save(name, all);
+    this.render();
+    this._refreshBadge();
+  },
+
+  // ── Marca visual en los botones 📊 ──
+  _refreshBadge() {
+    // Re-aplica la clase has-data a los botones del ejercicio actual
+    // Es más simple re-renderizar el día activo
+    if (activeView === 'plan') {
+      const w = ALL_WEEKS.find(w => w.id === activeWeek);
+      if (w && w.type === 'checklist') {
+        // El render completo es barato
+        renderChecklistDay();
+      } else if (w && w.type === 'guide' && guideData) {
+        // Re-aplicar has-data manualmente
+        guideData.days.forEach(day => day.groups.forEach(g => g.exercises.forEach(ex => {
+          const card = document.getElementById(ex.id);
+          if (!card) return;
+          const btn = card.querySelector('.ex-log-btn');
+          if (btn) btn.classList.toggle('has-data', this.hasTodayData(ex.name));
+        })));
+      }
+    }
+  },
+
+  // ── Sheet ──
+  open(name, muscle) {
+    this.currentName = name;
+    this.currentMuscle = muscle || '';
+    this.historyOpen = false;
+    // Cierra el timer si está abierto
+    Timer.close();
+    document.getElementById('exlog-sheet').classList.add('open');
+    document.getElementById('exlog-backdrop').classList.add('open');
+    this.render();
+  },
+  close() {
+    document.getElementById('exlog-sheet').classList.remove('open');
+    document.getElementById('exlog-backdrop').classList.remove('open');
+  },
+  toggleHistory() {
+    this.historyOpen = !this.historyOpen;
+    this.render();
+  },
+
+  // ── Formato ──
+  _fmtSeries(series) {
+    return series
+      .filter(s => (s.kg != null && s.kg !== '') || (s.reps != null && s.reps !== ''))
+      .map(s => {
+        const kg = (s.kg != null && s.kg !== '') ? s.kg : '?';
+        const r  = (s.reps != null && s.reps !== '') ? s.reps : '?';
+        return `${kg}×${r}`;
+      })
+      .join(' · ') || '—';
+  },
+  _fmtDate(iso) {
+    const d = new Date(iso + 'T00:00:00');
+    const today = new Date(); today.setHours(0,0,0,0);
+    const diff = Math.round((today - d) / 86400000);
+    if (diff === 0) return 'Hoy';
+    if (diff === 1) return 'Ayer';
+    if (diff < 7)   return `Hace ${diff} días`;
+    if (diff < 14)  return 'Hace 1 sem';
+    if (diff < 30)  return `Hace ${Math.floor(diff/7)} sem`;
+    return d.toLocaleDateString('es-ES', { day:'numeric', month:'short' });
+  },
+
+  // ── Render ──
+  render() {
+    const name = this.currentName;
+    if (!name) return;
+    const body = document.getElementById('exlog-body');
+    const today = this.getTodaySeries(name);
+    const last  = this.getLastSession(name);
+    const history = this.getAllSessions(name).filter(s => s.date !== this._today());
+
+    let html = `
+      <div class="exlog-title">${name}</div>
+      ${this.currentMuscle ? `<div class="exlog-muscle">${this.currentMuscle}</div>` : '<div style="height:14px"></div>'}
+    `;
+
+    // Última sesión
+    if (last) {
+      html += `
+        <div class="exlog-section">Última sesión</div>
+        <div class="exlog-last">
+          <div class="exlog-last-meta">${this._fmtDate(last.date)}</div>
+          <div class="exlog-last-series">${this._fmtSeries(last.series)}</div>
+        </div>`;
+    }
+
+    // Series de hoy
+    html += `<div class="exlog-section">Hoy</div><div class="exlog-rows">`;
+    if (today.length === 0) {
+      html += `<div class="exlog-empty">Sin series registradas todavía</div>`;
+    } else {
+      today.forEach((s, i) => {
+        const kg   = s.kg   != null ? s.kg   : '';
+        const reps = s.reps != null ? s.reps : '';
+        html += `
+          <div class="exlog-row">
+            <div class="exlog-row-num">${i+1}</div>
+            <div class="exlog-input-wrap">
+              <input class="exlog-input" type="number" inputmode="decimal" step="0.5" min="0" value="${kg}" placeholder="0" oninput="ExLog.setSeries('${name.replace(/'/g,"\\'")}',${i},'kg',this.value)">
+              <span class="exlog-unit">KG</span>
+            </div>
+            <span class="exlog-x">×</span>
+            <div class="exlog-input-wrap">
+              <input class="exlog-input" type="number" inputmode="numeric" step="1" min="0" value="${reps}" placeholder="0" oninput="ExLog.setSeries('${name.replace(/'/g,"\\'")}',${i},'reps',this.value)">
+              <span class="exlog-unit">REPS</span>
+            </div>
+            <button class="exlog-del" onclick="ExLog.removeSeries('${name.replace(/'/g,"\\'")}',${i})" aria-label="Eliminar serie">×</button>
+          </div>`;
+      });
+    }
+    html += `</div>`;
+
+    html += `<button class="exlog-add" onclick="ExLog.addSeries('${name.replace(/'/g,"\\'")}')">+ Añadir serie</button>`;
+
+    // Historial colapsable
+    if (history.length > 0) {
+      html += `<button class="exlog-history-toggle" onclick="ExLog.toggleHistory()">
+        ${this.historyOpen ? '▾' : '▸'} Historial (${history.length} ${history.length===1?'sesión':'sesiones'})
+      </button>`;
+      html += `<div class="exlog-history${this.historyOpen?' open':''}">`;
+      history.slice(0, 30).forEach(sess => {
+        html += `
+          <div class="exlog-history-item">
+            <div class="exlog-history-date">${this._fmtDate(sess.date)}</div>
+            <div class="exlog-history-series">${this._fmtSeries(sess.series)}</div>
+          </div>`;
+      });
+      html += `</div>`;
+    }
+
+    // Acciones
+    if (today.length > 0) {
+      html += `
+        <div class="exlog-actions">
+          <button class="exlog-action-clear" onclick="ExLog._confirmClear('${name.replace(/'/g,"\\'")}')">Borrar hoy</button>
+          <button class="exlog-action-close" onclick="ExLog.close()">Hecho</button>
+        </div>`;
+    } else {
+      html += `<div class="exlog-actions">
+        <button class="exlog-action-close" style="flex:1" onclick="ExLog.close()">Cerrar</button>
+      </div>`;
+    }
+
+    body.innerHTML = html;
+  },
+
+  _confirmClear(name) {
+    if (confirm('¿Borrar todas las series de hoy?')) this.clearToday(name);
   }
 };
 
