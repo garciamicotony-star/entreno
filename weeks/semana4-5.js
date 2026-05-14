@@ -715,6 +715,145 @@ window.WEEK_DATA = {
           ]
         }
       ]
+    },
+
+    {
+      id: 'dia5',
+      label: 'Día 5 · Core 🏠',
+      canReset: true,
+      groups: [
+        {
+          label: 'CORE EN CASA · SOLO ESTERILLA',
+          exercises: [
+            {
+              id: 'd5e1', icon: '🛡️',
+              name: 'Plank',
+              muscle: 'Core',
+              sets: '3 × 45 seg',
+              howto: true,
+              steps: [
+                'Boca abajo, apoya los antebrazos en el suelo con los codos justo debajo de los hombros',
+                'Eleva las caderas hasta formar una línea recta de cabeza a talones',
+                'Aprieta el abdomen, los glúteos y los cuádriceps',
+                'Mantén la posición sin dejar caer las caderas ni elevarlas'
+              ],
+              tip: { bold: 'Si las caderas caen o suben, el ejercicio pierde efecto.', text: 'Imagina que tienes un vaso de agua encima de la espalda.' }
+            },
+            {
+              id: 'd5e2', icon: '🐞',
+              name: 'Dead Bug',
+              muscle: 'Core',
+              sets: '3 × 10 rep',
+              howto: true,
+              steps: [
+                'Tumbado boca arriba, brazos estirados hacia el techo, rodillas dobladas a 90° en el aire',
+                'Baja simultáneamente el brazo derecho hacia atrás y la pierna izquierda hacia el suelo sin tocar',
+                'Vuelve al centro y repite con el lado contrario',
+                'La espalda baja debe permanecer pegada al suelo en todo momento'
+              ],
+              tip: { bold: 'Ve muy lento.', text: 'La velocidad arruina este ejercicio — el control es lo que activa el core profundo.' }
+            },
+            {
+              id: 'd5e3', icon: '💥',
+              name: 'Crunch',
+              muscle: 'Abdominales',
+              sets: '3 × 15 rep',
+              howto: true,
+              steps: [
+                'Tumbado boca arriba, rodillas dobladas, pies apoyados en el suelo',
+                'Manos detrás de la cabeza sin tirar del cuello',
+                'Eleva los hombros del suelo contrayendo el abdomen, no el cuello',
+                'Baja lento sin apoyar del todo los hombros entre repetición'
+              ],
+              tip: { bold: 'El movimiento es pequeño — solo despegan los hombros.', text: 'Si el cuello duele, cruza los brazos sobre el pecho.' }
+            },
+            {
+              id: 'd5e4', icon: '🔁',
+              name: 'Reverse Crunch',
+              muscle: 'Abdomen bajo',
+              sets: '3 × 12 rep',
+              howto: true,
+              steps: [
+                'Tumbado boca arriba, manos a los lados apoyadas en el suelo, rodillas dobladas a 90°',
+                'Eleva las caderas del suelo llevando las rodillas hacia el pecho',
+                'Controla la bajada — no dejes caer las piernas',
+                'El movimiento viene del abdomen bajo, no del impulso de las piernas'
+              ],
+              tip: { bold: 'Complemento del crunch normal:', text: 'este trabaja la parte baja del abdomen que el crunch no alcanza.' }
+            },
+            {
+              id: 'd5e5', icon: '🌀',
+              name: 'Russian Twist',
+              muscle: 'Oblicuos',
+              sets: '3 × 20 rep',
+              howto: true,
+              steps: [
+                'Sentado en el suelo, rodillas dobladas, pies ligeramente elevados o apoyados para empezar',
+                'Inclina el torso hacia atrás unos 45°',
+                'Gira el torso de lado a lado tocando el suelo a cada lado con las manos juntas',
+                'Cada toque a un lado cuenta como 1 repetición'
+              ],
+              tip: { bold: 'Para hacerlo más difícil eleva los pies del suelo.', text: 'El giro viene del torso, no solo de los brazos.' }
+            },
+            {
+              id: 'd5e6', icon: '🏊',
+              name: 'Flutter Kick',
+              muscle: 'Abdomen bajo',
+              sets: '3 × 30 seg',
+              howto: true,
+              steps: [
+                'Tumbado boca arriba, manos bajo los glúteos para proteger la zona lumbar',
+                'Eleva las piernas unos 15-20 cm del suelo',
+                'Alterna subiendo y bajando cada pierna en movimiento continuo tipo natación',
+                'Mantén las piernas lo más rectas posible'
+              ],
+              tip: { bold: 'Si la zona lumbar se despega del suelo,', text: 'sube un poco más las piernas hasta que puedas mantener la espalda plana.' }
+            },
+            {
+              id: 'd5e7', icon: '↔️',
+              name: 'Plank Hip Dip',
+              muscle: 'Oblicuos',
+              sets: '3 × 12 rep',
+              howto: true,
+              steps: [
+                'Posición de plank sobre antebrazos',
+                'Rota las caderas hacia la derecha bajando hasta casi tocar el suelo',
+                'Vuelve al centro y rota hacia la izquierda',
+                'Un toque a cada lado cuenta como 2 repeticiones'
+              ],
+              tip: { bold: 'Mantén los hombros estables — solo se mueven las caderas.', text: 'El movimiento debe ser controlado, no un balanceo.' }
+            },
+            {
+              id: 'd5e8', icon: '📐',
+              name: 'V-Up',
+              muscle: 'Abdominales',
+              sets: '3 × 10 rep',
+              howto: true,
+              steps: [
+                'Tumbado boca arriba, brazos extendidos por encima de la cabeza y piernas juntas estiradas',
+                'Sube simultáneamente las piernas y el torso formando una V',
+                'Intenta tocar los pies con las manos en el punto más alto',
+                'Baja lento volviendo a la posición inicial'
+              ],
+              tip: { bold: 'Es el ejercicio más exigente del día:', text: 'si no llegas a tocar los pies no pasa nada. Lo importante es subir todo lo que puedas con control.' }
+            },
+            {
+              id: 'd5e9', icon: '🦸',
+              name: 'Superman',
+              muscle: 'Lumbar',
+              sets: '3 × 12 rep',
+              howto: true,
+              steps: [
+                'Tumbado boca abajo, brazos extendidos hacia delante como Superman volando',
+                'Eleva simultáneamente los brazos, el pecho y las piernas del suelo',
+                'Mantén la posición 2 segundos arriba apretando glúteos y espalda',
+                'Baja lento y repite'
+              ],
+              tip: { bold: 'Es el ejercicio de cierre:', text: 'compensa todo el trabajo abdominal anterior fortaleciendo la zona lumbar. No te lo saltes aunque estés cansado.' }
+            }
+          ]
+        }
+      ]
     }
   ]
 };
