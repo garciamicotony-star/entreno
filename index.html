@@ -500,8 +500,8 @@ function switchView(view) {
    4. Si es tipo 'checklist': añadir entrada en PLAN_DATA
 ════════════════════════════════════════════════════════ */
 const ALL_WEEKS = [
-  { id: 'semanas1-2', label: 'Semanas 1-2', type: 'checklist' },
-  { id: 'semanas3-4', label: 'Semanas 3-4', type: 'checklist' },
+  { id: 'semanas1-2', label: 'Semanas 1-2', type: 'guide', fileId: 'semana1-2' },
+  { id: 'semanas3-4', label: 'Semanas 3-4', type: 'guide', fileId: 'semana3-4' },
   { id: 'semanas4-5', label: 'Semanas 4-5', type: 'guide', fileId: 'semana4-5' }
 ];
 
@@ -677,7 +677,7 @@ function renderExercise(ex) {
         <button class="ex-log-btn${hasLog?' has-data':''}" onclick="event.stopPropagation();ExLog.open('${safeName}','${safeMuscle}')" aria-label="Registrar series">📊</button>
         <button class="done-btn" onclick="toggleDone('${ex.id}',event)">✓</button>
         <div class="alt-trigger" onclick="toggleCard('${ex.id}')">
-          <span>Alt.</span><span class="chevron">⌄</span>
+          <span>Si está ocupado</span><span class="chevron">⌄</span>
         </div>
       </div>
       <div class="card-body">

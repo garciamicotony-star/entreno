@@ -1,10 +1,12 @@
-const CACHE = 'entreno-v6';
+const CACHE = 'entreno-v7';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icons/icon-192.svg',
   './icons/icon-512.svg',
+  './weeks/semana1-2.js',
+  './weeks/semana3-4.js',
   './weeks/semana4-5.js',
   './weeks/library.js',
 ];
