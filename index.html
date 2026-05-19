@@ -202,6 +202,94 @@
   .lib-card-name { font-size:13px; font-weight:600; color:var(--text); line-height:1.3; }
   .lib-card-muscle { font-size:10px; color:var(--muted); margin-top:2px; font-weight:500; }
 
+  /* ════════════════════════════
+     NUTRICIÓN STYLES
+  ════════════════════════════ */
+  #nutrition-view { display:none; min-height:50vh; padding-bottom:20px; animation:fadeIn .3s cubic-bezier(.22,1,.36,1); }
+
+  /* Summary view (9 días) */
+  .nut-header { padding:14px 16px 6px; }
+  .nut-header h2 { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:2px; color:var(--accent); margin-bottom:4px; }
+  .nut-header p { font-size:11px; color:var(--muted); }
+  .nut-day-row { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:13px 14px; margin:0 16px 8px; cursor:pointer; transition:border-color .2s, transform .15s; }
+  .nut-day-row:active { transform:scale(.98); }
+  .nut-day-row.open { border-color:rgba(232,255,71,.45); }
+  .nut-day-num { width:42px; height:42px; border-radius:11px; background:var(--surface); display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; }
+  .nut-day-num-label { font-size:8px; color:var(--muted); font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+  .nut-day-num-val { font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--accent); letter-spacing:1px; line-height:1; margin-top:1px; }
+  .nut-day-info { flex:1; min-width:0; }
+  .nut-day-kcal { display:flex; align-items:center; gap:6px; margin-bottom:4px; }
+  .nut-day-kcal-num { font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--text); letter-spacing:1px; font-variant-numeric:tabular-nums; }
+  .nut-day-kcal-unit { font-size:10px; color:var(--muted); font-weight:600; }
+  .nut-kcal-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-right:2px; }
+  .nut-kcal-dot.low  { background:#7dd87d; }
+  .nut-kcal-dot.mid  { background:var(--accent); }
+  .nut-kcal-dot.high { background:var(--accent2); }
+  .nut-day-macros { display:flex; gap:4px; flex-wrap:wrap; }
+  .nut-macro { font-size:10px; color:var(--muted); font-weight:600; padding:2px 6px; border-radius:6px; background:var(--surface); }
+  .nut-macro .macro-val { color:var(--text); font-weight:700; }
+  .nut-day-bf { font-size:11px; color:#b0b0c0; margin-top:5px; line-height:1.35; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; }
+  .nut-day-arrow { font-size:18px; color:var(--muted); flex-shrink:0; }
+
+  /* Detail view (1 día con 4 comidas) */
+  .nut-detail-header { display:flex; align-items:center; gap:10px; padding:14px 16px 8px; }
+  .nut-back-btn { width:36px; height:36px; border-radius:50%; background:var(--card); border:1px solid var(--border); color:var(--text); font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-family:'DM Sans',sans-serif; }
+  .nut-back-btn:active { background:var(--surface); }
+  .nut-detail-title { flex:1; min-width:0; }
+  .nut-detail-title h2 { font-family:'Bebas Neue',sans-serif; font-size:24px; letter-spacing:2px; color:var(--accent); line-height:1; }
+  .nut-detail-title-sub { font-size:11px; color:var(--muted); margin-top:3px; font-weight:600; letter-spacing:.3px; }
+  .nut-detail-macros-bar { display:flex; gap:6px; padding:6px 16px 14px; }
+  .nut-detail-macro { flex:1; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:8px 6px; text-align:center; }
+  .nut-detail-macro-val { font-family:'Bebas Neue',sans-serif; font-size:18px; color:var(--text); letter-spacing:.5px; line-height:1; }
+  .nut-detail-macro-val.kcal { color:var(--accent); }
+  .nut-detail-macro-val.c { color:var(--accent3); }
+  .nut-detail-macro-val.p { color:#ff8b6b; }
+  .nut-detail-macro-val.f { color:var(--accent); }
+  .nut-detail-macro-lab { font-size:9px; color:var(--muted); font-weight:600; letter-spacing:.5px; text-transform:uppercase; margin-top:3px; }
+
+  /* Meal cards */
+  .nut-meal { background:var(--card); border:1px solid var(--border); border-radius:14px; margin:0 16px 10px; overflow:hidden; }
+  .nut-meal-head { display:flex; align-items:flex-start; gap:10px; padding:12px 14px; border-bottom:1px solid var(--border); }
+  .nut-meal-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+  .nut-meal-icon.t-DESAYUNO { background:rgba(232,255,71,.15); }
+  .nut-meal-icon.t-COMIDA { background:rgba(255,107,53,.15); }
+  .nut-meal-icon.t-MERIENDA { background:rgba(78,205,196,.15); }
+  .nut-meal-icon.t-CENA { background:rgba(140,120,200,.15); }
+  .nut-meal-info { flex:1; min-width:0; }
+  .nut-meal-type { font-family:'DM Sans',sans-serif; font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:3px; }
+  .nut-meal-type.t-DESAYUNO { color:var(--accent); }
+  .nut-meal-type.t-COMIDA { color:var(--accent2); }
+  .nut-meal-type.t-MERIENDA { color:var(--accent3); }
+  .nut-meal-type.t-CENA { color:#a98ff2; }
+  .nut-meal-name { font-weight:700; font-size:14px; color:var(--text); line-height:1.3; }
+  .nut-meal-macros { display:flex; gap:5px; flex-wrap:wrap; margin-top:7px; }
+  .nut-meal-pill { font-size:10px; padding:3px 8px; border-radius:10px; background:var(--surface); color:var(--muted); font-weight:600; }
+  .nut-meal-pill b { color:var(--text); font-weight:700; }
+  .nut-meal-pill.kcal b { color:var(--accent); }
+  .nut-meal-pill.c b { color:var(--accent3); }
+  .nut-meal-pill.p b { color:#ff8b6b; }
+  .nut-meal-pill.f b { color:var(--accent); }
+  /* Ingredients table */
+  .nut-ing-table { padding:10px 12px 4px; }
+  .nut-ing-row { display:grid; grid-template-columns:1fr auto auto auto auto auto; gap:6px; align-items:baseline; padding:6px 0; border-bottom:1px dashed rgba(255,255,255,.04); font-size:11px; font-variant-numeric:tabular-nums; }
+  .nut-ing-row:last-child { border-bottom:none; }
+  .nut-ing-row.head { font-size:9px; color:var(--muted); font-weight:700; letter-spacing:.5px; text-transform:uppercase; border-bottom:1px solid var(--border); padding:4px 0 6px; }
+  .nut-ing-name { color:var(--text); font-weight:500; min-width:0; line-height:1.35; word-break:break-word; }
+  .nut-ing-qty  { color:var(--muted); font-weight:600; white-space:nowrap; }
+  .nut-ing-num  { color:var(--text); font-weight:600; text-align:right; white-space:nowrap; min-width:30px; }
+  .nut-ing-num.kcal { color:var(--accent); }
+  /* Prep steps */
+  .nut-prep { padding:6px 14px 14px; border-top:1px solid var(--border); margin-top:6px; }
+  .nut-prep-lab { font-size:9px; color:var(--muted); font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
+  .nut-prep-step { display:flex; gap:8px; margin-bottom:6px; align-items:flex-start; }
+  .nut-prep-num { width:18px; height:18px; border-radius:4px; background:var(--surface); color:var(--accent); font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+  .nut-prep-text { font-size:12px; color:#c0c0d0; line-height:1.5; }
+  /* Prev/Next nav at bottom of detail */
+  .nut-day-nav { display:flex; gap:8px; padding:16px 16px 4px; }
+  .nut-day-nav button { flex:1; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:12px; color:var(--text); font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif; cursor:pointer; letter-spacing:.3px; }
+  .nut-day-nav button:active { background:var(--surface); }
+  .nut-day-nav button.disabled { opacity:.4; pointer-events:none; }
+
   /* ── BOTTOM NAV ── */
   .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:var(--surface); border-top:1px solid var(--border); display:flex; z-index:110; padding-bottom:env(safe-area-inset-bottom,0); }
   .nav-item { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:10px 0; background:none; border:none; cursor:pointer; color:var(--muted); transition:color .2s; font-family:'DM Sans',sans-serif; }
@@ -380,6 +468,9 @@
   <!-- Biblioteca content -->
   <div id="library-view"></div>
 
+  <!-- Nutrición content -->
+  <div id="nutrition-view"></div>
+
   <!-- Completion overlay -->
   <div id="completion-overlay" class="completion-overlay" onclick="closeCompletion()">
     <div class="completion-card" onclick="event.stopPropagation()">
@@ -399,6 +490,10 @@
     <button class="nav-item" id="nav-lib" onclick="switchView('library')">
       <span class="nav-icon">📚</span>
       <span class="nav-label">Biblioteca</span>
+    </button>
+    <button class="nav-item" id="nav-nut" onclick="switchView('nutrition')">
+      <span class="nav-icon">🥗</span>
+      <span class="nav-label">Nutrición</span>
     </button>
   </nav>
 
@@ -469,23 +564,36 @@ let activeView = 'plan';
 function switchView(view) {
   activeView = view;
   const isPlan = view === 'plan';
+  const isLib  = view === 'library';
+  const isNut  = view === 'nutrition';
 
   document.getElementById('nav-plan').classList.toggle('active', isPlan);
-  document.getElementById('nav-lib').classList.toggle('active', !isPlan);
+  document.getElementById('nav-lib').classList.toggle('active',  isLib);
+  document.getElementById('nav-nut').classList.toggle('active',  isNut);
 
-  document.getElementById('week-tabs').style.display   = isPlan ? 'flex' : 'none';
-  document.getElementById('day-tabs').style.display    = isPlan ? 'flex' : 'none';
-  document.getElementById('lib-bar').style.display     = isPlan ? 'none' : 'block';
-  document.getElementById('header-title').textContent  = isPlan ? 'MI PLAN' : 'BIBLIOTECA';
-  document.getElementById('main-content').style.display  = isPlan ? 'block' : 'none';
-  document.getElementById('library-view').style.display  = isPlan ? 'none' : 'block';
+  document.getElementById('week-tabs').style.display      = isPlan ? 'flex'  : 'none';
+  document.getElementById('day-tabs').style.display       = isPlan ? 'flex'  : 'none';
+  document.getElementById('lib-bar').style.display        = isLib  ? 'block' : 'none';
+  document.getElementById('header-title').textContent     = isPlan ? 'MI PLAN' : isLib ? 'BIBLIOTECA' : 'NUTRICIÓN';
+  document.getElementById('main-content').style.display   = isPlan ? 'block' : 'none';
+  document.getElementById('library-view').style.display   = isLib  ? 'block' : 'none';
+  document.getElementById('nutrition-view').style.display = isNut  ? 'block' : 'none';
 
-  if (!isPlan) {
+  if (isLib) {
     if (!window.LIBRARY) {
       document.getElementById('library-view').innerHTML = '<div class="loading">Cargando biblioteca…</div>';
       loadLibrary();
     } else {
       renderLibrary();
+    }
+  } else if (isNut) {
+    if (!window.NUTRITION) {
+      document.getElementById('nutrition-view').innerHTML = '<div class="loading">Cargando plan nutricional…</div>';
+      loadNutrition();
+    } else {
+      // Si estábamos viendo un día concreto, lo mantenemos; si no, vamos al resumen
+      if (nutritionDay > 0) renderNutritionDay(nutritionDay);
+      else renderNutritionSummary();
     }
   }
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -563,6 +671,13 @@ function preloadGuideData() {
     s.src = 'weeks/library.js';
     document.head.appendChild(s);
   }
+  // Pre-carga nutricion.js (para Nutrición)
+  if (!window.NUTRITION && !document.getElementById('_wnp')) {
+    const s = document.createElement('script');
+    s.id = '_wnp';
+    s.src = 'weeks/nutricion.js';
+    document.head.appendChild(s);
+  }
 }
 
 function loadLibrary() {
@@ -575,6 +690,173 @@ function loadLibrary() {
   s.onload  = () => renderLibrary();
   s.onerror = () => { document.getElementById('library-view').innerHTML = '<div class="loading">No se pudo cargar la biblioteca.</div>'; };
   document.head.appendChild(s);
+}
+
+/* ════════════════════════════════════════════════════════
+   NUTRICIÓN
+════════════════════════════════════════════════════════ */
+let nutritionDay = 0; // 0 = resumen, 1-9 = detalle
+
+function loadNutrition() {
+  if (window.NUTRITION) {
+    if (nutritionDay > 0) renderNutritionDay(nutritionDay);
+    else renderNutritionSummary();
+    return;
+  }
+  const old = document.getElementById('_wln');
+  if (old) old.remove();
+  const s = document.createElement('script');
+  s.id = '_wln';
+  s.src = 'weeks/nutricion.js';
+  s.onload  = () => renderNutritionSummary();
+  s.onerror = () => { document.getElementById('nutrition-view').innerHTML = '<div class="loading">No se pudo cargar el plan nutricional.</div>'; };
+  document.head.appendChild(s);
+}
+
+function kcalLevel(kcal) {
+  if (kcal < 1980) return 'low';
+  if (kcal > 2030) return 'high';
+  return 'mid';
+}
+
+function renderNutritionSummary() {
+  if (!window.NUTRITION) return;
+  nutritionDay = 0;
+  const totalKcal = Math.round(NUTRITION.days.reduce((a, d) => a + d.totals.kcal, 0) / NUTRITION.days.length);
+
+  let html = `
+    <div class="nut-header">
+      <h2>PLAN NUTRICIONAL · 9 DÍAS</h2>
+      <p>${NUTRITION.target} · Toca cualquier día para ver el detalle · Plan rotativo (tras el día 9 vuelve al 1)</p>
+    </div>
+    <div class="nut-detail-macros-bar">
+      <div class="nut-detail-macro"><div class="nut-detail-macro-val kcal">${totalKcal}</div><div class="nut-detail-macro-lab">Media kcal</div></div>
+      <div class="nut-detail-macro"><div class="nut-detail-macro-val">${NUTRITION.days.length}</div><div class="nut-detail-macro-lab">Días</div></div>
+      <div class="nut-detail-macro"><div class="nut-detail-macro-val">4</div><div class="nut-detail-macro-lab">Comidas/día</div></div>
+    </div>`;
+
+  NUTRITION.days.forEach(d => {
+    const bf = d.meals.find(m => m.type === 'DESAYUNO');
+    const lvl = kcalLevel(d.totals.kcal);
+    html += `
+      <div class="nut-day-row" onclick="renderNutritionDay(${d.n})">
+        <div class="nut-day-num">
+          <div class="nut-day-num-label">Día</div>
+          <div class="nut-day-num-val">${d.n}</div>
+        </div>
+        <div class="nut-day-info">
+          <div class="nut-day-kcal">
+            <span class="nut-kcal-dot ${lvl}"></span>
+            <span class="nut-day-kcal-num">${d.totals.kcal}</span>
+            <span class="nut-day-kcal-unit">kcal</span>
+          </div>
+          <div class="nut-day-macros">
+            <span class="nut-macro">C <span class="macro-val">${d.totals.c}g</span></span>
+            <span class="nut-macro">P <span class="macro-val">${d.totals.p}g</span></span>
+            <span class="nut-macro">F <span class="macro-val">${d.totals.f}g</span></span>
+          </div>
+          <div class="nut-day-bf">🥣 ${bf ? bf.name : ''}</div>
+        </div>
+        <div class="nut-day-arrow">›</div>
+      </div>`;
+  });
+
+  // Pie con autor / coach
+  html += `<div class="nut-header" style="padding-top:16px;text-align:center">
+    <p>Autor: ${NUTRITION.author} · Coach: ${NUTRITION.coach}</p>
+  </div>`;
+
+  document.getElementById('nutrition-view').innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderNutritionDay(n) {
+  if (!window.NUTRITION) return;
+  const day = NUTRITION.days.find(d => d.n === n);
+  if (!day) return renderNutritionSummary();
+  nutritionDay = n;
+  const last = NUTRITION.days.length;
+  const prevN = n === 1 ? last : n - 1;
+  const nextN = n === last ? 1 : n + 1;
+
+  let html = `
+    <div class="nut-detail-header">
+      <button class="nut-back-btn" onclick="renderNutritionSummary()" aria-label="Volver al resumen">‹</button>
+      <div class="nut-detail-title">
+        <h2>DÍA ${day.n}</h2>
+        <div class="nut-detail-title-sub">${day.meals.length} comidas · ${day.totals.kcal} kcal totales</div>
+      </div>
+    </div>
+    <div class="nut-detail-macros-bar">
+      <div class="nut-detail-macro"><div class="nut-detail-macro-val kcal">${day.totals.kcal}</div><div class="nut-detail-macro-lab">kcal</div></div>
+      <div class="nut-detail-macro"><div class="nut-detail-macro-val c">${day.totals.c}g</div><div class="nut-detail-macro-lab">Carbos</div></div>
+      <div class="nut-detail-macro"><div class="nut-detail-macro-val p">${day.totals.p}g</div><div class="nut-detail-macro-lab">Proteína</div></div>
+      <div class="nut-detail-macro"><div class="nut-detail-macro-val f">${day.totals.f}g</div><div class="nut-detail-macro-lab">Grasa</div></div>
+    </div>`;
+
+  day.meals.forEach((m, mi) => {
+    html += renderNutritionMeal(m, day.n + '-' + mi);
+  });
+
+  html += `
+    <div class="nut-day-nav">
+      <button onclick="renderNutritionDay(${prevN})">‹ Día ${prevN}</button>
+      <button onclick="renderNutritionDay(${nextN})">Día ${nextN} ›</button>
+    </div>`;
+
+  document.getElementById('nutrition-view').innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderNutritionMeal(m, key) {
+  const ingRows = m.ing.map(([name, qty, kcal, c, p, f]) => `
+    <div class="nut-ing-row">
+      <div class="nut-ing-name">${name}</div>
+      <div class="nut-ing-qty">${qty}</div>
+      <div class="nut-ing-num kcal">${kcal}</div>
+      <div class="nut-ing-num">${c}</div>
+      <div class="nut-ing-num">${p}</div>
+      <div class="nut-ing-num">${f}</div>
+    </div>`).join('');
+
+  const steps = (m.prep || '').split(/\.\s+/).map(s => s.trim()).filter(s => s.length > 0);
+  const stepsHtml = steps.map((s, i) => `
+    <div class="nut-prep-step">
+      <div class="nut-prep-num">${i + 1}</div>
+      <div class="nut-prep-text">${s}${s.endsWith('.') ? '' : '.'}</div>
+    </div>`).join('');
+
+  return `
+    <div class="nut-meal" id="meal-${key}">
+      <div class="nut-meal-head">
+        <div class="nut-meal-icon t-${m.type}">${m.icon}</div>
+        <div class="nut-meal-info">
+          <div class="nut-meal-type t-${m.type}">${m.type}</div>
+          <div class="nut-meal-name">${m.name}</div>
+          <div class="nut-meal-macros">
+            <span class="nut-meal-pill kcal"><b>${m.kcal}</b> kcal</span>
+            <span class="nut-meal-pill c">C <b>${m.c}g</b></span>
+            <span class="nut-meal-pill p">P <b>${m.p}g</b></span>
+            <span class="nut-meal-pill f">F <b>${m.f}g</b></span>
+          </div>
+        </div>
+      </div>
+      <div class="nut-ing-table">
+        <div class="nut-ing-row head">
+          <div>Ingrediente</div>
+          <div>Cant.</div>
+          <div style="text-align:right">kcal</div>
+          <div style="text-align:right">C</div>
+          <div style="text-align:right">P</div>
+          <div style="text-align:right">F</div>
+        </div>
+        ${ingRows}
+      </div>
+      <div class="nut-prep">
+        <div class="nut-prep-lab">Preparación</div>
+        ${stepsHtml}
+      </div>
+    </div>`;
 }
 
 function renderGuideDayTabs() {

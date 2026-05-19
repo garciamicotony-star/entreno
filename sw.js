@@ -1,4 +1,4 @@
-const CACHE = 'entreno-v7';
+const CACHE = 'entreno-v8';
 const ASSETS = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const ASSETS = [
   './weeks/semana3-4.js',
   './weeks/semana4-5.js',
   './weeks/library.js',
+  './weeks/nutricion.js',
 ];
 
 self.addEventListener('install', e => {
