@@ -1,4 +1,4 @@
-const CACHE = 'entreno-v9';
+const CACHE = 'entreno-v10';
 const ASSETS = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const ASSETS = [
   './weeks/semana3-4.js',
   './weeks/semana4-5.js',
   './weeks/semana7-8.js',
+  './weeks/semana9-10.js',
   './weeks/library.js',
   './weeks/nutricion.js',
 ];
